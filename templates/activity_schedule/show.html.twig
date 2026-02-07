@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<title>ActivitySchedule</title>
+
+{% block body %}
+    <h1>ActivitySchedule</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ activity_schedule.id }}</td>
+            </tr>
+            <tr>
+                <th>StartAt</th>
+                <td>{{ activity_schedule.startAt ? activity_schedule.startAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EndAt</th>
+                <td>{{ activity_schedule.endAt ? activity_schedule.endAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>AvailableSpots</th>
+                <td>{{ activity_schedule.availableSpots }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_activity_schedule_index') }}">back to list</a>
+
+    <a href="{{ path('app_activity_schedule_edit', {'id': activity_schedule.id}) }}">edit</a>
+
+    {{ include('activity_schedule/_delete_form.html.twig') }}
+{% endblock %}

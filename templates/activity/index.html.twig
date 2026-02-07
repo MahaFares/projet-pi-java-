@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<title>Activity index</title>
+
+{% block body %}
+    <h1>Activity index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>DurationMinutes</th>
+                <th>Location</th>
+                <th>MaxParticipants</th>
+                <th>Image</th>
+                <th>IsActive</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for activity in activities %}
+            <tr>
+                <td>{{ activity.id }}</td>
+                <td>{{ activity.title }}</td>
+                <td>{{ activity.description }}</td>
+                <td>{{ activity.price }}</td>
+                <td>{{ activity.durationMinutes }}</td>
+                <td>{{ activity.location }}</td>
+                <td>{{ activity.maxParticipants }}</td>
+                <td>{{ activity.image }}</td>
+                <td>{{ activity.isActive ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_activity_show', {'id': activity.id}) }}">show</a>
+                    <a href="{{ path('app_activity_edit', {'id': activity.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_activity_new') }}">Create new</a>
+{% endblock %}

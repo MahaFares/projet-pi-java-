@@ -1,0 +1,71 @@
+ <!-- STYLES POUR CHANGER LES BOUTONS EN VERT -->
+        <style>
+            /* STYLE POUR LE LOGO - CONTRÔLE DE LA TAILLE */
+.navbar-brand.logo_h img {
+    max-height: 100px !important;  /* Ajustez cette valeur selon vos besoins */
+    width: auto !important;
+    object-fit: contain;
+}
+            /* Image de fond pour la bannière */
+.banner_area .overlay {
+    background-image: url('{{ asset('images/banner_bg.jpg') }}') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Image de fond pour les facilities */
+.facilities_area .overlay {
+    background-image: url('{{ asset('images/facilites_bg.jpg') }}') !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+            /* Tous les boutons en VERT */
+            .theme_btn,
+            .button_hover,
+            .btn.theme_btn,
+            .book_now_btn,
+            .theme_btn_two {
+                background-color: #2d5016 !important;
+                border-color: #2d5016 !important;
+                color: #fff !important;
+            }
+
+            .theme_btn:hover,
+            .button_hover:hover,
+            .btn.theme_btn:hover,
+            .book_now_btn:hover,
+            .theme_btn_two:hover {
+                background-color: #1e4620 !important;
+                border-color: #1e4620 !important;
+            }
+            
+        </style>
+
+
+<header class="header_area">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                     
+                    <a class="navbar-brand logo_h" href="index.html"><img src={{asset('images/logo.jpg')}} alt="logo"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                       <ul class="nav navbar-nav menu_nav ml-auto">
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_home') }}">Acceuil</a></li> 
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_about') }}">A propos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_hebergement') }}">Hebergemnt</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_activities') }}">Activité</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_transport') }}">Transport</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_boutique') }}">Boutique</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_contact') }}">Se Connecter</a></li>
+                        </ul>
+                    </div> 
+                </nav>
+            </div>
+        </header>
