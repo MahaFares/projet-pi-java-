@@ -65,6 +65,6 @@ class HomeController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function contact(): Response
     {
-        return $this->render('FrontOffice/se_connecter/contact.html.twig');
+        return $this->render('FrontOffice/contact/contact.html.twig');
     }
 }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accomodation | Royal Hotel{% endblock %}
+{% block title %}Transport | Royal Hotel{% endblock %}
 
 {% block body %}
     <!--================Breadcrumb Area =================-->
@@ -8,10 +8,10 @@
         <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
         <div class="container">
             <div class="page-cover text-center">
-                <h2 class="page-cover-tittle">Accomodation</h2>
+                <h2 class="page-cover-tittle">Transport</h2>
                 <ol class="breadcrumb">
                     <li><a href="{{ path('app_home') }}">Home</a></li>
-                    <li class="active">Accomodation</li>
+                    <li class="active">Transport</li>
                 </ol>
             </div>
         </div>
@@ -148,86 +148,18 @@
                 <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
             </div>
             <div class="row accomodation_two">
+                {% for i in 1..8 %}
                 <div class="col-lg-3 col-sm-6">
                     <div class="accomodation_item text-center">
                         <div class="hotel_img">
-                            <img src="{{ asset('images/room1.jpg') }}" alt="">
+                            <img src="{{ asset('images/room' ~ ((i - 1) % 4 + 1) ~ '.jpg') }}" alt="">
                             <a href="#" class="btn theme_btn button_hover">Book Now</a>
                         </div>
-                        <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
+                        <a href="#"><h4 class="sec_h4">Room {{ i }}</h4></a>
                         <h5>$250<small>/night</small></h5>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room2.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room3.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                        <h5>$750<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room4.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room1.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
-                        <h5>$250<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room2.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room3.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                        <h5>$750<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room4.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

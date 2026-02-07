@@ -1,0 +1,24 @@
+<header class="header_area">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand logo_h" href="{{ path('app_home') }}"><img src="{{ asset('images/logo.jpg') }}" alt="Royal Hotel"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                <ul class="nav navbar-nav menu_nav ml-auto">
+                    <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_home' ? 'active' : '' }}" href="{{ path('app_home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_about' ? 'active' : '' }}" href="{{ path('app_about') }}">A propos</a></li>
+                    <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_hebergement' ? 'active' : '' }}" href="{{ path('app_hebergement') }}">Hébergement</a></li>
+                    <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_activites' ? 'active' : '' }}" href="{{ path('app_activites') }}">Activité</a></li>
+                    <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_transport' ? 'active' : '' }}" href="{{ path('app_transport') }}">Transport</a></li>
+                    <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_boutique' ? 'active' : '' }}" href="{{ path('app_boutique') }}">Boutique</a></li>
+                    <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_contact' ? 'active' : '' }}" href="{{ path('app_contact') }}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_sign_in' ? 'active' : '' }}" href="{{ path('app_sign_in') }}">Se connecter</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
