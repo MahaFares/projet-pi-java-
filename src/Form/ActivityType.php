@@ -25,11 +25,16 @@ class ActivityType extends AbstractType
             ->add('isActive')
             ->add('category', EntityType::class, [
                 'class' => ActivityCategory::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
+                'placeholder' => 'Choisir une catégorie',
             ])
             ->add('guide', EntityType::class, [
                 'class' => Guide::class,
-                'choice_label' => 'id',
+                'choice_label' => function (Guide $g) {
+                    return $g->getFirstName() . ' ' . $g->getLastName();
+                },
+                'placeholder' => 'Choisir un guide (optionnel)',
+                'required' => false,
             ])
         ;
     }

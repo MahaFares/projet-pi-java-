@@ -19,7 +19,8 @@ class ActivityScheduleType extends AbstractType
             ->add('availableSpots')
             ->add('activity', EntityType::class, [
                 'class' => Activity::class,
-                'choice_label' => 'id',
+                'choice_label' => 'title',
+                'placeholder' => 'Choisir une activité',
             ])
         ;
     }
