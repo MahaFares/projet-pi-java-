@@ -40,15 +40,18 @@
                                 {{ error.messageKey|trans(error.messageData, 'security') }}
                             </div>
                         {% endif %}
-                        <form action="{{ path('app_sign_in') }}" method="post">
+                        {% if app.user %}
+                            <div class="alert alert-info mb-3">Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a></div>
+                        {% endif %}
+                        <form action="{{ path('app_login') }}" method="post">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <div class="form-group">
-                                <label for="username">Email</label>
-                                <input type="email" class="form-control" id="username" name="_username" value="{{ last_username }}" required autofocus placeholder="votre@email.com">
+                                <label for="inputEmail">Email</label>
+                                <input type="email" class="form-control" id="inputEmail" name="email" value="{{ last_username }}" required autofocus autocomplete="email" placeholder="votre@email.com">
                             </div>
                             <div class="form-group">
-                                <label for="password">Mot de passe</label>
-                                <input type="password" class="form-control" id="password" name="_password" required placeholder="••••••••">
+                                <label for="inputPassword">Mot de passe</label>
+                                <input type="password" class="form-control" id="inputPassword" name="password" required autocomplete="current-password" placeholder="••••••••">
                             </div>
                             <div class="form-group form-check">
                                 <input type="checkbox" class="form-check-input" id="remember_me" name="_remember_me" value="on" checked>
@@ -57,7 +60,7 @@
                             <button type="submit" class="btn theme_btn button_hover btn-block">Se connecter</button>
                         </form>
                         <p class="text-center mt-3 mb-0">
-                            Pas encore de compte ? <a href="{{ path('app_sign_up') }}">S'inscrire</a>
+                            Pas encore de compte ? <a href="{{ path('app_register') }}">S'inscrire</a>
                         </p>
                     </div>
                 </div>
