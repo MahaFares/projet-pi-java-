@@ -58,11 +58,15 @@ class Produit
     {
         $this->commandes = new ArrayCollection();
     }
+public function getId(): ?int
+{
+    return $this->idProduit;
+}
 
-    public function getIdProduit(): ?int
-    {
-        return $this->idProduit;
-    }
+    // public function getIdProduit(): ?int
+    // {
+    //     return $this->idProduit;
+    // }
 
     public function getNom(): ?string
     {

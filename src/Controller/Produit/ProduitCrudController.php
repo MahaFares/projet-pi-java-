@@ -12,7 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/produit')]
+/**
+ * Contrôle de saisie côté serveur :
+ * - Validation des entrées : formulaire (Form Type + contraintes) puis ValidatorInterface->validate($entity).
+ * - Pas de SQL brut : uniquement Repository->find($id) / findBy() (requêtes paramétrées Doctrine).
+ * - ID route : requirements: ['id' => '\d+'] pour n'accepter que des entiers.
+ * - Suppression : méthode POST + vérification du jeton CSRF (isCsrfTokenValid).
+ */
+#[Route('/admin/produit')]
 class ProduitCrudController extends AbstractController
 {
     public function __construct(
@@ -22,12 +29,12 @@ class ProduitCrudController extends AbstractController
     ) {
     }
 
-    #[Route(name: 'app_produit_index', methods: ['GET'])]
+    #[Route('', name: 'app_produit_index', methods: ['GET'])]
     public function index(): Response
     {
         $items = $this->repository->findBy([], ['nom' => 'ASC']);
 
-        return $this->render('ProduitTemplate/produit/index.html.twig', [
+        return $this->render('FrontOffice/boutique/produit/index.html.twig', [
             'produits' => $items,
         ]);
     }
@@ -45,7 +52,7 @@ class ProduitCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('ProduitTemplate/produit/new.html.twig', [
+                return $this->render('FrontOffice/boutique/produit/new.html.twig', [
                     'produit' => $produit,
                     'form' => $form,
                 ]);
@@ -56,7 +63,7 @@ class ProduitCrudController extends AbstractController
             return $this->redirectToRoute('app_produit_index');
         }
 
-        return $this->render('ProduitTemplate/produit/new.html.twig', [
+        return $this->render('FrontOffice/boutique/produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form,
         ]);
@@ -70,7 +77,7 @@ class ProduitCrudController extends AbstractController
             throw $this->createNotFoundException('Produit introuvable.');
         }
 
-        return $this->render('ProduitTemplate/produit/show.html.twig', [
+        return $this->render('FrontOffice/boutique/produit/show.html.twig', [
             'produit' => $produit,
         ]);
     }
@@ -92,7 +99,7 @@ class ProduitCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('ProduitTemplate/produit/edit.html.twig', [
+                return $this->render('FrontOffice/boutique/produit/edit.html.twig', [
                     'produit' => $produit,
                     'form' => $form,
                 ]);
@@ -102,7 +109,7 @@ class ProduitCrudController extends AbstractController
             return $this->redirectToRoute('app_produit_index');
         }
 
-        return $this->render('ProduitTemplate/produit/edit.html.twig', [
+        return $this->render('FrontOffice/boutique/produit/edit.html.twig', [
             'produit' => $produit,
             'form' => $form,
         ]);

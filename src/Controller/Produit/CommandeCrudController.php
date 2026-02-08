@@ -12,7 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/produit/commande')]
+/**
+ * Contrôle de saisie côté serveur :
+ * - Validation des entrées : formulaire (Form Type + contraintes) puis ValidatorInterface->validate($entity).
+ * - Pas de SQL brut : uniquement Repository->find($id) / findBy() (requêtes paramétrées Doctrine).
+ * - ID route : requirements: ['id' => '\d+'] pour n'accepter que des entiers.
+ * - Suppression : méthode POST + vérification du jeton CSRF (isCsrfTokenValid).
+ */
+#[Route('/admin/commande')]
 class CommandeCrudController extends AbstractController
 {
     public function __construct(
@@ -21,12 +28,13 @@ class CommandeCrudController extends AbstractController
         private readonly ValidatorInterface $validator,
     ) {
     }
-    #[Route(name: 'app_commande_index', methods: ['GET'])]
+
+    #[Route('', name: 'app_commande_index', methods: ['GET'])]
     public function index(): Response
     {
         $items = $this->repository->findBy([], ['dateCommande' => 'DESC']);
 
-        return $this->render('ProduitTemplate/commande/index.html.twig', [
+        return $this->render('FrontOffice/produit/commande/index.html.twig', [
             'commandes' => $items,
         ]);
     }
@@ -44,7 +52,7 @@ class CommandeCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('crud/commande/new.html.twig', [
+                return $this->render('FrontOffice/boutique/commande/new.html.twig', [
                     'commande' => $commande,
                     'form' => $form,
                 ]);
@@ -55,7 +63,7 @@ class CommandeCrudController extends AbstractController
             return $this->redirectToRoute('app_commande_index');
         }
 
-        return $this->render('crud/commande/new.html.twig', [
+        return $this->render('FrontOffice/boutique/commande/new.html.twig', [
             'commande' => $commande,
             'form' => $form,
         ]);
@@ -69,7 +77,7 @@ class CommandeCrudController extends AbstractController
             throw $this->createNotFoundException('Commande introuvable.');
         }
 
-        return $this->render('crud/commande/show.html.twig', [
+        return $this->render('FrontOffice/boutique/commande/show.html.twig', [
             'commande' => $commande,
         ]);
     }
@@ -91,7 +99,7 @@ class CommandeCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('crud/commande/edit.html.twig', [
+                return $this->render('FrontOffice/boutique/commande/edit.html.twig', [
                     'commande' => $commande,
                     'form' => $form,
                 ]);
@@ -101,7 +109,7 @@ class CommandeCrudController extends AbstractController
             return $this->redirectToRoute('app_commande_index');
         }
 
-        return $this->render('crud/commande/edit.html.twig', [
+        return $this->render('FrontOffice/boutique/commande/edit.html.twig', [
             'commande' => $commande,
             'form' => $form,
         ]);
