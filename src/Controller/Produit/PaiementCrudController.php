@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Crud;
+namespace App\Controller\Produit;
 
 use App\Entity\Paiement;
 use App\Form\PaiementType;

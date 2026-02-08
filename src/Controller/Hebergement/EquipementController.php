@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Hebergement;
 
 use App\Entity\Equipement;
 use App\Form\EquipementType;

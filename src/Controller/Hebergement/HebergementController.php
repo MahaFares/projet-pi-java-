@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Hebergement;
 
 use App\Entity\Hebergement;
 use App\Form\HebergementType;
@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/hebergement')]
+#[Route('/hebergement')]
 final class HebergementController extends AbstractController
 {
     #[Route(name: 'admin_hebergement_index', methods: ['GET'])]
     public function index(HebergementRepository $hebergementRepository): Response
     {
-        return $this->render('hebergement/index.html.twig', [
+        return $this->render('HebergementTemplate/hebergement/index.html.twig', [
             'hebergements' => $hebergementRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ final class HebergementController extends AbstractController
             return $this->redirectToRoute('admin_hebergement_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('hebergement/new.html.twig', [
+        return $this->render('HebergementTemplate/hebergement/new.html.twig', [
             'hebergement' => $hebergement,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ final class HebergementController extends AbstractController
     #[Route('/{id}', name: 'admin_hebergement_show', methods: ['GET'])]
     public function show(Hebergement $hebergement): Response
     {
-        return $this->render('hebergement/show.html.twig', [
+        return $this->render('HebergementTemplate/hebergement/show.html.twig', [
             'hebergement' => $hebergement,
         ]);
     }
@@ -62,7 +62,7 @@ final class HebergementController extends AbstractController
             return $this->redirectToRoute('admin_hebergement_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('hebergement/edit.html.twig', [
+        return $this->render('HebergementTemplate/hebergement/edit.html.twig', [
             'hebergement' => $hebergement,
             'form' => $form,
         ]);
