@@ -38,8 +38,7 @@ class HomeController extends AbstractController
         ActivityRepository $activityRepository, 
         ActivityCategoryRepository $categoryRepository, 
         ActivityScheduleRepository $scheduleRepository, 
-        GuideRepository $guideRepository
-    ): Response {
+        GuideRepository $guideRepository): Response {
         return $this->render('FrontOffice/activities/blog.html.twig', [
             'activities' => $activityRepository->findAll(),
             'categories' => $categoryRepository->findAll(),

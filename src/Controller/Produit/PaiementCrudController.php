@@ -12,14 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * Contrôle de saisie côté serveur :
- * - Validation des entrées : formulaire (Form Type + contraintes) puis ValidatorInterface->validate($entity).
- * - Pas de SQL brut : uniquement Repository->find($id) / findBy() (requêtes paramétrées Doctrine).
- * - ID route : requirements: ['id' => '\d+'] pour n'accepter que des entiers.
- * - Suppression : méthode POST + vérification du jeton CSRF (isCsrfTokenValid).
- */
-#[Route('/admin/paiement')]
+
+#[Route('/produit/paiement')]
 class PaiementCrudController extends AbstractController
 {
     public function __construct(
@@ -29,12 +23,12 @@ class PaiementCrudController extends AbstractController
     ) {
     }
 
-    #[Route('', name: 'app_paiement_index', methods: ['GET'])]
+    #[Route(name: 'app_paiement_index', methods: ['GET'])]
     public function index(): Response
     {
         $items = $this->repository->findBy([], ['datePaiement' => 'DESC']);
 
-        return $this->render('crud/paiement/index.html.twig', [
+        return $this->render('ProduitTemplate/paiement/index.html.twig', [
             'paiements' => $items,
         ]);
     }
@@ -52,7 +46,7 @@ class PaiementCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('crud/paiement/new.html.twig', [
+                return $this->render('ProduitTemplate/paiement/new.html.twig', [
                     'paiement' => $paiement,
                     'form' => $form,
                 ]);
@@ -63,7 +57,7 @@ class PaiementCrudController extends AbstractController
             return $this->redirectToRoute('app_paiement_index');
         }
 
-        return $this->render('crud/paiement/new.html.twig', [
+        return $this->render('ProduitTemplate/paiement/new.html.twig', [
             'paiement' => $paiement,
             'form' => $form,
         ]);
@@ -77,7 +71,7 @@ class PaiementCrudController extends AbstractController
             throw $this->createNotFoundException('Paiement introuvable.');
         }
 
-        return $this->render('crud/paiement/show.html.twig', [
+        return $this->render('ProduitTemplate/paiement/show.html.twig', [
             'paiement' => $paiement,
         ]);
     }
@@ -99,7 +93,7 @@ class PaiementCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('crud/paiement/edit.html.twig', [
+                return $this->render('ProduitTemplate/paiement/edit.html.twig', [
                     'paiement' => $paiement,
                     'form' => $form,
                 ]);
@@ -109,7 +103,7 @@ class PaiementCrudController extends AbstractController
             return $this->redirectToRoute('app_paiement_index');
         }
 
-        return $this->render('crud/paiement/edit.html.twig', [
+        return $this->render('ProduitTemplate/paiement/edit.html.twig', [
             'paiement' => $paiement,
             'form' => $form,
         ]);

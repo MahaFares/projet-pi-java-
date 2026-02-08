@@ -18,7 +18,7 @@ final class ActivityController extends AbstractController
     #[Route(name: 'app_activity_index', methods: ['GET'])]
     public function index(ActivityRepository $activityRepository): Response
     {
-        return $this->render('activity/index.html.twig', [
+        return $this->render('ActivityTemplate/activity/index.html.twig', [
             'activities' => $activityRepository->findAll(),
         ]);
     }
@@ -37,7 +37,7 @@ final class ActivityController extends AbstractController
             return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('activity/new.html.twig', [
+        return $this->render('ActivityTemplate/activity/new.html.twig', [
             'activity' => $activity,
             'form' => $form,
         ]);
@@ -46,7 +46,7 @@ final class ActivityController extends AbstractController
     #[Route('/{id}', name: 'app_activity_show', methods: ['GET'])]
     public function show(Activity $activity): Response
     {
-        return $this->render('activity/show.html.twig', [
+        return $this->render('ActivityTemplate/activity/show.html.twig', [
             'activity' => $activity,
         ]);
     }
@@ -63,7 +63,7 @@ final class ActivityController extends AbstractController
             return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('activity/edit.html.twig', [
+        return $this->render('ActivityTemplate/activity/edit.html.twig', [
             'activity' => $activity,
             'form' => $form,
         ]);
@@ -80,59 +80,55 @@ final class ActivityController extends AbstractController
         return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    /** Blog listing: all activities (optional price filter). */
-    #[Route('/activities', name: 'activities_blog', methods: ['GET'])]
-    public function activitiesBlog(
-        Request $request,
-        ActivityRepository $activityRepo,
-        ActivityCategoryRepository $categoryRepo
-    ): Response {
-        return $this->renderActivitiesBlog($request, $activityRepo, $categoryRepo, null);
-    }
+    // /** Blog listing: all activities (optional price filter). */
+    // #[Route('/activities', name: 'activities_blog', methods: ['GET'])]
+    // public function activitiesBlog(
+    //     Request $request,
+    //     ActivityRepository $activityRepo,
+    //     ActivityCategoryRepository $categoryRepo
+    // ): Response {
+    //     return $this->renderActivitiesBlog($request, $activityRepo, $categoryRepo, null);
+    // }
 
-    /** Blog listing: activities filtered by category. */
-    #[Route('/activities/category/{categoryId}', name: 'activities_by_category', requirements: ['categoryId' => '\d+'], methods: ['GET'])]
-    public function activitiesByCategory(
-        Request $request,
-        ActivityRepository $activityRepo,
-        ActivityCategoryRepository $categoryRepo,
-        int $categoryId
-    ): Response {
-        return $this->renderActivitiesBlog($request, $activityRepo, $categoryRepo, $categoryId);
-    }
+    // /** Blog listing: activities filtered by category. */
+    // #[Route('/activities/category/{categoryId}', name: 'activities_by_category', requirements: ['categoryId' => '\d+'], methods: ['GET'])]
+    // public function activitiesByCategory(
+    //     Request $request,
+    //     ActivityRepository $activityRepo,
+    //     ActivityCategoryRepository $categoryRepo,
+    //     int $categoryId
+    // ): Response {
+    //     return $this->renderActivitiesBlog($request, $activityRepo, $categoryRepo, $categoryId);
+    // }
 
-    private function renderActivitiesBlog(
-        Request $request,
-        ActivityRepository $activityRepo,
-        ActivityCategoryRepository $categoryRepo,
-        ?int $categoryId
-    ): Response {
-        $sidebarNames = ['Camping', 'Équitation', 'Kayak', 'Randonnée', 'Yoga'];
-        $sidebarCategories = [];
-        foreach ($sidebarNames as $name) {
-            $cat = $categoryRepo->findOneBy(['name' => $name]);
-            if ($cat !== null) {
-                $sidebarCategories[] = $cat;
-            }
-        }
+    // private function renderActivitiesBlog(
+    //     Request $request,
+    //     ActivityRepository $activityRepo,
+    //     ActivityCategoryRepository $categoryRepo,
+    //     ?int $categoryId
+    // ): Response {
+    //     $sidebarNames = ['Camping', 'Équitation', 'Kayak', 'Randonnée', 'Yoga'];
+    //     $sidebarCategories = [];
+    //     foreach ($sidebarNames as $name) {
+    //         $cat = $categoryRepo->findOneBy(['name' => $name]);
+    //         if ($cat !== null) {
+    //             $sidebarCategories[] = $cat;
+    //         }
+    //     }
 
-        $minPrice = $request->query->get('minPrice') !== null && $request->query->get('minPrice') !== ''
-            ? (float) $request->query->get('minPrice') : null;
-        $maxPrice = $request->query->get('maxPrice') !== null && $request->query->get('maxPrice') !== ''
-            ? (float) $request->query->get('maxPrice') : null;
+    //     $minPrice = $request->query->get('minPrice') !== null && $request->query->get('minPrice') !== ''
+    //         ? (float) $request->query->get('minPrice') : null;
+    //     $maxPrice = $request->query->get('maxPrice') !== null && $request->query->get('maxPrice') !== ''
+    //         ? (float) $request->query->get('maxPrice') : null;
 
-        $activities = $activityRepo->findAllForBlog($categoryId, $minPrice, $maxPrice);
+    //     $activities = $activityRepo->findAllForBlog($categoryId, $minPrice, $maxPrice);
 
-        return $this->render('FrontOffice/activities/blog.html.twig', [
-            'activities' => $activities,
-            'sidebarCategories' => $sidebarCategories,
-            'selectedCategory' => $categoryId,
-            'filterMinPrice' => $minPrice,
-            'filterMaxPrice' => $maxPrice,
-        ]);
-    }
-
-
-
-
+    //     return $this->render('FrontOffice/activities/blog.html.twig', [
+    //         'activities' => $activities,
+    //         'sidebarCategories' => $sidebarCategories,
+    //         'selectedCategory' => $categoryId,
+    //         'filterMinPrice' => $minPrice,
+    //         'filterMaxPrice' => $maxPrice,
+    //     ]);
+    // }
 }

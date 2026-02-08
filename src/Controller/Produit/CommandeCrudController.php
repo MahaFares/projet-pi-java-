@@ -12,14 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * Contrôle de saisie côté serveur :
- * - Validation des entrées : formulaire (Form Type + contraintes) puis ValidatorInterface->validate($entity).
- * - Pas de SQL brut : uniquement Repository->find($id) / findBy() (requêtes paramétrées Doctrine).
- * - ID route : requirements: ['id' => '\d+'] pour n'accepter que des entiers.
- * - Suppression : méthode POST + vérification du jeton CSRF (isCsrfTokenValid).
- */
-#[Route('/admin/commande')]
+#[Route('/produit/commande')]
 class CommandeCrudController extends AbstractController
 {
     public function __construct(
@@ -28,13 +21,12 @@ class CommandeCrudController extends AbstractController
         private readonly ValidatorInterface $validator,
     ) {
     }
-
-    #[Route('', name: 'app_commande_index', methods: ['GET'])]
+    #[Route(name: 'app_commande_index', methods: ['GET'])]
     public function index(): Response
     {
         $items = $this->repository->findBy([], ['dateCommande' => 'DESC']);
 
-        return $this->render('crud/commande/index.html.twig', [
+        return $this->render('ProduitTemplate/commande/index.html.twig', [
             'commandes' => $items,
         ]);
     }

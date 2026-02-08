@@ -17,7 +17,7 @@ final class ChambreController extends AbstractController
     #[Route(name: 'app_chambre_index', methods: ['GET'])]
     public function index(ChambreRepository $chambreRepository): Response
     {
-        return $this->render('chambre/index.html.twig', [
+        return $this->render('HebergementTemplate/chambre/index.html.twig', [
             'chambres' => $chambreRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ final class ChambreController extends AbstractController
             return $this->redirectToRoute('app_chambre_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('chambre/new.html.twig', [
+        return $this->render('HebergementTemplate/chambre/new.html.twig', [
             'chambre' => $chambre,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ final class ChambreController extends AbstractController
     #[Route('/{id}', name: 'app_chambre_show', methods: ['GET'])]
     public function show(Chambre $chambre): Response
     {
-        return $this->render('chambre/show.html.twig', [
+        return $this->render('HebergementTemplate/chambre/show.html.twig', [
             'chambre' => $chambre,
         ]);
     }
@@ -62,7 +62,7 @@ final class ChambreController extends AbstractController
             return $this->redirectToRoute('app_chambre_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('chambre/edit.html.twig', [
+        return $this->render('HebergementTemplate/chambre/edit.html.twig', [
             'chambre' => $chambre,
             'form' => $form,
         ]);

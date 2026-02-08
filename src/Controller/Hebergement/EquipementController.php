@@ -17,7 +17,7 @@ final class EquipementController extends AbstractController
     #[Route(name: 'app_equipement_index', methods: ['GET'])]
     public function index(EquipementRepository $equipementRepository): Response
     {
-        return $this->render('equipement/index.html.twig', [
+        return $this->render('HebergementTemplate/equipement/index.html.twig', [
             'equipements' => $equipementRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ final class EquipementController extends AbstractController
             return $this->redirectToRoute('app_equipement_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('equipement/new.html.twig', [
+        return $this->render('HebergementTemplate/equipement/new.html.twig', [
             'equipement' => $equipement,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ final class EquipementController extends AbstractController
     #[Route('/{id}', name: 'app_equipement_show', methods: ['GET'])]
     public function show(Equipement $equipement): Response
     {
-        return $this->render('equipement/show.html.twig', [
+        return $this->render('HebergementTemplate/equipement/show.html.twig', [
             'equipement' => $equipement,
         ]);
     }
@@ -62,7 +62,7 @@ final class EquipementController extends AbstractController
             return $this->redirectToRoute('app_equipement_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('equipement/edit.html.twig', [
+        return $this->render('HebergementTemplate/equipement/edit.html.twig', [
             'equipement' => $equipement,
             'form' => $form,
         ]);

@@ -17,7 +17,7 @@ final class GuideController extends AbstractController
     #[Route(name: 'app_guide_index', methods: ['GET'])]
     public function index(GuideRepository $guideRepository): Response
     {
-        return $this->render('guide/index.html.twig', [
+        return $this->render('ActivityTemplate/guide/index.html.twig', [
             'guides' => $guideRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ final class GuideController extends AbstractController
             return $this->redirectToRoute('app_guide_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('guide/new.html.twig', [
+        return $this->render('ActivityTemplate/guide/new.html.twig', [
             'guide' => $guide,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ final class GuideController extends AbstractController
     #[Route('/{id}', name: 'app_guide_show', methods: ['GET'])]
     public function show(Guide $guide): Response
     {
-        return $this->render('guide/show.html.twig', [
+        return $this->render('ActivityTemplate/guide/show.html.twig', [
             'guide' => $guide,
         ]);
     }
@@ -62,7 +62,7 @@ final class GuideController extends AbstractController
             return $this->redirectToRoute('app_guide_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('guide/edit.html.twig', [
+        return $this->render('ActivityTemplate/guide/edit.html.twig', [
             'guide' => $guide,
             'form' => $form,
         ]);

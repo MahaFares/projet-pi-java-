@@ -17,7 +17,7 @@ final class ActivityCategoryController extends AbstractController
     #[Route(name: 'app_activity_category_index', methods: ['GET'])]
     public function index(ActivityCategoryRepository $activityCategoryRepository): Response
     {
-        return $this->render('activity_category/index.html.twig', [
+        return $this->render('ActivityTemplate/activity_category/index.html.twig', [
             'activity_categories' => $activityCategoryRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ final class ActivityCategoryController extends AbstractController
             return $this->redirectToRoute('app_activity_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('activity_category/new.html.twig', [
+        return $this->render('ActivityTemplate/activity_category/new.html.twig', [
             'activity_category' => $activityCategory,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ final class ActivityCategoryController extends AbstractController
     #[Route('/{id}', name: 'app_activity_category_show', methods: ['GET'])]
     public function show(ActivityCategory $activityCategory): Response
     {
-        return $this->render('activity_category/show.html.twig', [
+        return $this->render('ActivityTemplate/activity_category/show.html.twig', [
             'activity_category' => $activityCategory,
         ]);
     }
@@ -62,7 +62,7 @@ final class ActivityCategoryController extends AbstractController
             return $this->redirectToRoute('app_activity_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('activity_category/edit.html.twig', [
+        return $this->render('ActivityTemplate/activity_category/edit.html.twig', [
             'activity_category' => $activityCategory,
             'form' => $form,
         ]);

@@ -17,7 +17,7 @@ final class ActivityScheduleController extends AbstractController
     #[Route(name: 'app_activity_schedule_index', methods: ['GET'])]
     public function index(ActivityScheduleRepository $activityScheduleRepository): Response
     {
-        return $this->render('activity_schedule/index.html.twig', [
+        return $this->render('ActivityTemplate/activity_schedule/index.html.twig', [
             'activity_schedules' => $activityScheduleRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ final class ActivityScheduleController extends AbstractController
             return $this->redirectToRoute('app_activity_schedule_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('activity_schedule/new.html.twig', [
+        return $this->render('ActivityTemplate/activity_schedule/new.html.twig', [
             'activity_schedule' => $activitySchedule,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ final class ActivityScheduleController extends AbstractController
     #[Route('/{id}', name: 'app_activity_schedule_show', methods: ['GET'])]
     public function show(ActivitySchedule $activitySchedule): Response
     {
-        return $this->render('activity_schedule/show.html.twig', [
+        return $this->render('ActivityTemplate/activity_schedule/show.html.twig', [
             'activity_schedule' => $activitySchedule,
         ]);
     }
@@ -62,7 +62,7 @@ final class ActivityScheduleController extends AbstractController
             return $this->redirectToRoute('app_activity_schedule_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('activity_schedule/edit.html.twig', [
+        return $this->render('ActivityTemplate/activity_schedule/edit.html.twig', [
             'activity_schedule' => $activitySchedule,
             'form' => $form,
         ]);
