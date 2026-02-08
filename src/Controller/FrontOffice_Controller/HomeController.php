@@ -15,14 +15,13 @@ use App\Repository\GuideRepository;
 
 class HomeController extends AbstractController
 {
-    #[Route(path: '/', name: 'app_home')]
-    
+    #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-        return $this->render(view: 'FrontOffice/home/index.html.twig');
+        return $this->render('FrontOffice/home/index.html.twig');
     }
 
-    #[Route('/about', name: 'app_about')]
+    #[Route('/a-propos', name: 'app_about')]
     public function about(): Response
     {
         return $this->render('FrontOffice/about_us/about.html.twig');
@@ -60,6 +59,12 @@ class HomeController extends AbstractController
     public function boutique(): Response
     {
         return $this->render('FrontOffice/boutique/boutique.html.twig');
+    }
+
+    #[Route('/se-connecter', name: 'app_login')]
+    public function login(): Response
+    {
+        return $this->render('FrontOffice/se_connecter/login.html.twig');
     }
 
     #[Route('/contact', name: 'app_contact')]
