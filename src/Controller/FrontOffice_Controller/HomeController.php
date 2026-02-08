@@ -8,14 +8,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route(path: '/', name: 'app_home')]
-    
+    #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-        return $this->render(view: 'FrontOffice/home/index.html.twig');
+        return $this->render('FrontOffice/home/index.html.twig');
     }
 
-    #[Route('/about', name: 'app_about')]
+    #[Route('/a-propos', name: 'app_about')]
     public function about(): Response
     {
         return $this->render('FrontOffice/about_us/about.html.twig');
@@ -24,7 +23,8 @@ class HomeController extends AbstractController
     #[Route('/hebergement', name: 'app_hebergement')]
     public function hebergement(): Response
     {
-        return $this->render('FrontOffice/transport/accomodation.html.twig');
+        // ⚠️ CORRECTION : c'était 'transport/accomodation' au lieu de 'hebrgement/accomodation'
+        return $this->render('FrontOffice/hebrgement/accomodation.html.twig');
     }
 
     #[Route('/activites', name: 'app_activites')]
@@ -36,13 +36,20 @@ class HomeController extends AbstractController
     #[Route('/transport', name: 'app_transport')]
     public function transport(): Response
     {
-        return $this->render('FrontOffice/transport/accomodation.html.twig');
+        // ⚠️ CORRECTION : transport devrait pointer vers transport.html.twig pas accomodation
+        return $this->render('FrontOffice/transport/transport.html.twig');
     }
 
     #[Route('/boutique', name: 'app_boutique')]
     public function boutique(): Response
     {
         return $this->render('FrontOffice/boutique/blog.html.twig');
+    }
+
+    #[Route('/se-connecter', name: 'app_login')]
+    public function login(): Response
+    {
+        return $this->render('FrontOffice/se_connecter/login.html.twig');
     }
 
     #[Route('/contact', name: 'app_contact')]
