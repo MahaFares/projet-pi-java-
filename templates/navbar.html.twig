@@ -16,7 +16,12 @@
                     <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_transport' ? 'active' : '' }}" href="{{ path('app_transport') }}">Transport</a></li>
                     <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_boutique' ? 'active' : '' }}" href="{{ path('app_boutique') }}">Boutique</a></li>
                     <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_contact' ? 'active' : '' }}" href="{{ path('app_contact') }}">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_login' ? 'active' : '' }}" href="{{ path('app_login') }}">Se connecter</a></li>
+                    {% if app.user %}
+                        <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_my_account' ? 'active' : '' }}" href="{{ path('app_my_account') }}">Mon compte</a></li>
+                        <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_logout' ? 'active' : '' }}" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link {{ (active_route|default('')) == 'app_login' ? 'active' : '' }}" href="{{ path('app_login') }}">Se connecter/S'inscrire</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
