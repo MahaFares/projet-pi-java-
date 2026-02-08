@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Edit Guide</title>
+{% block title %}Modifier le guide - Admin{% endblock %}
 
 {% block body %}
-    <h1>Edit Guide</h1>
-
-    {{ include('guide/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_guide_index') }}">back to list</a>
-
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
+    <h1>Modifier le guide</h1>
+    {{ include('guide/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    <a href="{{ path('app_guide_index') }}" class="btn btn-secondary mt-2">Retour à la liste</a>
     {{ include('guide/_delete_form.html.twig') }}
+</div>
 {% endblock %}

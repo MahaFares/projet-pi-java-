@@ -31,13 +31,31 @@ class ActivityRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Activity
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * Find activities (optionally by category and price range) with schedules and guide loaded.
+     *
+     * @return Activity[]
+     */
+    public function findAllForBlog(?int $categoryId = null, ?float $minPrice = null, ?float $maxPrice = null): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.category', 'c')
+            ->leftJoin('a.schedules', 's')
+            ->leftJoin('a.guide', 'g')
+            ->addSelect('c', 's', 'g')
+            ->orderBy('a.title', 'ASC');
+
+        if ($categoryId !== null) {
+            $qb->andWhere('c.id = :categoryId')
+               ->setParameter('categoryId', $categoryId);
+        }
+        if ($minPrice !== null) {
+            $qb->andWhere('a.price >= :minPrice')->setParameter('minPrice', $minPrice);
+        }
+        if ($maxPrice !== null) {
+            $qb->andWhere('a.price <= :maxPrice')->setParameter('maxPrice', $maxPrice);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

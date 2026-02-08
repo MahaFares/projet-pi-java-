@@ -1,22 +1,23 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Guide index</title>
+{% block title %}Guides - Admin{% endblock %}
 
 {% block body %}
-    <h1>Guide index</h1>
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
 
-    <table class="table">
+    <h1>Guides</h1>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>FirstName</th>
-                <th>LastName</th>
+                <th>Prénom</th>
+                <th>Nom</th>
                 <th>Email</th>
-                <th>Phone</th>
-                <th>Bio</th>
-                <th>Rating</th>
-                <th>Photo</th>
-                <th>actions</th>
+                <th>Téléphone</th>
+                <th>Note</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,21 +28,20 @@
                 <td>{{ guide.lastName }}</td>
                 <td>{{ guide.email }}</td>
                 <td>{{ guide.phone }}</td>
-                <td>{{ guide.bio }}</td>
-                <td>{{ guide.rating }}</td>
-                <td>{{ guide.photo }}</td>
+                <td>{{ guide.rating|default('–') }}</td>
                 <td>
-                    <a href="{{ path('app_guide_show', {'id': guide.id}) }}">show</a>
-                    <a href="{{ path('app_guide_edit', {'id': guide.id}) }}">edit</a>
+                    <a href="{{ path('app_guide_show', {'id': guide.id}) }}">Voir</a>
+                    <a href="{{ path('app_guide_edit', {'id': guide.id}) }}" class="ms-2">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="7" class="text-muted">Aucun guide. Créez-en pour les associer aux activités.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_guide_new') }}">Create new</a>
+    <a href="{{ path('app_guide_new') }}" class="btn btn-success">Créer un guide</a>
+</div>
 {% endblock %}

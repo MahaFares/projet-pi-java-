@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Activity;
 use App\Form\ActivityType;
 use App\Repository\ActivityRepository;
+use App\Repository\ActivityCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,6 +79,60 @@ final class ActivityController extends AbstractController
 
         return $this->redirectToRoute('app_activity_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /** Blog listing: all activities (optional price filter). */
+    #[Route('/activities', name: 'activities_blog', methods: ['GET'])]
+    public function activitiesBlog(
+        Request $request,
+        ActivityRepository $activityRepo,
+        ActivityCategoryRepository $categoryRepo
+    ): Response {
+        return $this->renderActivitiesBlog($request, $activityRepo, $categoryRepo, null);
+    }
+
+    /** Blog listing: activities filtered by category. */
+    #[Route('/activities/category/{categoryId}', name: 'activities_by_category', requirements: ['categoryId' => '\d+'], methods: ['GET'])]
+    public function activitiesByCategory(
+        Request $request,
+        ActivityRepository $activityRepo,
+        ActivityCategoryRepository $categoryRepo,
+        int $categoryId
+    ): Response {
+        return $this->renderActivitiesBlog($request, $activityRepo, $categoryRepo, $categoryId);
+    }
+
+    private function renderActivitiesBlog(
+        Request $request,
+        ActivityRepository $activityRepo,
+        ActivityCategoryRepository $categoryRepo,
+        ?int $categoryId
+    ): Response {
+        $sidebarNames = ['Camping', 'Équitation', 'Kayak', 'Randonnée', 'Yoga'];
+        $sidebarCategories = [];
+        foreach ($sidebarNames as $name) {
+            $cat = $categoryRepo->findOneBy(['name' => $name]);
+            if ($cat !== null) {
+                $sidebarCategories[] = $cat;
+            }
+        }
+
+        $minPrice = $request->query->get('minPrice') !== null && $request->query->get('minPrice') !== ''
+            ? (float) $request->query->get('minPrice') : null;
+        $maxPrice = $request->query->get('maxPrice') !== null && $request->query->get('maxPrice') !== ''
+            ? (float) $request->query->get('maxPrice') : null;
+
+        $activities = $activityRepo->findAllForBlog($categoryId, $minPrice, $maxPrice);
+
+        return $this->render('FrontOffice/activities/blog.html.twig', [
+            'activities' => $activities,
+            'sidebarCategories' => $sidebarCategories,
+            'selectedCategory' => $categoryId,
+            'filterMinPrice' => $minPrice,
+            'filterMaxPrice' => $maxPrice,
+        ]);
+    }
+
+
 
 
 }

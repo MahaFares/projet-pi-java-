@@ -1,34 +1,21 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>ActivityCategory</title>
+{% block title %}{{ activity_category.name }} - Admin{% endblock %}
 
 {% block body %}
-    <h1>ActivityCategory</h1>
-
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
+    <h1>{{ activity_category.name }}</h1>
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ activity_category.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ activity_category.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ activity_category.description }}</td>
-            </tr>
-            <tr>
-                <th>Icon</th>
-                <td>{{ activity_category.icon }}</td>
-            </tr>
+            <tr><th>Id</th><td>{{ activity_category.id }}</td></tr>
+            <tr><th>Nom</th><td>{{ activity_category.name }}</td></tr>
+            <tr><th>Description</th><td>{{ activity_category.description|default('–') }}</td></tr>
+            <tr><th>Icône</th><td>{{ activity_category.icon|default('–') }}</td></tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_activity_category_index') }}">back to list</a>
-
-    <a href="{{ path('app_activity_category_edit', {'id': activity_category.id}) }}">edit</a>
-
+    <a href="{{ path('app_activity_category_edit', {'id': activity_category.id}) }}" class="btn btn-primary">Modifier</a>
+    <a href="{{ path('app_activity_category_index') }}" class="btn btn-secondary">Retour à la liste</a>
     {{ include('activity_category/_delete_form.html.twig') }}
+</div>
 {% endblock %}

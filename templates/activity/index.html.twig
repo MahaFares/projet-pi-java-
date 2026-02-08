@@ -1,23 +1,23 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Activity index</title>
+{% block title %}Activités - Admin{% endblock %}
 
 {% block body %}
-    <h1>Activity index</h1>
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
 
-    <table class="table">
+    <h1>Activités</h1>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>DurationMinutes</th>
-                <th>Location</th>
-                <th>MaxParticipants</th>
-                <th>Image</th>
-                <th>IsActive</th>
-                <th>actions</th>
+                <th>Titre</th>
+                <th>Prix</th>
+                <th>Durée</th>
+                <th>Lieu</th>
+                <th>Catégorie</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,25 +25,23 @@
             <tr>
                 <td>{{ activity.id }}</td>
                 <td>{{ activity.title }}</td>
-                <td>{{ activity.description }}</td>
-                <td>{{ activity.price }}</td>
-                <td>{{ activity.durationMinutes }}</td>
+                <td>{{ activity.price }} €</td>
+                <td>{{ activity.durationMinutes }} min</td>
                 <td>{{ activity.location }}</td>
-                <td>{{ activity.maxParticipants }}</td>
-                <td>{{ activity.image }}</td>
-                <td>{{ activity.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ activity.category ? activity.category.name : '–' }}</td>
                 <td>
-                    <a href="{{ path('app_activity_show', {'id': activity.id}) }}">show</a>
-                    <a href="{{ path('app_activity_edit', {'id': activity.id}) }}">edit</a>
+                    <a href="{{ path('app_activity_show', {'id': activity.id}) }}">Voir</a>
+                    <a href="{{ path('app_activity_edit', {'id': activity.id}) }}" class="ms-2">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="7" class="text-muted">Aucune activité. Créez d'abord des catégories, puis des activités.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_activity_new') }}">Create new</a>
+    <a href="{{ path('app_activity_new') }}" class="btn btn-success">Créer une activité</a>
+</div>
 {% endblock %}
