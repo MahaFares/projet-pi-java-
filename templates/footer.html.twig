@@ -24,7 +24,12 @@
                                 <li><a href="{{ path('app_about') }}">A propos</a></li>
                                 <li><a href="{{ path('app_transport') }}">Transport</a></li>
                                 <li><a href="{{ path('app_boutique') }}">Boutique</a></li>
-                                <li><a href="{{ path('app_sign_in') }}">Se connecter</a></li>
+                                {% if app.user %}
+                                    <li><a href="{{ path('app_my_account') }}">Mon compte</a></li>
+                                    <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                                {% else %}
+                                    <li><a href="{{ path('app_login') }}">Se connecter/S'inscrire</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>

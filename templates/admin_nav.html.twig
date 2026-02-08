@@ -1,0 +1,13 @@
+{# Admin CRUD navigation – include in activity, activity_category, activity_schedule, guide index/edit/new pages #}
+<nav class="mb-4 p-3 bg-light rounded">
+    <span class="fw-bold me-3">Admin :</span>
+    <a href="{{ path('app_activity_category_index') }}">Catégories</a>
+    <span class="mx-2">|</span>
+    <a href="{{ path('app_guide_index') }}">Guides</a>
+    <span class="mx-2">|</span>
+    <a href="{{ path('app_activity_index') }}">Activités</a>
+    <span class="mx-2">|</span>
+    <a href="{{ path('app_activity_schedule_index') }}">Horaires</a>
+    <span class="mx-2">|</span>
+    <a href="{{ path('activities_blog') }}">Voir le blog (front)</a>
+</nav>
