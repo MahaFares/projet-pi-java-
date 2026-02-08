@@ -5,6 +5,13 @@ namespace App\Controller\FrontOffice_Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ActivityRepository;
+use App\Repository\ActivityCategoryRepository;
+use App\Repository\ActivityScheduleRepository;
+use App\Repository\GuideRepository;
+
+
+
 
 class HomeController extends AbstractController
 {
@@ -23,27 +30,35 @@ class HomeController extends AbstractController
     #[Route('/hebergement', name: 'app_hebergement')]
     public function hebergement(): Response
     {
-        // ⚠️ CORRECTION : c'était 'transport/accomodation' au lieu de 'hebrgement/accomodation'
-        return $this->render('FrontOffice/hebrgement/accomodation.html.twig');
+        return $this->render('FrontOffice/hebergement/accomodation.html.twig');
     }
 
-    #[Route('/activites', name: 'app_activites')]
-    public function activites(): Response
-    {
-        return $this->render('FrontOffice/activities/blog.html.twig');
+    #[Route('/activities', name: 'app_activites')]
+    public function activites(
+        ActivityRepository $activityRepository, 
+        ActivityCategoryRepository $categoryRepository, 
+        ActivityScheduleRepository $scheduleRepository, 
+        GuideRepository $guideRepository
+    ): Response {
+        return $this->render('FrontOffice/activities/blog.html.twig', [
+            'activities' => $activityRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'schedules'  => $scheduleRepository->findAll(), 
+            'guides'     => $guideRepository->findAll(),
+        ]);
     }
+
 
     #[Route('/transport', name: 'app_transport')]
     public function transport(): Response
     {
-        // ⚠️ CORRECTION : transport devrait pointer vers transport.html.twig pas accomodation
         return $this->render('FrontOffice/transport/transport.html.twig');
     }
 
     #[Route('/boutique', name: 'app_boutique')]
     public function boutique(): Response
     {
-        return $this->render('FrontOffice/boutique/blog.html.twig');
+        return $this->render('FrontOffice/boutique/boutique.html.twig');
     }
 
     #[Route('/se-connecter', name: 'app_login')]
@@ -55,6 +70,6 @@ class HomeController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function contact(): Response
     {
-        return $this->render('FrontOffice/se_connecter/contact.html.twig');
+        return $this->render('FrontOffice/contact/contact.html.twig');
     }
 }
