@@ -34,14 +34,14 @@ class HomeController extends AbstractController
         return $this->render('FrontOffice/hebergement/accomodation.html.twig');
     }
 
-    #[Route('/activities', name: 'app_activities')]
+    #[Route('/activities', name: 'app_activites')]
     public function activites(
         ActivityRepository $activityRepository, 
         ActivityCategoryRepository $categoryRepository, 
         ActivityScheduleRepository $scheduleRepository, 
         GuideRepository $guideRepository
     ): Response {
-        return $this->render('FrontOffice/activities/activities.html.twig', [
+        return $this->render('FrontOffice/activities/blog.html.twig', [
             'activities' => $activityRepository->findAll(),
             'categories' => $categoryRepository->findAll(),
             'schedules'  => $scheduleRepository->findAll(), 
