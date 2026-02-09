@@ -6,6 +6,7 @@ use App\Repository\ActivityCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ActivityCategoryRepository::class)]
 class ActivityCategory
@@ -16,12 +17,17 @@ class ActivityCategory
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le nom de la catégorie est requis')]
+    #[Assert\Length(min: 3, max: 100, minMessage: 'Le nom doit contenir au moins 3 caractères', maxMessage: 'Le nom ne peut pas dépasser 100 caractères')]
+    #[Assert\Unique]
     private ?string $name = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\Length(max: 1000, maxMessage: 'La description ne peut pas dépasser 1000 caractères')]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Length(max: 50, maxMessage: 'L\'icone ne peut pas dépasser 50 caractères')]
     private ?string $icon = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Activity::class)]

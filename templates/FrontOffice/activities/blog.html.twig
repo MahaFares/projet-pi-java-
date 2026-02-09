@@ -148,8 +148,13 @@
                 <div class="panel-body">
                     {# Prix #}
                     <div class="filter-section">
+<<<<<<< Updated upstream
                         <div class="filter-label">Filtrer par prix (€)</div>
                         <form method="get" action="{{ path(selectedCategory ? 'activities_by_category' : 'app_activites', selectedCategory ? { categoryId: selectedCategory } : {}) }}">
+=======
+                        <div class="filter-label">Filtrer par prix (DT)</div>
+                        <form method="get" action="{{ path(selectedCategory ? 'activities_by_category' : 'activities_blog', selectedCategory ? { categoryId: selectedCategory } : {}) }}">
+>>>>>>> Stashed changes
                             <div class="price-inputs">
                                 <input type="number" name="minPrice" class="form-control form-control-sm" placeholder="Min" step="0.01" min="0" value="{{ filterMinPrice is not null ? filterMinPrice : '' }}">
                                 <input type="number" name="maxPrice" class="form-control form-control-sm" placeholder="Max" step="0.01" min="0" value="{{ filterMaxPrice is not null ? filterMaxPrice : '' }}">
@@ -160,7 +165,7 @@
 
                     {# Type de l'événement #}
                     <div class="filter-section">
-                        <div class="filter-label">Type de l'événement</div>
+                        <div class="filter-label">Type de l'activité</div>
                         <ul class="category-list">
                             <li>
                                 <a href="{{ path('app_activites') }}{{ filterMinPrice is not null or filterMaxPrice is not null ? '?minPrice=' ~ (filterMinPrice ?? '') ~ '&maxPrice=' ~ (filterMaxPrice ?? '') : '' }}"
@@ -192,7 +197,7 @@
 
         {# ========== RIGHT: RÉSULTATS + CARTES ========== #}
         <div class="col-lg-9">
-            <p class="results-count mb-4">{{ activities|length }} Événement(s) trouvé(s)</p>
+            <p class="results-count mb-4">{{ activities|length }} Activité(s) trouvé(s)</p>
 
             <div class="row">
                 {% for activity in activities %}
@@ -233,7 +238,7 @@
                                             <span title="Durée">🕐 {{ activity.durationMinutes >= 60 ? (activity.durationMinutes / 60)|round(1, 'floor') ~ ' h' : activity.durationMinutes ~ ' min' }}</span>
                                         {% endif %}
                                         {% if activity.price is defined and activity.price is not null %}
-                                            <span title="Prix">⚡ {{ activity.price|number_format(2, ',', ' ') }} € /personne</span>
+                                            <span title="Prix">⚡ {{ activity.price|number_format(2, ',', ' ') }} DT /personne</span>
                                         {% endif %}
                                     </div>
 
@@ -252,7 +257,7 @@
                 {% else %}
                     <div class="col-12">
                         <div class="alert alert-light border text-center py-4">
-                            Aucun événement trouvé. Essayez d'ajuster les filtres.
+                            Aucune Activité trouvé. Essayez d'ajuster les filtres.
                         </div>
                     </div>
                 {% endfor %}
