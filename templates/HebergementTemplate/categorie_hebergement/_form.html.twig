@@ -26,7 +26,7 @@
 
         <div class="mb-3">
             {{ form_label(form.description) }}
-            {{ form_widget(form.description, {'attr': {'class': 'form-control' ~ (form.description.vars.errors|length > 0 ? ' is-invalid' : ''), 'rows': '4'}}) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
             {% if form.description.vars.errors %}
                 <div class="invalid-feedback d-block">
                     {% for error in form.description.vars.errors %}
