@@ -12,13 +12,15 @@ class BoutiqueController extends AbstractController
     #[Route('/boutique', name: 'front_boutique')]
     public function index(ProduitRepository $repo): Response
     {
-        $produits = $repo->findAll();
+        try {
+            $produits = $repo->findAll();
+        } catch (\Exception $e) {
+            $produits = [];
+        }
 
-return $this->render('FrontOffice/boutique/categorie/index.html.twig', [
-    'categories' => $produits
-]);
-
-
+        return $this->render('FrontOffice/boutique/categorie/index.html.twig', [
+            'categories' => $produits
+        ]);
     }
 }
 

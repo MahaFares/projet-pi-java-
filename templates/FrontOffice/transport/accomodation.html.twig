@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Transport | Royal Hotel{% endblock %}
+{% block title %}Transport | EcoTrip{% endblock %}
 
 {% block body %}
     <!--================Breadcrumb Area =================-->
@@ -18,150 +18,73 @@
     </section>
     <!--================Breadcrumb Area =================-->
 
-    <!--================ Accomodation Area  =================-->
+    <!--================ Transport Area  =================-->
     <section class="accomodation_area section_gap">
         <div class="container">
+            {% set filters = filters|default({}) %}
             <div class="section_title text-center">
-                <h2 class="title_color">Special Accomodation</h2>
-                <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
+                <h2 class="title_color">Available Transports</h2>
+                <p>Choose your eco-friendly transport option for your journey</p>
+            </div>
+            <div class="row mb-4">
+                <form method="get" class="row g-2 w-100">
+                    <div class="col-md-3">
+                        <input type="text" name="type" value="{{ filters.type|default('') }}" class="form-control" placeholder="Type (Ex: minivan)">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" step="0.01" name="minPrice" value="{{ filters.minPrice is not null ? filters.minPrice : '' }}" class="form-control" placeholder="Prix min (DT)">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" step="0.01" name="maxPrice" value="{{ filters.maxPrice is not null ? filters.maxPrice : '' }}" class="form-control" placeholder="Prix max (DT)">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" name="minCapacity" value="{{ filters.minCapacity is not null ? filters.minCapacity : '' }}" class="form-control" placeholder="Capacité min">
+                    </div>
+                    <div class="col-md-2">
+                        <select name="available" class="form-select">
+                            <option value="">Tous</option>
+                            <option value="1" {% if filters.available is same as(true) %}selected{% endif %}>Disponible</option>
+                            <option value="0" {% if filters.available is same as(false) %}selected{% endif %}>Indisponible</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 d-grid">
+                        <button type="submit" class="btn btn-primary">Filtrer</button>
+                    </div>
+                </form>
             </div>
             <div class="row mb_30">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room1.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
-                        <h5>$250<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room2.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room3.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                        <h5>$750<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room4.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--================ Accomodation Area  =================-->
-    <!--================Booking Tabel Area =================-->
-    <section class="hotel_booking_area">
-        <div class="container">
-            <div class="row hotel_booking_table">
-                <div class="col-md-3">
-                    <h2>Book<br> Your Room</h2>
-                </div>
-                <div class="col-md-9">
-                    <div class="boking_table">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="book_tabel_item">
-                                    <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker11'>
-                                            <input type='text' class="form-control" placeholder="Arrival Date"/>
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker1'>
-                                            <input type='text' class="form-control" placeholder="Departure Date"/>
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                {% if transports is defined and transports|length > 0 %}
+                    {% for transport in transports %}
+                    <div class="col-lg-3 col-sm-6 mb-4">
+                        <div class="accomodation_item text-center">
+                            <div class="hotel_img" style="position: relative; overflow: hidden; border-radius: 8px;">
+                                {% if transport.image %}
+                                    <img src="{{ asset('uploads/transports/' ~ transport.image) }}" alt="{{ transport.type }}" style="height: 250px; object-fit: cover; width: 100%; display: block;">
+                                {% else %}
+                                    <img src="{{ asset('images/transport.jpg') }}" alt="{{ transport.type }}" style="height: 250px; object-fit: cover; width: 100%; display: block;">
+                                {% endif %}
+                                <a href="#" class="btn btn-success button_hover" style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); padding: 10px 25px; font-weight: bold; z-index: 10;">
+                                    <i class="fa fa-cart-plus"></i> Book Now
+                                </a>
                             </div>
-                            <div class="col-md-4">
-                                <div class="book_tabel_item">
-                                    <div class="input-group">
-                                        <select class="wide">
-                                            <option data-display="Adult">Adult</option>
-                                            <option value="1">Old</option>
-                                            <option value="2">Younger</option>
-                                            <option value="3">Potato</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <select class="wide">
-                                            <option data-display="Child">Child</option>
-                                            <option value="1">Child</option>
-                                            <option value="2">Baby</option>
-                                            <option value="3">Child</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="book_tabel_item">
-                                    <div class="input-group">
-                                        <select class="wide">
-                                            <option data-display="Child">Number of Rooms</option>
-                                            <option value="1">Room 01</option>
-                                            <option value="2">Room 02</option>
-                                            <option value="3">Room 03</option>
-                                        </select>
-                                    </div>
-                                    <a class="book_now_btn button_hover" href="#">Book Now</a>
-                                </div>
+                            <a href="#"><h4 class="sec_h4">{{ transport.type }}</h4></a>
+                            <div class="transport-details" style="padding: 10px;">
+                                <p><strong>Capacity:</strong> {{ transport.capacite }} passengers</p>
+                                <p><strong>CO2 Emission:</strong> {{ transport.emissionco2 }} kg</p>
+                                <h5><span style="color: #2196F3; font-size: 1.3rem;">{{ transport.prixparpersonne }} DT</span><small>/person</small></h5>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--================Booking Tabel Area  =================-->
-    <!--================ Accomodation Area  =================-->
-    <section class="accomodation_area section_gap">
-        <div class="container">
-            <div class="section_title text-center">
-                <h2 class="title_color">Normal Accomodation</h2>
-                <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
-            </div>
-            <div class="row accomodation_two">
-                {% for i in 1..8 %}
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room' ~ ((i - 1) % 4 + 1) ~ '.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <p>No transports available at the moment. Please check back later!</p>
                         </div>
-                        <a href="#"><h4 class="sec_h4">Room {{ i }}</h4></a>
-                        <h5>$250<small>/night</small></h5>
                     </div>
-                </div>
-                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </section>
-    <!--================ Accomodation Area  =================-->
+    <!--================ Transport Area  =================-->
 {% endblock %}

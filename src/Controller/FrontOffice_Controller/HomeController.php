@@ -2,6 +2,7 @@
 
 namespace App\Controller\FrontOffice_Controller;
 
+use App\Repository\TransportRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,66 +35,56 @@ class HomeController extends AbstractController
         return $this->render('FrontOffice/hebergement/accomodation.html.twig');
     }
 
-    #[Route('/activities', name: 'app_activites')]
-    public function activites(
-        Request $request,
-        ActivityRepository $activityRepository, 
-        ActivityCategoryRepository $categoryRepository, 
-        ActivityScheduleRepository $scheduleRepository, 
-        GuideRepository $guideRepository): Response {
+    #[Route('/activites', name: 'app_activites')]
+    public function activites(ActivityRepository $activityRepository): Response
+    {
+        try {
+            $activities = $activityRepository->findAll();
+        } catch (\Exception $e) {
+            // Table may not exist yet, return empty array
+            $activities = [];
+        }
         
-        $minPrice = $request->query->get('minPrice') !== null && $request->query->get('minPrice') !== ''
-            ? (float) $request->query->get('minPrice') : null;
-        $maxPrice = $request->query->get('maxPrice') !== null && $request->query->get('maxPrice') !== ''
-            ? (float) $request->query->get('maxPrice') : null;
-
-        $activities = $activityRepository->findByPriceRange($minPrice, $maxPrice);
-        $sidebarCategories = $categoryRepository->findAll();
-
         return $this->render('FrontOffice/activities/blog.html.twig', [
             'activities' => $activities,
-            'sidebarCategories' => $sidebarCategories,
-            'selectedCategory' => null,
-            'filterMinPrice' => $minPrice,
-            'filterMaxPrice' => $maxPrice,
-        ]);
-    }
-
-    #[Route('/activities/category/{categoryId}', name: 'activities_by_category', requirements: ['categoryId' => '\d+'])]
-    public function activitiesByCategory(
-        Request $request,
-        int $categoryId,
-        ActivityRepository $activityRepository, 
-        ActivityCategoryRepository $categoryRepository): Response {
-        
-        $minPrice = $request->query->get('minPrice') !== null && $request->query->get('minPrice') !== ''
-            ? (float) $request->query->get('minPrice') : null;
-        $maxPrice = $request->query->get('maxPrice') !== null && $request->query->get('maxPrice') !== ''
-            ? (float) $request->query->get('maxPrice') : null;
-
-        $activities = $activityRepository->findByCategoryAndPrice($categoryId, $minPrice, $maxPrice);
-        $sidebarCategories = $categoryRepository->findAll();
-
-        return $this->render('FrontOffice/activities/blog.html.twig', [
-            'activities' => $activities,
-            'sidebarCategories' => $sidebarCategories,
-            'selectedCategory' => $categoryId,
-            'filterMinPrice' => $minPrice,
-            'filterMaxPrice' => $maxPrice,
         ]);
     }
 
 
     #[Route('/transport', name: 'app_transport')]
-    public function transport(): Response
+    public function transport(TransportRepository $transportRepository, Request $request): Response
     {
-        return $this->render('FrontOffice/transport/transport.html.twig');
+        $type = $request->query->get('type');
+        $minPrice = $request->query->get('minPrice');
+        $maxPrice = $request->query->get('maxPrice');
+        $minCapacity = $request->query->get('minCapacity');
+        $available = $request->query->get('available');
+
+        $minPrice = $minPrice !== null && $minPrice !== '' ? (float) $minPrice : null;
+        $maxPrice = $maxPrice !== null && $maxPrice !== '' ? (float) $maxPrice : null;
+        $minCapacity = $minCapacity !== null && $minCapacity !== '' ? (int) $minCapacity : null;
+        $available = ($available === '1' ? true : ($available === '0' ? false : null));
+
+        $transports = $transportRepository->findByFilters($type, $minPrice, $maxPrice, $minCapacity, $available);
+
+        return $this->render('FrontOffice/transport/accomodation.html.twig', [
+            'transports' => $transports,
+            'filters' => [
+                'type' => $type,
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice,
+                'minCapacity' => $minCapacity,
+                'available' => $available,
+            ],
+        ]);
     }
 
     #[Route('/boutique', name: 'app_boutique')]
     public function boutique(): Response
     {
-        return $this->render('FrontOffice/boutique/boutique.html.twig');
+        return $this->render('FrontOffice/boutique/boutique.html.twig', [
+            'produits' => [],
+        ]);
     }
 
     #[Route('/se-connecter', name: 'app_login')]
