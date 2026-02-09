@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}CategorieHebergement{% endblock %}
+{% block title %}Catégorie d'hébergement - Admin{% endblock %}
 
 {% block body %}
-    <h1>CategorieHebergement</h1>
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
+    <h1>Détails de la catégorie</h1>
 
-    <table class="table">
+    <table class="table table-striped">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -22,9 +24,19 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_categorie_hebergement_index') }}">back to list</a>
+    <div class="mt-3">
+        <a href="{{ path('app_categorie_hebergement_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        <a href="{{ path('app_categorie_hebergement_edit', {'id': categorie_hebergement.id}) }}" class="btn btn-primary ms-2">Modifier</a>
+    </div>
 
+<<<<<<< HEAD
     <a href="{{ path('app_categorie_hebergement_edit', {'id': categorie_hebergement.id}) }}">edit</a>
 
     {{ include('HebergementTemplate/categorie_hebergement/_delete_form.html.twig') }}
+=======
+    <div class="mt-3">
+        {{ include('HebergementTemplate/categorie_hebergement/_delete_form.html.twig') }}
+    </div>
+</div>
+>>>>>>> d1fec4b (temp)
 {% endblock %}

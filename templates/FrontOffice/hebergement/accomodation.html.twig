@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accomodation | Royal Hotel{% endblock %}
+{% block title %}Hébergements | EcoTrip{% endblock %}
 
 {% block body %}
     <!--================Breadcrumb Area =================-->
@@ -8,228 +8,249 @@
         <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
         <div class="container">
             <div class="page-cover text-center">
-                <h2 class="page-cover-tittle">Accomodation</h2>
+                <h2 class="page-cover-tittle">Nos Hébergements</h2>
                 <ol class="breadcrumb">
-                    <li><a href="{{ path('app_home') }}">Home</a></li>
-                    <li class="active">Accomodation</li>
+                    <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li class="active">Hébergements</li>
                 </ol>
             </div>
         </div>
     </section>
     <!--================Breadcrumb Area =================-->
 
-    <!--================ Accomodation Area  =================-->
+    <!--================ Search & Filter Area =================-->
+    <section class="py-4" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="card p-3 shadow-sm">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par nom ou ville..." />
+                            <button id="clearSearch" class="btn btn-outline-secondary" type="button">Effacer</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="sortSelect" class="form-select">
+                            <option value="">-- Trier par --</option>
+                            <option value="nom_asc">Nom (A-Z)</option>
+                            <option value="nom_desc">Nom (Z-A)</option>
+                            <option value="etoiles_desc">Meilleures évaluations</option>
+                            <option value="ville_asc">Ville (A-Z)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 text-end">
+                        <small class="text-muted">{{ hebergements|length }} résultats</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================ Search & Filter Area =================-->
+
+    <!--================ Accommodation Area =================-->
     <section class="accomodation_area section_gap">
         <div class="container">
-            <div class="section_title text-center">
-                <h2 class="title_color">Special Accomodation</h2>
-                <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
+            <div id="noResults" class="text-center py-5" style="display: none;">
+                <p class="text-muted fs-5">Aucun hébergement ne correspond à votre recherche.</p>
             </div>
-            <div class="row mb_30">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room1.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
-                        <h5>$250<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room2.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room3.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                        <h5>$750<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room4.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--================ Accomodation Area  =================-->
-    <!--================Booking Tabel Area =================-->
-    <section class="hotel_booking_area">
-        <div class="container">
-            <div class="row hotel_booking_table">
-                <div class="col-md-3">
-                    <h2>Book<br> Your Room</h2>
-                </div>
-                <div class="col-md-9">
-                    <div class="boking_table">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="book_tabel_item">
-                                    <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker11'>
-                                            <input type='text' class="form-control" placeholder="Arrival Date"/>
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>
+            <div id="accommodationGrid" class="row">
+                {% if hebergements|length > 0 %}
+                    {% for hebergement in hebergements %}
+                        <div class="col-lg-4 col-md-6 mb-4 accommodation-card" data-nom="{{ hebergement.nom|lower }}" data-ville="{{ hebergement.ville|lower }}" data-etoiles="{{ hebergement.nbEtoiles }}">
+                            <div class="card h-100 shadow-sm border-0" style="overflow: hidden; transition: all 0.3s ease;">
+                                <div style="height: 250px; overflow: hidden; background: #e9ecef; position: relative;">
+                                    {% if hebergement.imagePrincipale and hebergement.imagePrincipale != '' %}
+                                        {% if hebergement.imagePrincipale starts with 'http' %}
+                                            <img src="{{ hebergement.imagePrincipale }}" alt="{{ hebergement.nom }}" class="w-100 h-100 accommodation-image" style="object-fit: cover; transition: transform 0.3s ease;">
+                                        {% else %}
+                                            <img src="{{ asset('uploads/' ~ hebergement.imagePrincipale) }}" alt="{{ hebergement.nom }}" class="w-100 h-100 accommodation-image" style="object-fit: cover; transition: transform 0.3s ease;">
+                                        {% endif %}
+                                    {% else %}
+                                        <img src="{{ asset('images/room1.jpg') }}" alt="{{ hebergement.nom }}" class="w-100 h-100 accommodation-image" style="object-fit: cover; transition: transform 0.3s ease;">
+                                    {% endif %}
+                                    {% if hebergement.labelEco %}
+                                        <div style="position: absolute; top: 10px; right: 10px;">
+                                            <span class="badge bg-success"><i class="fa fa-leaf"></i> {{ hebergement.labelEco }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="card-title mb-0">{{ hebergement.nom }}</h5>
+                                            {% set minPrice = null %}
+                                            {% for chambre in hebergement.chambres %}
+                                                {% if chambre.prixParNuit is defined and chambre.prixParNuit is not null %}
+                                                    {% if minPrice is null or chambre.prixParNuit < minPrice %}
+                                                        {% set minPrice = chambre.prixParNuit %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if minPrice is not null %}
+                                                <p class="h6 text-primary mb-1 mt-1">{{ minPrice|number_format(2, ',', ' ') }} TND / nuit</p>
+                                            {% else %}
+                                                <p class="h6 text-secondary mb-1 mt-1">Prix indisponible</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="text-warning">
+                                            {% for i in 1..hebergement.nbEtoiles %}
+                                                <i class="fa fa-star"></i>
+                                            {% endfor %}
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker1'>
-                                            <input type='text' class="form-control" placeholder="Departure Date"/>
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>
+
+                                    {% if hebergement.categorie %}
+                                        <p class="small mb-2"><span class="badge bg-secondary">{{ hebergement.categorie.nom }}</span></p>
+                                    {% endif %}
+
+                                    <p class="text-muted small mb-3"><i class="fa fa-map-marker"></i> {{ hebergement.ville }}</p>
+
+                                    {% if hebergement.description %}
+                                        <p class="small text-muted mb-3">{{ hebergement.description|slice(0, 100) }}...</p>
+                                    {% endif %}
+
+                                    <div class="mb-3">
+                                        <p class="small mb-2"><strong>Équipements:</strong></p>
+                                        <div>
+                                            {% if hebergement.equipements|length > 0 %}
+                                                {% for equipement in hebergement.equipements|slice(0,3) %}
+                                                    <span class="badge bg-info me-1 mb-1">{{ equipement.nom }}</span>
+                                                {% endfor %}
+                                                {% if hebergement.equipements|length > 3 %}
+                                                    <span class="badge bg-secondary">+{{ hebergement.equipements|length - 3 }}</span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="text-muted small">Aucun équipement</span>
+                                            {% endif %}
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="book_tabel_item">
-                                    <div class="input-group">
-                                        <select class="wide">
-                                            <option data-display="Adult">Adult</option>
-                                            <option value="1">Old</option>
-                                            <option value="2">Younger</option>
-                                            <option value="3">Potato</option>
-                                        </select>
+
+                                    <div class="d-grid gap-2">
+                                        <a href="#" class="btn btn-success btn-sm"><i class="fa fa-calendar"></i> Réserver</a>
                                     </div>
-                                    <div class="input-group">
-                                        <select class="wide">
-                                            <option data-display="Child">Child</option>
-                                            <option value="1">Child</option>
-                                            <option value="2">Baby</option>
-                                            <option value="3">Child</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="book_tabel_item">
-                                    <div class="input-group">
-                                        <select class="wide">
-                                            <option data-display="Child">Number of Rooms</option>
-                                            <option value="1">Room 01</option>
-                                            <option value="2">Room 02</option>
-                                            <option value="3">Room 03</option>
-                                        </select>
-                                    </div>
-                                    <a class="book_now_btn button_hover" href="#">Book Now</a>
                                 </div>
                             </div>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center py-5">
+                        <p class="text-muted">Aucun hébergement à afficher.</p>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </section>
-    <!--================Booking Tabel Area  =================-->
-    <!--================ Accomodation Area  =================-->
-    <section class="accomodation_area section_gap">
-        <div class="container">
-            <div class="section_title text-center">
-                <h2 class="title_color">Normal Accomodation</h2>
-                <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
-            </div>
-            <div class="row accomodation_two">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room1.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
-                        <h5>$250<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room2.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room3.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                        <h5>$750<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room4.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room1.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
-                        <h5>$250<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room2.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room3.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                        <h5>$750<small>/night</small></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="accomodation_item text-center">
-                        <div class="hotel_img">
-                            <img src="{{ asset('images/room4.jpg') }}" alt="">
-                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                        </div>
-                        <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                        <h5>$200<small>/night</small></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--================ Accomodation Area  =================-->
+    <!--================ Accommodation Area =================-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const sortSelect = document.getElementById('sortSelect');
+            const clearBtn = document.getElementById('clearSearch');
+            const grid = document.getElementById('accommodationGrid');
+            const noResults = document.getElementById('noResults');
+
+            function filterAccommodations() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                const sortValue = sortSelect.value;
+                const allCards = Array.from(document.querySelectorAll('.accommodation-card'));
+
+                // Step 1: Filter cards
+                let visibleCards = allCards.filter(card => {
+                    if (!searchTerm) return true;
+                    const nom = (card.dataset.nom || '').toLowerCase();
+                    const ville = (card.dataset.ville || '').toLowerCase();
+                    return nom.includes(searchTerm) || ville.includes(searchTerm);
+                });
+
+                // Step 2: Sort visible cards
+                visibleCards.sort((a, b) => {
+                    // Prioritize search relevance if search term exists
+                    if (searchTerm) {
+                        const nomA = (a.dataset.nom || '').toLowerCase();
+                        const nomB = (b.dataset.nom || '').toLowerCase();
+                        const villeA = (a.dataset.ville || '').toLowerCase();
+                        const villeB = (b.dataset.ville || '').toLowerCase();
+                        
+                        // Exact name match
+                        const aExactNom = nomA === searchTerm ? 0 : 1;
+                        const bExactNom = nomB === searchTerm ? 0 : 1;
+                        if (aExactNom !== bExactNom) return aExactNom - bExactNom;
+                        
+                        // Name starts with search term
+                        const aStartsNom = nomA.startsWith(searchTerm) ? 0 : 1;
+                        const bStartsNom = nomB.startsWith(searchTerm) ? 0 : 1;
+                        if (aStartsNom !== bStartsNom) return aStartsNom - bStartsNom;
+                        
+                        // Exact city match
+                        const aExactVille = villeA === searchTerm ? 0 : 1;
+                        const bExactVille = villeB === searchTerm ? 0 : 1;
+                        if (aExactVille !== bExactVille) return aExactVille - bExactVille;
+                        
+                        // City starts with search term
+                        const aStartsVille = villeA.startsWith(searchTerm) ? 0 : 1;
+                        const bStartsVille = villeB.startsWith(searchTerm) ? 0 : 1;
+                        if (aStartsVille !== bStartsVille) return aStartsVille - bStartsVille;
+                    }
+                    
+                    // Apply selected sort
+                    switch(sortValue) {
+                        case 'nom_asc':
+                            return a.dataset.nom.localeCompare(b.dataset.nom);
+                        case 'nom_desc':
+                            return b.dataset.nom.localeCompare(a.dataset.nom);
+                        case 'etoiles_desc':
+                            return parseInt(b.dataset.etoiles || 0) - parseInt(a.dataset.etoiles || 0);
+                        case 'ville_asc':
+                            return a.dataset.ville.localeCompare(b.dataset.ville);
+                        default:
+                            return 0;
+                    }
+                });
+
+                // Step 3: Reorder grid by using appendChild (moves existing elements to new position)
+                if (visibleCards.length === 0) {
+                    noResults.style.display = 'block';
+                    allCards.forEach(card => card.style.display = 'none');
+                } else {
+                    noResults.style.display = 'none';
+                    // Hide all cards first
+                    allCards.forEach(card => card.style.display = 'none');
+                    // Show and reorder visible cards
+                    visibleCards.forEach(card => {
+                        card.style.display = '';
+                        grid.appendChild(card);
+                    });
+                }
+            }
+
+            // Bind events
+            searchInput.addEventListener('input', filterAccommodations);
+            sortSelect.addEventListener('change', filterAccommodations);
+            clearBtn.addEventListener('click', function() { 
+                searchInput.value = ''; 
+                filterAccommodations(); 
+            });
+
+            // Image hover effect
+            function setupHoverEffect() {
+                document.querySelectorAll('.accommodation-card').forEach(card => {
+                    const img = card.querySelector('.accommodation-image');
+                    if (img) {
+                        card.addEventListener('mouseenter', function() { 
+                            img.style.transform = 'scale(1.05)'; 
+                        });
+                        card.addEventListener('mouseleave', function() { 
+                            img.style.transform = 'scale(1)'; 
+                        });
+                    }
+                });
+            }
+
+            setupHoverEffect();
+            filterAccommodations();
+        });
+    </script>
 {% endblock %}
+ 

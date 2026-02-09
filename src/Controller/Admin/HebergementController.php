@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Hebergement;
+namespace App\Controller\Admin;
 
 use App\Entity\Hebergement;
 use App\Form\HebergementType;
@@ -9,13 +9,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/hebergement')]
+#[Route('/admin/hebergement')]
 final class HebergementController extends AbstractController
 {
-    #[Route(name: 'app_hebergement_index', methods: ['GET'])]
+    #[Route('/', name: 'admin_hebergement_index', methods: ['GET'])]
     public function index(HebergementRepository $hebergementRepository): Response
     {
         return $this->render('HebergementTemplate/hebergement/index.html.twig', [
@@ -23,7 +22,7 @@ final class HebergementController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_hebergement_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'admin_hebergement_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $hebergement = new Hebergement();
@@ -31,12 +30,12 @@ final class HebergementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // imagePrincipale field stores either URL or filename
+            //$hebergement->setCreatedAt(new \DateTime());
             $hebergement->setActif(true);
             $entityManager->persist($hebergement);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_hebergement_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_hebergement_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('HebergementTemplate/hebergement/new.html.twig', [
@@ -45,7 +44,7 @@ final class HebergementController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_hebergement_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'admin_hebergement_show', methods: ['GET'])]
     public function show(Hebergement $hebergement): Response
     {
         return $this->render('HebergementTemplate/hebergement/show.html.twig', [
@@ -53,17 +52,16 @@ final class HebergementController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_hebergement_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'admin_hebergement_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Hebergement $hebergement, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(HebergementType::class, $hebergement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // imagePrincipale field stores either URL or filename
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_hebergement_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_hebergement_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('HebergementTemplate/hebergement/edit.html.twig', [
@@ -72,7 +70,7 @@ final class HebergementController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_hebergement_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'admin_hebergement_delete', methods: ['POST'])]
     public function delete(Request $request, Hebergement $hebergement, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$hebergement->getId(), $request->getPayload()->getString('_token'))) {
@@ -80,6 +78,6 @@ final class HebergementController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_hebergement_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_hebergement_index', [], Response::HTTP_SEE_OTHER);
     }
 }

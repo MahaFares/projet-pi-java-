@@ -10,6 +10,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\ActivityCategoryRepository;
 use App\Repository\ActivityScheduleRepository;
 use App\Repository\GuideRepository;
+use App\Repository\HebergementRepository;
 
 
 
@@ -28,10 +29,13 @@ class HomeController extends AbstractController
         return $this->render('FrontOffice/about_us/about.html.twig');
     }
 
-    #[Route('/hebergement', name: 'app_hebergement')]
-    public function hebergement(): Response
+    #[Route('/hebergements', name: 'app_hebergement')]
+    public function hebergement(HebergementRepository $hebergementRepository): Response
     {
-        return $this->render('FrontOffice/hebergement/accomodation.html.twig');
+        $hebergements = $hebergementRepository->findAll();
+        return $this->render('FrontOffice/hebergement/accomodation.html.twig', [
+            'hebergements' => $hebergements,
+        ]);
     }
 
     #[Route('/activities', name: 'app_activites')]
