@@ -43,6 +43,11 @@ class ActivityRepository extends ServiceEntityRepository
             ->leftJoin('a.schedules', 's')
             ->leftJoin('a.guide', 'g')
             ->addSelect('c', 's', 'g')
+<<<<<<< HEAD
+=======
+            ->where('a.isActive = :active')
+            ->setParameter('active', true)
+>>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
             ->orderBy('a.title', 'ASC');
 
         if ($categoryId !== null) {
@@ -58,4 +63,27 @@ class ActivityRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Find activities filtered by price range only
+     *
+     * @return Activity[]
+     */
+    public function findByPriceRange(?float $minPrice = null, ?float $maxPrice = null): array
+    {
+        return $this->findAllForBlog(null, $minPrice, $maxPrice);
+    }
+
+    /**
+     * Find activities filtered by category and optional price range
+     *
+     * @return Activity[]
+     */
+    public function findByCategoryAndPrice(?int $categoryId = null, ?float $minPrice = null, ?float $maxPrice = null): array
+    {
+        return $this->findAllForBlog($categoryId, $minPrice, $maxPrice);
+    }
+>>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
 }

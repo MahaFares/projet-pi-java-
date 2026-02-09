@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ activity_category.name }} - Admin{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
+    <h1>{{ activity_category.name }}</h1>
+    <table class="table">
+        <tbody>
+            <tr><th>Id</th><td>{{ activity_category.id }}</td></tr>
+            <tr><th>Nom</th><td>{{ activity_category.name }}</td></tr>
+            <tr><th>Description</th><td>{{ activity_category.description|default('–') }}</td></tr>
+            <tr>
+                <th>Icône</th>
+                <td>
+                    {% if activity_category.icon %}
+                        <img src="{{ asset(activity_category.icon) }}" alt="{{ activity_category.name }}" style="max-height: 100px; max-width: 100px; object-fit: contain;">
+                    {% else %}
+                        <span class="text-muted">–</span>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_activity_category_edit', {'id': activity_category.id}) }}" class="btn btn-primary">Modifier</a>
+    <a href="{{ path('app_activity_category_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    {{ include('ActivityTemplate/activity_category/_delete_form.html.twig') }}
+</div>
+{% endblock %}

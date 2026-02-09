@@ -31,6 +31,7 @@
                         <dt class="col-sm-4"><i class="fa fa-money"></i> Prix par Personne</dt>
                         <dd class="col-sm-8"><strong class="text-success" style="font-size: 1.2rem;">{{ transport.prixparpersonne }} DT</strong></dd>
 
+<<<<<<< HEAD
                         <dt class="col-sm-4"><i class="fa fa-check-circle"></i> État</dt>
                         <dd class="col-sm-8">
                             {% if transport.disponible %}
@@ -63,4 +64,7 @@
         </div>
     </div>
 </div>
+=======
+    {{ include('TransportTemplate/transport/_delete_form.html.twig') }}
+>>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
 {% endblock %}

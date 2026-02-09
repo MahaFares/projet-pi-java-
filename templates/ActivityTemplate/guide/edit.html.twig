@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le guide - Admin{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
+    <h1>Modifier le guide</h1>
+    {{ include('ActivityTemplate/guide/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    <a href="{{ path('app_guide_index') }}" class="btn btn-secondary mt-2">Retour à la liste</a>
+    {{ include('ActivityTemplate/guide/_delete_form.html.twig') }}
+</div>
+{% endblock %}

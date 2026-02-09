@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Transport;
 
 use App\Entity\Transport;
 use App\Form\TransportType;
@@ -17,7 +17,7 @@ final class TrajetController extends AbstractController
     #[Route(name: 'app_trajet_index', methods: ['GET'])]
     public function index(TransportRepository $transportRepository): Response
     {
-        return $this->render('trajet/index.html.twig', [
+        return $this->render('TransportTemplate/trajet/index.html.twig', [
             'transports' => $transportRepository->findAll(),
         ]);
     }
@@ -45,7 +45,7 @@ final class TrajetController extends AbstractController
     #[Route('/{id}', name: 'app_trajet_show', methods: ['GET'])]
     public function show(Transport $transport): Response
     {
-        return $this->render('trajet/show.html.twig', [
+        return $this->render('TransportTemplate/trajet/show.html.twig', [
             'transport' => $transport,
         ]);
     }
@@ -62,7 +62,7 @@ final class TrajetController extends AbstractController
             return $this->redirectToRoute('app_trajet_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('trajet/edit.html.twig', [
+        return $this->render('TransportTemplate/trajet/edit.html.twig', [
             'transport' => $transport,
             'form' => $form,
         ]);

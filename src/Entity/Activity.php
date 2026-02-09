@@ -6,6 +6,7 @@ use App\Repository\ActivityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ActivityRepository::class)]
 class Activity
@@ -16,6 +17,7 @@ class Activity
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
+<<<<<<< HEAD
     private ?string $title = null;
 
     #[ORM\Column(type: 'text')]
@@ -34,6 +36,41 @@ class Activity
     private ?int $maxParticipants = null;
 
     #[ORM\Column(nullable: true)]
+=======
+    #[Assert\NotBlank(message: 'Le titre de l\'activité est requis')]
+    #[Assert\Length(min: 3, max: 150, minMessage: 'Le titre doit contenir au moins 3 caractères', maxMessage: 'Le titre ne peut pas dépasser 150 caractères')]
+    private ?string $title = null;
+
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: 'La description est requise')]
+    #[Assert\Length(min: 10, max: 5000, minMessage: 'La description doit contenir au moins 10 caractères', maxMessage: 'La description ne peut pas dépasser 5000 caractères')]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    #[Assert\NotNull(message: 'Le prix est requis')]
+    #[Assert\Positive(message: 'Le prix doit être un nombre positif')]
+    #[Assert\Type('float', message: 'Le prix doit être un nombre')]
+    private ?float $price = null;
+
+    #[ORM\Column]
+    #[Assert\NotNull(message: 'La durée est requise')]
+    #[Assert\Positive(message: 'La durée doit être positive')]
+    #[Assert\Range(min: 5, max: 1440, notInRangeMessage: 'La durée doit être entre 5 et 1440 minutes')]
+    private ?int $durationMinutes = null;
+
+    #[ORM\Column(length: 150)]
+    #[Assert\NotBlank(message: 'Le lieu est requis')]
+    #[Assert\Length(min: 3, max: 150, minMessage: 'Le lieu doit contenir au moins 3 caractères', maxMessage: 'Le lieu ne peut pas dépasser 150 caractères')]
+    private ?string $location = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\Positive(message: 'Le nombre de participants doit être positif')]
+    #[Assert\Range(min: 1, notInRangeMessage: 'Au moins 1 participant requis')]
+    private ?int $maxParticipants = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'L\'URL de l\'image ne peut pas dépasser 255 caractères')]
+>>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
     private ?string $image = null;
 
     #[ORM\Column]
@@ -41,6 +78,10 @@ class Activity
 
     #[ORM\ManyToOne(inversedBy: 'activities')]
     #[ORM\JoinColumn(nullable: false)]
+<<<<<<< HEAD
+=======
+    #[Assert\NotNull(message: 'Vous devez sélectionner une catégorie')]
+>>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
     private ?ActivityCategory $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'activities')]

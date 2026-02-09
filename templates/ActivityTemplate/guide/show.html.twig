@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ guide.firstName }} {{ guide.lastName }} - Admin{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
+    <h1>{{ guide.firstName }} {{ guide.lastName }}</h1>
+    <table class="table">
+        <tbody>
+            <tr><th>Id</th><td>{{ guide.id }}</td></tr>
+            <tr><th>Prénom</th><td>{{ guide.firstName }}</td></tr>
+            <tr><th>Nom</th><td>{{ guide.lastName }}</td></tr>
+            <tr><th>Email</th><td>{{ guide.email }}</td></tr>
+            <tr><th>Téléphone</th><td>{{ guide.phone }}</td></tr>
+            <tr><th>Bio</th><td>{{ guide.bio|default('–') }}</td></tr>
+            <tr><th>Note</th><td>{{ guide.rating|default('–') }}</td></tr>
+            <tr><th>Photo</th><td>{{ guide.photo|default('–') }}</td></tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_guide_edit', {'id': guide.id}) }}" class="btn btn-primary">Modifier</a>
+    <a href="{{ path('app_guide_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    {{ include('ActivityTemplate/guide/_delete_form.html.twig') }}
+</div>
+{% endblock %}

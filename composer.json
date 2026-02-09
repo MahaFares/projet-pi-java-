@@ -23,7 +23,12 @@
         "symfony/validator": "6.4.*",
         "symfony/webpack-encore-bundle": "^2.4",
         "symfony/yaml": "6.4.*",
+<<<<<<< HEAD
         "symfonycasts/verify-email-bundle": "^1.18"
+=======
+        "symfonycasts/verify-email-bundle": "^1.18",
+        "vich/uploader-bundle": "^2.9"
+>>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
     },
     "config": {
         "allow-plugins": {

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guides - Admin{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
+
+    <h1>Guides</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Note</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for guide in guides %}
+            <tr>
+                <td>{{ guide.id }}</td>
+                <td>{{ guide.firstName }}</td>
+                <td>{{ guide.lastName }}</td>
+                <td>{{ guide.email }}</td>
+                <td>{{ guide.phone }}</td>
+                <td>{{ guide.rating|default('–') }}</td>
+                <td>
+                    <a href="{{ path('app_guide_show', {'id': guide.id}) }}">Voir</a>
+                    <a href="{{ path('app_guide_edit', {'id': guide.id}) }}" class="ms-2">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" class="text-muted">Aucun guide. Créez-en pour les associer aux activités.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_guide_new') }}" class="btn btn-success">Créer un guide</a>
+</div>
+{% endblock %}

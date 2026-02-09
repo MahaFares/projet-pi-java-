@@ -19,6 +19,10 @@ final class TransportController extends AbstractController
     #[Route(name: 'app_transport_index', methods: ['GET'])]
     public function index(Request $request, TransportRepository $transportRepository): Response
     {
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:src/Controller/TransportController.php
+>>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
         $type = $request->query->get('type');
         $minPrice = $request->query->get('minPrice');
         $maxPrice = $request->query->get('maxPrice');
@@ -41,6 +45,13 @@ final class TransportController extends AbstractController
                 'minCapacity' => $minCapacity,
                 'available' => $available,
             ],
+<<<<<<< HEAD
+=======
+========
+        return $this->render('TransportTemplate/transport/index.html.twig', [
+            'transports' => $transportRepository->findAll(),
+>>>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087:src/Controller/Transport/TransportController.php
+>>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
         ]);
     }
 
