@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\TransportRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,20 +16,40 @@ class Transport
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $type = null;
+   #[ORM\Column(length: 100)]
+#[Assert\NotBlank(message: "Le type de transport est obligatoire")]
+#[Assert\Length(
+    min: 3,
+    max: 100,
+    minMessage: "Le type doit contenir au moins {{ limit }} caractères",
+    maxMessage: "Le type ne peut pas dépasser {{ limit }} caractères"
+)]
+private ?string $type = null;
 
-    #[ORM\Column]
-    private ?int $capacite = null;
+  #[ORM\Column]
+#[Assert\NotBlank(message: "La capacité est obligatoire")]
+#[Assert\Positive(message: "La capacité doit être un nombre positif")]
+#[Assert\Range(
+    min: 1,
+    max: 500,
+    notInRangeMessage: "La capacité doit être entre {{ min }} et {{ max }}"
+)]
+private ?int $capacite = null;
 
-    #[ORM\Column]
-    private ?float $emissionco2 = null;
+    #[ORM\Column(name: 'emissionco2')]
+#[Assert\NotBlank(message: "L'émission CO2 est obligatoire")]
+#[Assert\PositiveOrZero(message: "L'émission CO2 doit être positive ou zéro")]
+private ?float $emissionco2 = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $prixparpersonne = null;
-
+  #[ORM\Column(type: 'decimal', precision: 10, scale: 2, name: 'prixparpersonne')]
+#[Assert\NotBlank(message: "Le prix est obligatoire")]
+#[Assert\Positive(message: "Le prix doit être positif")]
+private ?string $prixparpersonne = null;
     #[ORM\Column]
     private ?bool $disponible = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
     /**
      * @var Collection<int, Trajet>
@@ -133,6 +153,18 @@ class Transport
                 $trajet->setTransport(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

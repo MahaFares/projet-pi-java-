@@ -34,7 +34,7 @@ class PaiementCrudController extends AbstractController
     {
         $items = $this->repository->findBy([], ['datePaiement' => 'DESC']);
 
-        return $this->render('FrontOffice/boutique/paiement/index.html.twig', [
+        return $this->render('FrontOffice/boutique/paiment/index.html.twig', [
             'paiements' => $items,
         ]);
     }
@@ -52,7 +52,7 @@ class PaiementCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('FrontOffice/boutique/paiement/new.html.twig', [
+                return $this->render('FrontOffice/boutique/paiment/new.html.twig', [
                     'paiement' => $paiement,
                     'form' => $form,
                 ]);
@@ -63,7 +63,7 @@ class PaiementCrudController extends AbstractController
             return $this->redirectToRoute('app_paiement_index');
         }
 
-        return $this->render('FrontOffice/boutique/paiement/new.html.twig', [
+        return $this->render('FrontOffice/boutique/paiment/new.html.twig', [
             'paiement' => $paiement,
             'form' => $form,
         ]);
@@ -77,7 +77,7 @@ class PaiementCrudController extends AbstractController
             throw $this->createNotFoundException('Paiement introuvable.');
         }
 
-        return $this->render('FrontOffice/boutique/paiement/show.html.twig', [
+        return $this->render('FrontOffice/boutique/paiment/show.html.twig', [
             'paiement' => $paiement,
         ]);
     }
@@ -99,7 +99,7 @@ class PaiementCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('FrontOffice/boutique/paiement/edit.html.twig', [
+                return $this->render('FrontOffice/boutique/paiment/edit.html.twig', [
                     'paiement' => $paiement,
                     'form' => $form,
                 ]);
@@ -109,7 +109,7 @@ class PaiementCrudController extends AbstractController
             return $this->redirectToRoute('app_paiement_index');
         }
 
-        return $this->render('FrontOffice/boutique/paiement/edit.html.twig', [
+        return $this->render('FrontOffice/boutique/paiment/edit.html.twig', [
             'paiement' => $paiement,
             'form' => $form,
         ]);

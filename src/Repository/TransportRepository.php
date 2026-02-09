@@ -40,4 +40,39 @@ class TransportRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findByFilters(?string $type, ?float $minPrice, ?float $maxPrice, ?int $minCapacity, ?bool $available): array
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        if ($type) {
+            $qb->andWhere('t.type LIKE :type')
+               ->setParameter('type', '%'.$type.'%');
+        }
+
+        if ($minPrice !== null) {
+            $qb->andWhere('t.prixparpersonne >= :minPrice')
+               ->setParameter('minPrice', $minPrice);
+        }
+
+        if ($maxPrice !== null) {
+            $qb->andWhere('t.prixparpersonne <= :maxPrice')
+               ->setParameter('maxPrice', $maxPrice);
+        }
+
+        if ($minCapacity !== null) {
+            $qb->andWhere('t.capacite >= :minCapacity')
+               ->setParameter('minCapacity', $minCapacity);
+        }
+
+        if ($available !== null) {
+            $qb->andWhere('t.disponible = :available')
+               ->setParameter('available', $available);
+        }
+
+        $qb->orderBy('t.id', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

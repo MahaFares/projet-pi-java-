@@ -15,13 +15,14 @@
         </div>
     </div>
 </section>
+</section>
 <!-- Boutons de navigation -->
 <section class="py-3">
     <div class="container">
        <div class="text-right">
     <a href="{{ path('app_categorie_new') }}" class="btn theme_btn button_hover">Categorie</a>
-    <a href="{{ path('app_commande_new') }}" class="btn theme_btn button_hover">Commandes</a>
     <a href="{{ path('app_paiement_new') }}" class="btn theme_btn button_hover">Paiement</a>
+    <a href="{{ path('app_commande_new') }}" class="btn theme_btn button_hover">Commandes</a>
 </div>
     </div>
 </section>
@@ -34,7 +35,6 @@
 
         {{ form_start(form) }}
         {{ form_row(form.nom) }}
-        {{ form_row(form.description) }}
         {{ form_row(form.prix) }}
         {{ form_row(form.stock) }}
         {{ form_row(form.image) }}

@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier paiement #{{ paiement.id }} | Admin{% endblock %}
+{% block title %}Nouvelle catégorie | Admin{% endblock %}
 
 {% block body %}
 <section class="breadcrumb_area">
     <div class="container">
         <div class="page-cover text-center">
-            <h2 class="page-cover-tittle">Modifier le paiement</h2>
+            <h2 class="page-cover-tittle">Nouvelle catégorie</h2>
             <ol class="breadcrumb">
                 <li><a href="{{ path('app_home') }}">Accueil</a></li>
-                <li><a href="{{ path('app_paiement_index') }}">Paiements</a></li>
-                <li class="active">Modifier</li>
+                <li><a href="{{ path('app_categorie_index') }}">Catégories</a></li>
+                <li class="active">Nouvelle</li>
             </ol>
         </div>
     </div>
@@ -23,14 +23,10 @@
         {% endfor %}
 
         {{ form_start(form) }}
-        {{ form_row(form.commande) }}
-        {{ form_row(form.montant) }}
-        {{ form_row(form.methodePaiement) }}
-        {{ form_row(form.statutPaiement) }}
-        {{ form_row(form.datePaiement) }}
-        {{ form_row(form.referencePaiement) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.description) }}
         <button type="submit" class="btn theme_btn button_hover">Enregistrer</button>
-        <a href="{{ path('app_paiement_show', { id: paiement.id }) }}" class="btn btn-secondary">Annuler</a>
+        <a href="{{ path('app_categorie_index') }}" class="btn btn-secondary">Annuler</a>
         {{ form_end(form) }}
     </div>
 </section>

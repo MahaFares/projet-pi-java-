@@ -42,23 +42,13 @@ class PaiementType extends AbstractType
                     new Length(['max' => 50]),
                 ],
             ])
-            ->add('statutPaiement', TextType::class, [
-                'label' => 'Statut du paiement',
-                'constraints' => [
-                    new NotBlank(['message' => 'Le statut du paiement est obligatoire.']),
-                    new Length(['max' => 50]),
-                ],
-            ])
+           
             ->add('datePaiement', DateTimeType::class, [
                 'label' => 'Date de paiement',
                 'widget' => 'single_text',
                 'constraints' => [new NotBlank(['message' => 'La date de paiement est obligatoire.'])],
             ])
-            ->add('referencePaiement', TextType::class, [
-                'label' => 'Référence paiement',
-                'required' => false,
-                'constraints' => [new Length(['max' => 100])],
-            ])
+            
         ;
     }
 

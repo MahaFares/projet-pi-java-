@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 #[ORM\Table(name: 'categorie')]
+#[Assert\Callback('validate')]
 class Categorie
 {
     #[ORM\Id]
@@ -19,6 +21,7 @@ class Categorie
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
+    #[Assert\Choice(choices: ['A louer', 'A vendre'], message: 'Le nom doit être "A louer" ou "A vendre".')]
     #[Assert\Length(max: 100, maxMessage: 'Le nom ne peut pas dépasser {{ limit }} caractères.')]
     #[Assert\Type('string')]
     private ?string $nom = null;
@@ -37,14 +40,28 @@ class Categorie
     {
         $this->produits = new ArrayCollection();
     }
- public function getId(): ?int
+
+    /**
+     * Validation personnalisée au niveau de la classe
+     * Si l'état est "A louer", la description ne peut pas être vide
+     */
+    public function validate(ExecutionContextInterface $context): void
+    {
+        // Vérifier si l'état est "A louer"
+        if ($this->nom === 'A louer') {
+            // Vérifier si la description est vide ou contient uniquement des espaces
+            if ($this->description === null || trim($this->description) === '') {
+                $context->buildViolation('La description ne peut pas être vide pour l\'état "A louer".')
+                    ->atPath('description')
+                    ->addViolation();
+            }
+        }
+    }
+
+    public function getId(): ?int
     {
         return $this->idCategorie;
     }
-    // public function getIdCategorie(): ?int
-    // {
-    //     return $this->idCategorie;
-    // }
 
     public function getNom(): ?string
     {
@@ -98,9 +115,9 @@ class Categorie
 
         return $this;
     }
+    
     public function __toString(): string
-{
-    return $this->nom ?? 'Categorie';
-}
-
+    {
+        return $this->nom ?? 'Categorie';
+    }
 }
