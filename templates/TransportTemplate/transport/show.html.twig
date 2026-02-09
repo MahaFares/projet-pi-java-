@@ -1,42 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Transport{% endblock %}
+{% block title %}Détails du Transport{% endblock %}
 
 {% block body %}
-    <h1>Transport</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0"><i class="fa fa-bus"></i> Détails du Transport</h3>
+                    <span class="badge bg-light text-dark">N°{{ transport.id }}</span>
+                </div>
+                <div class="card-body">
+                    {% if transport.image %}
+                    <div class="text-center mb-4">
+                        <img src="{{ asset('uploads/transports/' ~ transport.image) }}" alt="{{ transport.type }}" class="img-fluid rounded" style="max-width: 100%; max-height: 400px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    </div>
+                    {% endif %}
+                    
+                    <dl class="row">
+                        <dt class="col-sm-4"><i class="fa fa-tag"></i> Type</dt>
+                        <dd class="col-sm-8"><strong class="text-primary" style="font-size: 1.1rem;">{{ transport.type }}</strong></dd>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ transport.id }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ transport.type }}</td>
-            </tr>
-            <tr>
-                <th>Capacite</th>
-                <td>{{ transport.capacite }}</td>
-            </tr>
-            <tr>
-                <th>Emissionco2</th>
-                <td>{{ transport.emissionco2 }}</td>
-            </tr>
-            <tr>
-                <th>Prixparpersonne</th>
-                <td>{{ transport.prixparpersonne }}</td>
-            </tr>
-            <tr>
-                <th>Disponible</th>
-                <td>{{ transport.disponible ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                        <dt class="col-sm-4"><i class="fa fa-users"></i> Capacité</dt>
+                        <dd class="col-sm-8">{{ transport.capacite }} passagers</dd>
 
-    <a href="{{ path('app_transport_index') }}">back to list</a>
+                        <dt class="col-sm-4"><i class="fa fa-leaf"></i> Émission CO2</dt>
+                        <dd class="col-sm-8">{{ transport.emissionco2 }} kg</dd>
 
-    <a href="{{ path('app_transport_edit', {'id': transport.id}) }}">edit</a>
+                        <dt class="col-sm-4"><i class="fa fa-money"></i> Prix par Personne</dt>
+                        <dd class="col-sm-8"><strong class="text-success" style="font-size: 1.2rem;">{{ transport.prixparpersonne }} DT</strong></dd>
 
-    {{ include('transport/_delete_form.html.twig') }}
+                        <dt class="col-sm-4"><i class="fa fa-check-circle"></i> État</dt>
+                        <dd class="col-sm-8">
+                            {% if transport.disponible %}
+                                <span class="badge bg-success"><i class="fa fa-check"></i> Disponible</span>
+                            {% else %}
+                                <span class="badge bg-danger"><i class="fa fa-times"></i> Indisponible</span>
+                            {% endif %}
+                        </dd>
+                    </dl>
+                </div>
+                <div class="card-footer bg-light d-flex gap-2">
+                    <a href="{{ path('app_transport_index') }}" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left"></i> Retour à la Liste
+                    </a>
+                    <a href="{{ path('app_transport_edit', {'id': transport.id}) }}" class="btn btn-warning">
+                        <i class="fa fa-edit"></i> Modifier
+                    </a>
+                </div>
+            </div>
+
+            <div class="card card-danger mt-4 shadow-lg">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="card-title mb-0"><i class="fa fa-trash"></i> Zone de Danger</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted"><i class="fa fa-warning"></i> Cette action supprimera définitivement le transport et ses données.</p>
+                    {{ include('TransportTemplate/transport/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\TrajetRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,23 +14,48 @@ class Trajet
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $depart = null;
-
+#[Assert\NotBlank(message: "Le lieu de départ est obligatoire")]
+#[Assert\Length(
+    min: 2,
+    minMessage: "Le lieu de départ doit contenir au moins {{ limit }} caractères"
+)]
+private ?string $depart = null;
     #[ORM\Column(length: 255)]
-    private ?string $arrivee = null;
+#[Assert\NotBlank(message: "Le lieu d'arrivée est obligatoire")]
+#[Assert\Length(
+    min: 2,
+    minMessage: "Le lieu d'arrivée doit contenir au moins {{ limit }} caractères"
+)]
+private ?string $arrivee = null;
+
+   #[ORM\Column]
+#[Assert\NotBlank(message: "La date de départ est obligatoire")]
+#[Assert\GreaterThan(
+    value: "today",
+    message: "La date de départ doit être dans le futur"
+)]
+private ?\DateTimeInterface $dateDepart = null;
 
     #[ORM\Column]
-    private ?\DateTime $dateDepart = null;
+#[Assert\NotBlank(message: "La distance est obligatoire")]
+#[Assert\Positive(message: "La distance doit être positive")]
+#[Assert\Range(
+    min: 1,
+    max: 1000,
+    notInRangeMessage: "La distance doit être entre {{ min }} et {{ max }} km"
+)]
+private ?float $distanceKm = null;
 
     #[ORM\Column]
-    private ?float $distancekm = null;
-
-    #[ORM\Column]
-    private ?int $placeDisponible = null;
+#[Assert\NotBlank(message: "Le nombre de places est obligatoire")]
+#[Assert\PositiveOrZero(message: "Le nombre de places doit être positif ou zéro")]
+private ?int $placesDisponibles = null;
 
     #[ORM\ManyToOne(inversedBy: 'trajets')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?transport $transport = null;
+#[ORM\JoinColumn(nullable: false)]
+#[Assert\NotNull(message: "Vous devez sélectionner un transport")]
+private ?Transport $transport = null;
+
 
     public function getId(): ?int
     {
