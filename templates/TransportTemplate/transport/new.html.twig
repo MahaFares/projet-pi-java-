@@ -3,31 +3,9 @@
 {% block title %}Ajouter un Transport{% endblock %}
 
 {% block body %}
-<<<<<<< HEAD
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-success text-white">
-                    <h3 class="card-title mb-0"><i class="fa fa-plus"></i> Ajouter un nouveau Transport</h3>
-                </div>
-                <div class="card-body">
-                    {{ include('TransportTemplate/transport/_form.html.twig', {'button_label': 'Ajouter'}) }}
-                </div>
-                <div class="card-footer bg-light">
-                    <a href="{{ path('app_transport_index') }}" class="btn btn-secondary">
-                        <i class="fa fa-arrow-left"></i> Retour à la liste
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-=======
     <h1>Create new Transport</h1>
 
     {{ include('TransportTemplate/transport/_form.html.twig') }}
 
     <a href="{{ path('app_transport_index') }}">back to list</a>
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
 {% endblock %}

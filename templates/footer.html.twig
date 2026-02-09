@@ -22,20 +22,12 @@
                         <div class="col-6">
                             <ul class="list_style">
                                 <li><a href="{{ path('app_boutique') }}">Boutique</a></li>
-<<<<<<< HEAD
-                                {% if app.user %}
-                                    <li><a href="{{ path('app_my_account') }}">Mon compte</a></li>
-                                    <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
-                                {% else %}
-                                    <li><a href="{{ path('app_login') }}">Se connecter/S'inscrire</a></li>
-=======
                                 <li><a href="{{ path('app_about') }}">À Propos</a></li>
                                 <li><a href="{{ path('app_contact') }}">Contact</a></li>
                                 {% if app.user %}
                                     <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
                                 {% else %}
                                     <li><a href="{{ path('app_login') }}">Connexion</a></li>
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
                                 {% endif %}
                             </ul>
                         </div>

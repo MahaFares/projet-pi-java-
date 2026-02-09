@@ -7,10 +7,6 @@ use App\Entity\ActivityCategory;
 use App\Entity\Guide;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-<<<<<<< HEAD
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-=======
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -20,23 +16,12 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
 
 class ActivityType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-<<<<<<< HEAD
-            ->add('title')
-            ->add('description')
-            ->add('price')
-            ->add('durationMinutes')
-            ->add('location')
-            ->add('maxParticipants')
-            ->add('image')
-            ->add('isActive')
-=======
             ->add('title', TextType::class, [
                 'required' => true,
                 'help' => 'Titre de l\'activité (3-150 caractères)',
@@ -85,16 +70,12 @@ class ActivityType extends AbstractType
                 'required' => false,
                 'help' => 'Cochez pour rendre l\'activité disponible',
             ])
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
             ->add('category', EntityType::class, [
                 'class' => ActivityCategory::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Choisir une catégorie',
-<<<<<<< HEAD
-=======
                 'required' => true,
                 'attr' => ['class' => 'form-control'],
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
             ])
             ->add('guide', EntityType::class, [
                 'class' => Guide::class,
@@ -103,10 +84,7 @@ class ActivityType extends AbstractType
                 },
                 'placeholder' => 'Choisir un guide (optionnel)',
                 'required' => false,
-<<<<<<< HEAD
-=======
                 'attr' => ['class' => 'form-control'],
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
             ])
         ;
     }

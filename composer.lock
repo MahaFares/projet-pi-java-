@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "9586d40590dc5af6b297a1528766eea9",
-=======
     "content-hash": "f67fa067179642a6098b3fa8d9845004",
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
     "packages": [
         {
             "name": "doctrine/collections",
@@ -1191,8 +1187,6 @@
             "time": "2025-03-06T22:45:56+00:00"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "jms/metadata",
             "version": "2.9.0",
             "source": {
@@ -1257,7 +1251,6 @@
             "time": "2025-11-30T20:12:26+00:00"
         },
         {
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
             "name": "psr/cache",
             "version": "3.0.0",
             "source": {
@@ -7410,18 +7403,6 @@
         },
         {
             "name": "phpunit/phpunit",
-<<<<<<< HEAD
-            "version": "11.5.51",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ad14159f92910b0f0e3928c13e9b2077529de091"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ad14159f92910b0f0e3928c13e9b2077529de091",
-                "reference": "ad14159f92910b0f0e3928c13e9b2077529de091",
-=======
             "version": "11.5.52",
             "source": {
                 "type": "git",
@@ -7432,7 +7413,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b287d32c26f78768e391843c5a59395f24b62605",
                 "reference": "b287d32c26f78768e391843c5a59395f24b62605",
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
                 "shasum": ""
             },
             "require": {
@@ -7505,11 +7485,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-<<<<<<< HEAD
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.51"
-=======
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.52"
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
             },
             "funding": [
                 {
@@ -7533,11 +7509,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2026-02-05T07:59:30+00:00"
-=======
             "time": "2026-02-08T07:05:14+00:00"
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
         },
         {
             "name": "sebastian/cli-parser",

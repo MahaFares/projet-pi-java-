@@ -17,26 +17,6 @@ class Activity
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
-<<<<<<< HEAD
-    private ?string $title = null;
-
-    #[ORM\Column(type: 'text')]
-    private ?string $description = null;
-
-    #[ORM\Column]
-    private ?float $price = null;
-
-    #[ORM\Column]
-    private ?int $durationMinutes = null;
-
-    #[ORM\Column(length: 150)]
-    private ?string $location = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $maxParticipants = null;
-
-    #[ORM\Column(nullable: true)]
-=======
     #[Assert\NotBlank(message: 'Le titre de l\'activité est requis')]
     #[Assert\Length(min: 3, max: 150, minMessage: 'Le titre doit contenir au moins 3 caractères', maxMessage: 'Le titre ne peut pas dépasser 150 caractères')]
     private ?string $title = null;
@@ -70,7 +50,6 @@ class Activity
 
     #[ORM\Column(nullable: true)]
     #[Assert\Length(max: 255, maxMessage: 'L\'URL de l\'image ne peut pas dépasser 255 caractères')]
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
     private ?string $image = null;
 
     #[ORM\Column]
@@ -78,10 +57,7 @@ class Activity
 
     #[ORM\ManyToOne(inversedBy: 'activities')]
     #[ORM\JoinColumn(nullable: false)]
-<<<<<<< HEAD
-=======
     #[Assert\NotNull(message: 'Vous devez sélectionner une catégorie')]
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
     private ?ActivityCategory $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'activities')]

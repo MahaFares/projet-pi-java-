@@ -4,28 +4,18 @@ namespace App\Form;
 
 use App\Entity\ActivityCategory;
 use Symfony\Component\Form\AbstractType;
-<<<<<<< HEAD
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-=======
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
 
 class ActivityCategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-<<<<<<< HEAD
-            ->add('name')
-            ->add('description')
-            ->add('icon')
-=======
             ->add('name', TextType::class, [
                 'required' => true,
                 'help' => 'Nom de la catégorie (3-100 caractères)',
@@ -49,7 +39,6 @@ class ActivityCategoryType extends AbstractType
                 ],
                 'mapped' => false,
             ])
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
         ;
     }
 

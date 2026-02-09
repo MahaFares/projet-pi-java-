@@ -8,8 +8,4 @@ return [
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
-<<<<<<< HEAD
-=======
-    Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
 ];

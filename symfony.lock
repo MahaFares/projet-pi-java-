@@ -184,8 +184,6 @@
     },
     "symfonycasts/verify-email-bundle": {
         "version": "v1.18.0"
-<<<<<<< HEAD
-=======
     },
     "vich/uploader-bundle": {
         "version": "2.9",
@@ -198,6 +196,5 @@
         "files": [
             "./config/packages/vich_uploader.yaml"
         ]
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
     }
 }

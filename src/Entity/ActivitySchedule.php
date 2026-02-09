@@ -4,10 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ActivityScheduleRepository;
 use Doctrine\ORM\Mapping as ORM;
-<<<<<<< HEAD
-=======
 use Symfony\Component\Validator\Constraints as Assert;
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
 
 #[ORM\Entity(repositoryClass: ActivityScheduleRepository::class)]
 class ActivitySchedule
@@ -18,14 +15,6 @@ class ActivitySchedule
     private ?int $id = null;
 
     #[ORM\Column(type: 'datetime')]
-<<<<<<< HEAD
-    private ?\DateTimeInterface $startAt = null;
-
-    #[ORM\Column(type: 'datetime')]
-    private ?\DateTimeInterface $endAt = null;
-
-    #[ORM\Column]
-=======
     #[Assert\NotNull(message: 'La date de début est requise')]
     #[Assert\GreaterThan(value: 'now', message: 'La date de début doit être dans le futur')]
     private ?\DateTimeInterface $startAt = null;
@@ -39,15 +28,11 @@ class ActivitySchedule
     #[Assert\NotNull(message: 'Le nombre de places disponibles est requis')]
     #[Assert\Positive(message: 'Le nombre de places doit être positif')]
     #[Assert\Range(min: 1, notInRangeMessage: 'Au moins 1 place doit être disponible')]
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
     private ?int $availableSpots = null;
 
     #[ORM\ManyToOne(inversedBy: 'schedules')]
     #[ORM\JoinColumn(nullable: false)]
-<<<<<<< HEAD
-=======
     #[Assert\NotNull(message: 'Une activité doit être associée')]
->>>>>>> f5ab5f2b8143340c9833c9379b76af33954bf087
     private ?Activity $activity = null;
 
     public function getId(): ?int
