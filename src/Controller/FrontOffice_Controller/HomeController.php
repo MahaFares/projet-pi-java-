@@ -4,6 +4,7 @@ namespace App\Controller\FrontOffice_Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ActivityRepository;
 use App\Repository\ActivityCategoryRepository;
@@ -35,15 +36,50 @@ class HomeController extends AbstractController
 
     #[Route('/activities', name: 'app_activites')]
     public function activites(
+        Request $request,
         ActivityRepository $activityRepository, 
         ActivityCategoryRepository $categoryRepository, 
         ActivityScheduleRepository $scheduleRepository, 
         GuideRepository $guideRepository): Response {
+        
+        $minPrice = $request->query->get('minPrice') !== null && $request->query->get('minPrice') !== ''
+            ? (float) $request->query->get('minPrice') : null;
+        $maxPrice = $request->query->get('maxPrice') !== null && $request->query->get('maxPrice') !== ''
+            ? (float) $request->query->get('maxPrice') : null;
+
+        $activities = $activityRepository->findByPriceRange($minPrice, $maxPrice);
+        $sidebarCategories = $categoryRepository->findAll();
+
         return $this->render('FrontOffice/activities/blog.html.twig', [
-            'activities' => $activityRepository->findAll(),
-            'categories' => $categoryRepository->findAll(),
-            'schedules'  => $scheduleRepository->findAll(), 
-            'guides'     => $guideRepository->findAll(),
+            'activities' => $activities,
+            'sidebarCategories' => $sidebarCategories,
+            'selectedCategory' => null,
+            'filterMinPrice' => $minPrice,
+            'filterMaxPrice' => $maxPrice,
+        ]);
+    }
+
+    #[Route('/activities/category/{categoryId}', name: 'activities_by_category', requirements: ['categoryId' => '\d+'])]
+    public function activitiesByCategory(
+        Request $request,
+        int $categoryId,
+        ActivityRepository $activityRepository, 
+        ActivityCategoryRepository $categoryRepository): Response {
+        
+        $minPrice = $request->query->get('minPrice') !== null && $request->query->get('minPrice') !== ''
+            ? (float) $request->query->get('minPrice') : null;
+        $maxPrice = $request->query->get('maxPrice') !== null && $request->query->get('maxPrice') !== ''
+            ? (float) $request->query->get('maxPrice') : null;
+
+        $activities = $activityRepository->findByCategoryAndPrice($categoryId, $minPrice, $maxPrice);
+        $sidebarCategories = $categoryRepository->findAll();
+
+        return $this->render('FrontOffice/activities/blog.html.twig', [
+            'activities' => $activities,
+            'sidebarCategories' => $sidebarCategories,
+            'selectedCategory' => $categoryId,
+            'filterMinPrice' => $minPrice,
+            'filterMaxPrice' => $maxPrice,
         ]);
     }
 

@@ -55,6 +55,17 @@
   .filter-sidebar-panel .category-list a.disabled { color: #999; cursor: default; pointer-events: none; }
   .filter-sidebar-panel .price-inputs { display: flex; gap: 8px; margin-bottom: 10px; }
   .filter-sidebar-panel .price-inputs input { flex: 1; }
+  .filter-sidebar-panel select, .filter-sidebar-panel .form-control-sm { 
+    border: 1px solid #ddd; 
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 0.875rem;
+  }
+  .filter-sidebar-panel select:focus, .filter-sidebar-panel .form-control-sm:focus {
+    border-color: #2d5016;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1);
+  }
   .btn-apply-filter { background: #2d5016; border: 0; color: #fff; font-weight: 600; width: 100%; padding: 10px; border-radius: 8px; }
   .btn-apply-filter:hover { background: #1e4620; color: #fff; }
 
@@ -167,30 +178,46 @@
                     {# Type de l'événement #}
                     <div class="filter-section">
                         <div class="filter-label">Type de l'activité</div>
-                        <ul class="category-list">
-                            <li>
-                                <a href="{{ path('app_activites') }}{{ filterMinPrice is not null or filterMaxPrice is not null ? '?minPrice=' ~ (filterMinPrice ?? '') ~ '&maxPrice=' ~ (filterMaxPrice ?? '') : '' }}"
-                                   class="{{ selectedCategory is null ? 'active' : '' }}">
-                                    Toutes les activités
-                                </a>
-                            </li>
-                            {% for name in categoryNames %}
-                                {% set cat = null %}
-                                {% for c in sidebarCategories %}
-                                    {% if c.name == name %}{% set cat = c %}{% endif %}
-                                {% endfor %}
-                                <li>
+                        <form method="get" id="categoryFilterForm" action="{{ path('app_activites') }}">
+                            <select class="form-control form-control-sm" id="categorySelect" name="categoryId" onchange="handleCategoryChange()">
+                                <option value="">Toutes les activités</option>
+                                {% for name in categoryNames %}
+                                    {% set cat = null %}
+                                    {% for c in sidebarCategories %}
+                                        {% if c.name == name %}{% set cat = c %}{% endif %}
+                                    {% endfor %}
                                     {% if cat %}
-                                        <a href="{{ path('activities_by_category', { categoryId: cat.id }) }}{{ filterMinPrice is not null or filterMaxPrice is not null ? '?minPrice=' ~ (filterMinPrice ?? '') ~ '&maxPrice=' ~ (filterMaxPrice ?? '') : '' }}"
-                                           class="{{ selectedCategory == cat.id ? 'active' : '' }}">
+                                        <option value="{{ cat.id }}" {% if selectedCategory == cat.id %}selected{% endif %}>
                                             {{ name }}
-                                        </a>
-                                    {% else %}
-                                        <a href="#" class="disabled">{{ name }}</a>
+                                        </option>
                                     {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
+                                {% endfor %}
+                            </select>
+                        </form>
+                        <script>
+                            function handleCategoryChange() {
+                                const select = document.getElementById('categorySelect');
+                                const categoryId = select.value;
+                                const minPrice = new URLSearchParams(window.location.search).get('minPrice');
+                                const maxPrice = new URLSearchParams(window.location.search).get('maxPrice');
+                                
+                                let url = '{{ path("app_activites") }}';
+                                if (categoryId) {
+                                    url = '/activities/category/' + categoryId;
+                                }
+                                
+                                const params = new URLSearchParams();
+                                if (minPrice) params.append('minPrice', minPrice);
+                                if (maxPrice) params.append('maxPrice', maxPrice);
+                                
+                                const queryString = params.toString();
+                                if (queryString) {
+                                    url += '?' + queryString;
+                                }
+                                
+                                window.location.href = url;
+                            }
+                        </script>
                     </div>
                 </div>
             </aside>
