@@ -28,14 +28,6 @@ class CommandeType extends AbstractType
                 'label' => 'Produit',
                 'placeholder' => '-- Choisir un produit --',
             ])
-            ->add('typeCommande', ChoiceType::class, [
-                'label' => 'Type de commande',
-                'choices' => [
-                    'Achat' => TypeCommande::Achat,
-                    'Location' => TypeCommande::Location,
-                ],
-                'constraints' => [new NotBlank(['message' => 'Le type de commande est obligatoire.'])],
-            ])
             ->add('quantite', IntegerType::class, [
                 'label' => 'Quantité',
                 'constraints' => [
@@ -57,12 +49,6 @@ class CommandeType extends AbstractType
                 'label' => 'Date de commande',
                 'widget' => 'single_text',
                 'constraints' => [new NotBlank(['message' => 'La date de commande est obligatoire.'])],
-            ])
-            ->add('statutCommande', TextType::class, [
-                'label' => 'Statut de la commande',
-                'constraints' => [
-                    new NotBlank(['message' => 'Le statut est obligatoire.']),
-                ],
             ])
         ;
     }

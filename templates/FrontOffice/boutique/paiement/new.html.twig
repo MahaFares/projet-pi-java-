@@ -36,9 +36,7 @@
         {{ form_row(form.commande) }}
         {{ form_row(form.montant) }}
         {{ form_row(form.methodePaiement) }}
-        {{ form_row(form.statutPaiement) }}
         {{ form_row(form.datePaiement) }}
-        {{ form_row(form.referencePaiement) }}
         <button type="submit" class="btn theme_btn button_hover">Enregistrer</button>
         <a href="{{ path('app_paiement_index') }}" class="btn btn-secondary">Annuler</a>
         {{ form_end(form) }}

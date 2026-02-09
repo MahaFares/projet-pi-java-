@@ -35,12 +35,10 @@
 
         {{ form_start(form) }}
         {{ form_row(form.produit) }}
-        {{ form_row(form.typeCommande) }}
         {{ form_row(form.quantite) }}
         {{ form_row(form.prixUnitaire) }}
         {{ form_row(form.total) }}
         {{ form_row(form.dateCommande) }}
-        {{ form_row(form.statutCommande) }}
         <button type="submit" class="btn theme_btn button_hover">Enregistrer</button>
         <a href="{{ path('app_commande_index') }}" class="btn btn-secondary">Annuler</a>
         {{ form_end(form) }}

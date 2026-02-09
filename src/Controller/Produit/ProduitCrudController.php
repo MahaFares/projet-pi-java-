@@ -47,6 +47,27 @@ class ProduitCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Contrôle de saisie côté serveur pour le nom du produit
+            $nom = $produit->getNom();
+            
+            // Vérifier que le nom n'est pas vide
+            if (empty(trim($nom))) {
+                $this->addFlash('error', 'Le nom du produit ne peut pas être vide.');
+                return $this->render('FrontOffice/boutique/produit/new.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
+            
+            // Vérifier que le nom ne contient pas que des chiffres
+            if (preg_match('/^\d+$/', trim($nom))) {
+                $this->addFlash('error', 'Le nom du produit ne peut pas contenir uniquement des chiffres.');
+                return $this->render('FrontOffice/boutique/produit/new.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
+
             $errors = $this->validator->validate($produit);
             if (count($errors) > 0) {
                 foreach ($errors as $error) {
@@ -94,6 +115,27 @@ class ProduitCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Contrôle de saisie côté serveur pour le nom du produit
+            $nom = $produit->getNom();
+            
+            // Vérifier que le nom n'est pas vide
+            if (empty(trim($nom))) {
+                $this->addFlash('error', 'Le nom du produit ne peut pas être vide.');
+                return $this->render('FrontOffice/boutique/produit/edit.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
+            
+            // Vérifier que le nom ne contient pas que des chiffres
+            if (preg_match('/^\d+$/', trim($nom))) {
+                $this->addFlash('error', 'Le nom du produit ne peut pas contenir uniquement des chiffres.');
+                return $this->render('FrontOffice/boutique/produit/edit.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
+
             $errors = $this->validator->validate($produit);
             if (count($errors) > 0) {
                 foreach ($errors as $error) {
