@@ -31,9 +31,6 @@ class Commande
     #[ORM\JoinColumn(name: 'id_produit', referencedColumnName: 'id_produit')]
     private ?Produit $produit = null;
 
-    #[ORM\Column(name: 'type_commande', type: 'string', length: 20, enumType: \App\Enum\TypeCommande::class)]
-    #[Assert\NotNull(message: 'Le type de commande est obligatoire.')]
-    private ?\App\Enum\TypeCommande $typeCommande = null;
 
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank(message: 'La quantité est obligatoire.')]
@@ -57,12 +54,7 @@ class Commande
     #[Assert\NotNull(message: 'La date de commande est obligatoire.')]
     private ?\DateTimeInterface $dateCommande = null;
 
-    #[ORM\Column(name: 'statut_commande', length: 50)]
-    #[Assert\NotBlank(message: 'Le statut de la commande est obligatoire.')]
-    #[Assert\Length(max: 50)]
-    #[Assert\Type('string')]
-    private ?string $statutCommande = null;
-
+   
     /**
      * @var Collection<int, Paiement>
      */
@@ -104,17 +96,6 @@ class Commande
         return $this;
     }
 
-    public function getTypeCommande(): ?\App\Enum\TypeCommande
-    {
-        return $this->typeCommande;
-    }
-
-    public function setTypeCommande(\App\Enum\TypeCommande $typeCommande): static
-    {
-        $this->typeCommande = $typeCommande;
-
-        return $this;
-    }
 
     public function getQuantite(): ?int
     {
@@ -160,18 +141,6 @@ class Commande
     public function setDateCommande(\DateTimeInterface $dateCommande): static
     {
         $this->dateCommande = $dateCommande;
-
-        return $this;
-    }
-
-    public function getStatutCommande(): ?string
-    {
-        return $this->statutCommande;
-    }
-
-    public function setStatutCommande(string $statutCommande): static
-    {
-        $this->statutCommande = $statutCommande;
 
         return $this;
     }

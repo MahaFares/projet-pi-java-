@@ -34,7 +34,7 @@ class CommandeCrudController extends AbstractController
     {
         $items = $this->repository->findBy([], ['dateCommande' => 'DESC']);
 
-        return $this->render('FrontOffice/produit/commande/index.html.twig', [
+        return $this->render('FrontOffice/boutique/commande/index.html.twig', [
             'commandes' => $items,
         ]);
     }

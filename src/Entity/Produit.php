@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 #[ORM\Table(name: 'produits')]
@@ -21,11 +22,8 @@ class Produit
     #[Assert\NotBlank(message: 'Le nom du produit est obligatoire.')]
     #[Assert\Length(max: 150, maxMessage: 'Le nom ne peut pas dépasser {{ limit }} caractères.')]
     #[Assert\Type('string')]
+    #[Assert\Callback([self::class, 'validateNom'])]
     private ?string $nom = null;
-
-    #[ORM\Column(type: 'text', nullable: true)]
-    #[Assert\Type('string')]
-    private ?string $description = null;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     #[Assert\NotBlank(message: 'Le prix est obligatoire.')]
@@ -45,7 +43,8 @@ class Produit
     private ?string $image = null;
 
     #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'produits')]
-    #[ORM\JoinColumn(name: 'id_categorie', referencedColumnName: 'id_categorie')]
+    #[ORM\JoinColumn(name: 'id_categorie', referencedColumnName: 'id_categorie', nullable: false)]
+    #[Assert\NotBlank(message: 'La catégorie est obligatoire.')]
     private ?Categorie $categorie = null;
 
     /**
@@ -58,15 +57,32 @@ class Produit
     {
         $this->commandes = new ArrayCollection();
     }
-public function getId(): ?int
-{
-    return $this->idProduit;
-}
 
-    // public function getIdProduit(): ?int
-    // {
-    //     return $this->idProduit;
-    // }
+    public static function validateNom(mixed $object, ExecutionContextInterface $context): void
+    {
+        if ($object instanceof self) {
+            $nom = $object->getNom();
+            
+            // Vérifier que le nom n'est pas vide
+            if (empty(trim($nom ?? ''))) {
+                $context->buildViolation('Le nom du produit ne peut pas être vide.')
+                    ->atPath('nom')
+                    ->addViolation();
+            }
+            
+            // Vérifier que le nom ne contient pas que des chiffres
+            if (!empty($nom) && preg_match('/^\d+$/', trim($nom))) {
+                $context->buildViolation('Le nom du produit ne peut pas contenir uniquement des chiffres.')
+                    ->atPath('nom')
+                    ->addViolation();
+            }
+        }
+    }
+
+    public function getId(): ?int
+    {
+        return $this->idProduit;
+    }
 
     public function getNom(): ?string
     {
@@ -76,18 +92,6 @@ public function getId(): ?int
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): static
-    {
-        $this->description = $description;
 
         return $this;
     }

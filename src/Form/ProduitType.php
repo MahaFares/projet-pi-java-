@@ -8,7 +8,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,10 +26,6 @@ class ProduitType extends AbstractType
                     new NotBlank(['message' => 'Le nom du produit est obligatoire.']),
                     new Length(['max' => 150]),
                 ],
-            ])
-            ->add('description', TextareaType::class, [
-                'label' => 'Description',
-                'required' => false,
             ])
             ->add('prix', NumberType::class, [
                 'label' => 'Prix',
@@ -53,10 +48,15 @@ class ProduitType extends AbstractType
             ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
-                'choice_label' => 'nom',
+                'choice_label' => function(Categorie $categorie) {
+                    return $categorie->getNom() . ' - ' . ($categorie->getDescription() ?: 'Pas de description');
+                },
                 'label' => 'Catégorie',
                 'placeholder' => '-- Choisir une catégorie --',
-                'required' => false,
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(['message' => 'La catégorie est obligatoire.']),
+                ],
             ])
         ;
     }
