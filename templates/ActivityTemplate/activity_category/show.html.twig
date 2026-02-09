@@ -16,6 +16,6 @@
     </table>
     <a href="{{ path('app_activity_category_edit', {'id': activity_category.id}) }}" class="btn btn-primary">Modifier</a>
     <a href="{{ path('app_activity_category_index') }}" class="btn btn-secondary">Retour à la liste</a>
-    {{ include('activity_category/_delete_form.html.twig') }}
+    {{ include('ActivityTemplate/activity_category/_delete_form.html.twig') }}
 </div>
 {% endblock %}

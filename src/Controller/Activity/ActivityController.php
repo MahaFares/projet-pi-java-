@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/activity')]
 final class ActivityController extends AbstractController
 {
-    #[Route(name: 'app_activity_index', methods: ['GET'])]
+    #[Route('', name: 'app_activity_index', methods: ['GET'])]
     public function index(ActivityRepository $activityRepository): Response
     {
         return $this->render('ActivityTemplate/activity/index.html.twig', [
