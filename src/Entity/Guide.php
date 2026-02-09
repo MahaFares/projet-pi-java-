@@ -43,7 +43,7 @@ class Guide
     private ?string $bio = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Range(min: 0, max: 5, minMessage: 'La note doit être entre 0 et 5', maxMessage: 'La note doit être entre 0 et 5')]
+    #[Assert\Range(min: 0, max: 5, notInRangeMessage: 'La note doit être entre 0 et 5')]
     private ?float $rating = null;
 
     #[ORM\Column(nullable: true)]

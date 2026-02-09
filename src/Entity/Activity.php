@@ -45,7 +45,7 @@ class Activity
 
     #[ORM\Column(nullable: true)]
     #[Assert\Positive(message: 'Le nombre de participants doit être positif')]
-    #[Assert\Range(min: 1, message: 'Au moins 1 participant requis')]
+    #[Assert\Range(min: 1, notInRangeMessage: 'Au moins 1 participant requis')]
     private ?int $maxParticipants = null;
 
     #[ORM\Column(nullable: true)]

@@ -12,8 +12,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class ActivityType extends AbstractType
 {
@@ -51,10 +53,18 @@ class ActivityType extends AbstractType
                 'help' => 'Nombre maximum de participants',
                 'attr' => ['class' => 'form-control', 'placeholder' => 'Ex: 15'],
             ])
-            ->add('image', TextType::class, [
+            ->add('image', FileType::class, [
                 'required' => false,
-                'help' => 'URL de l\'image (max 255 caractères)',
-                'attr' => ['class' => 'form-control', 'placeholder' => 'https://example.com/image.jpg'],
+                'help' => 'Téléchargez une image JPG, PNG ou GIF (max 5 MB)',
+                'attr' => ['class' => 'form-control', 'accept' => 'image/jpeg,image/png,image/gif'],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
+                        'mimeTypesMessage' => 'Veuillez télécharger une image valide (JPG, PNG ou GIF)',
+                    ])
+                ],
+                'mapped' => false,
             ])
             ->add('isActive', CheckboxType::class, [
                 'required' => false,

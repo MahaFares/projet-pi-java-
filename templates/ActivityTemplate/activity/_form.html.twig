@@ -1,4 +1,102 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="form-group mb-3">
+        {{ form_label(form.title, 'Titre de l\'activité', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.title) }}
+        {% if form.title.vars.help %}
+            <small class="form-text text-muted d-block mt-1">{{ form.title.vars.help }}</small>
+        {% endif %}
+    </div>
+
+    <div class="form-group mb-3">
+        {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '6'}}) }}
+        {{ form_errors(form.description) }}
+        {% if form.description.vars.help %}
+            <small class="form-text text-muted d-block mt-1">{{ form.description.vars.help }}</small>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                {{ form_label(form.price, 'Prix (EUR)', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.price) }}
+                {% if form.price.vars.help %}
+                    <small class="form-text text-muted d-block mt-1">{{ form.price.vars.help }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                {{ form_label(form.durationMinutes, 'Durée (minutes)', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.durationMinutes, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.durationMinutes) }}
+                {% if form.durationMinutes.vars.help %}
+                    <small class="form-text text-muted d-block mt-1">{{ form.durationMinutes.vars.help }}</small>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        {{ form_label(form.location, 'Lieu', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.location, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.location) }}
+        {% if form.location.vars.help %}
+            <small class="form-text text-muted d-block mt-1">{{ form.location.vars.help }}</small>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                {{ form_label(form.maxParticipants, 'Nombre max de participants', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.maxParticipants, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.maxParticipants) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                {{ form_label(form.category, 'Catégorie', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.category) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                {{ form_label(form.guide, 'Guide', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.guide, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.guide) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                {{ form_label(form.isActive, 'Actif', {'label_attr': {'class': 'form-check-label'}}) }}
+                <div class="form-check">
+                    {{ form_widget(form.isActive, {'attr': {'class': 'form-check-input'}}) }}
+                </div>
+                {{ form_errors(form.isActive) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        {{ form_label(form.image, 'Image de l\'activité', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.image, {'attr': {'class': 'form-control', 'accept': 'image/jpeg,image/png,image/gif'}}) }}
+        {{ form_errors(form.image) }}
+        {% if form.image.vars.help %}
+            <small class="form-text text-muted d-block mt-1">{{ form.image.vars.help }}</small>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" style="background-color: #2d5016; border-color: #2d5016;">
+            {{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
 {{ form_end(form) }}

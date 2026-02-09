@@ -27,7 +27,7 @@ class ActivitySchedule
     #[ORM\Column]
     #[Assert\NotNull(message: 'Le nombre de places disponibles est requis')]
     #[Assert\Positive(message: 'Le nombre de places doit être positif')]
-    #[Assert\Range(min: 1, minMessage: 'Au moins 1 place doit être disponible')]
+    #[Assert\Range(min: 1, notInRangeMessage: 'Au moins 1 place doit être disponible')]
     private ?int $availableSpots = null;
 
     #[ORM\ManyToOne(inversedBy: 'schedules')]
