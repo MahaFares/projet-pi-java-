@@ -139,7 +139,8 @@
 {% set filterMinPrice = filterMinPrice|default(null) %}
 {% set filterMaxPrice = filterMaxPrice|default(null) %}
 {% set sidebarCategories = sidebarCategories|default([]) %}
-{% set categoryNames = ['Camping', 'Équitation', 'Kayak', 'Randonnée', 'Yoga'] %}
+{# Use categories provided by controller instead of a hard-coded list #}
+{% set categoryNames = sidebarCategories is iterable ? sidebarCategories : [] %}
 
     <!--================Breadcrumb Area =================-->
     <section class="breadcrumb_area">
@@ -165,8 +166,8 @@
                 <div class="panel-body">
                     {# Prix #}
                     <div class="filter-section">
-                        <div class="filter-label">Filtrer par prix (€)</div>
-                        <form method="get" action="{{ path(selectedCategory ? 'activities_by_category' : 'app_activites', selectedCategory ? { categoryId: selectedCategory } : {}) }}">
+                        <div class="filter-label">Filtrer par prix (DT)</div>
+                        <form method="get" action="{{ selectedCategory ? path('activities_by_category', {'categoryId': selectedCategory}) : path('app_activites') }}">
                             <div class="price-inputs">
                                 <input type="number" name="minPrice" class="form-control form-control-sm" placeholder="Min" step="0.01" min="0" value="{{ filterMinPrice is not null ? filterMinPrice : '' }}">
                                 <input type="number" name="maxPrice" class="form-control form-control-sm" placeholder="Max" step="0.01" min="0" value="{{ filterMaxPrice is not null ? filterMaxPrice : '' }}">
@@ -178,19 +179,13 @@
                     {# Type de l'événement #}
                     <div class="filter-section">
                         <div class="filter-label">Type de l'activité</div>
-                        <form method="get" id="categoryFilterForm" action="{{ path('app_activites') }}">
+                        <form method="get" id="categoryFilterForm" action="{{ selectedCategory ? path('activities_by_category', {'categoryId': selectedCategory}) : path('app_activites') }}">
                             <select class="form-control form-control-sm" id="categorySelect" name="categoryId" onchange="handleCategoryChange()">
                                 <option value="">Toutes les activités</option>
-                                {% for name in categoryNames %}
-                                    {% set cat = null %}
-                                    {% for c in sidebarCategories %}
-                                        {% if c.name == name %}{% set cat = c %}{% endif %}
-                                    {% endfor %}
-                                    {% if cat %}
-                                        <option value="{{ cat.id }}" {% if selectedCategory == cat.id %}selected{% endif %}>
-                                            {{ name }}
-                                        </option>
-                                    {% endif %}
+                                {% for cat in sidebarCategories %}
+                                    <option value="{{ cat.id }}" {% if selectedCategory is not null and selectedCategory == cat.id %}selected{% endif %}>
+                                        {{ cat.name }}
+                                    </option>
                                 {% endfor %}
                             </select>
                         </form>
