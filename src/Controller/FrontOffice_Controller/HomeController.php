@@ -36,22 +36,55 @@ class HomeController extends AbstractController
     }
 
     #[Route('/activites', name: 'app_activites')]
-    public function activites(): Response
+    public function activites(ActivityRepository $activityRepository): Response
     {
-        return $this->render('FrontOffice/activities/blog.html.twig');
+        try {
+            $activities = $activityRepository->findAll();
+        } catch (\Exception $e) {
+            // Table may not exist yet, return empty array
+            $activities = [];
+        }
+        
+        return $this->render('FrontOffice/activities/blog.html.twig', [
+            'activities' => $activities,
+        ]);
     }
 
 
     #[Route('/transport', name: 'app_transport')]
-    public function transport(TransportRepository $transportRepository, \Symfony\Component\HttpFoundation\Request $request): Response
+    public function transport(TransportRepository $transportRepository, Request $request): Response
     {
-        return $this->render('FrontOffice/transport/accomodation.html.twig');
+        $type = $request->query->get('type');
+        $minPrice = $request->query->get('minPrice');
+        $maxPrice = $request->query->get('maxPrice');
+        $minCapacity = $request->query->get('minCapacity');
+        $available = $request->query->get('available');
+
+        $minPrice = $minPrice !== null && $minPrice !== '' ? (float) $minPrice : null;
+        $maxPrice = $maxPrice !== null && $maxPrice !== '' ? (float) $maxPrice : null;
+        $minCapacity = $minCapacity !== null && $minCapacity !== '' ? (int) $minCapacity : null;
+        $available = ($available === '1' ? true : ($available === '0' ? false : null));
+
+        $transports = $transportRepository->findByFilters($type, $minPrice, $maxPrice, $minCapacity, $available);
+
+        return $this->render('FrontOffice/transport/accomodation.html.twig', [
+            'transports' => $transports,
+            'filters' => [
+                'type' => $type,
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice,
+                'minCapacity' => $minCapacity,
+                'available' => $available,
+            ],
+        ]);
     }
 
     #[Route('/boutique', name: 'app_boutique')]
     public function boutique(): Response
     {
-        return $this->render('FrontOffice/boutique/boutique.html.twig');
+        return $this->render('FrontOffice/boutique/boutique.html.twig', [
+            'produits' => [],
+        ]);
     }
 
     #[Route('/se-connecter', name: 'app_login')]
