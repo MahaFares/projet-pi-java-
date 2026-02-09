@@ -26,7 +26,7 @@ class CategorieCrudController extends AbstractController
     {
         $items = $this->repository->findBy([], ['nom' => 'ASC']);
 
-        return $this->render('ProduitTemplate/categorie/index.html.twig', [
+        return $this->render('FrontOffice/boutique/categorie/index.html.twig', [
             'categories' => $items,
         ]);
     }
@@ -44,7 +44,7 @@ class CategorieCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('ProduitTemplate/categorie/new.html.twig', [
+                return $this->render('FrontOffice/boutique/categorie/new.html.twig', [
                     'categorie' => $categorie,
                     'form' => $form,
                 ]);
@@ -55,7 +55,7 @@ class CategorieCrudController extends AbstractController
             return $this->redirectToRoute('app_categorie_index');
         }
 
-        return $this->render('ProduitTemplate/categorie/new.html.twig', [
+        return $this->render('FrontOffice/boutique/categorie/new.html.twig', [
             'categorie' => $categorie,
             'form' => $form,
         ]);
@@ -69,7 +69,7 @@ class CategorieCrudController extends AbstractController
             throw $this->createNotFoundException('Catégorie introuvable.');
         }
 
-        return $this->render('ProduitTemplate/categorie/show.html.twig', [
+        return $this->render('FrontOffice/boutique/categorie/show.html.twig', [
             'categorie' => $categorie,
         ]);
     }
@@ -91,7 +91,7 @@ class CategorieCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('ProduitTemplate/categorie/edit.html.twig', [
+                return $this->render('FrontOffice/boutique/categorie/edit.html.twig', [
                     'categorie' => $categorie,
                     'form' => $form,
                 ]);
@@ -101,7 +101,7 @@ class CategorieCrudController extends AbstractController
             return $this->redirectToRoute('app_categorie_index');
         }
 
-        return $this->render('ProduitTemplate/categorie/edit.html.twig', [
+        return $this->render('FrontOffice/boutique/categorie/edit.html.twig', [
             'categorie' => $categorie,
             'form' => $form,
         ]);

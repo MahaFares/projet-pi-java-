@@ -37,11 +37,14 @@ class Categorie
     {
         $this->produits = new ArrayCollection();
     }
-
-    public function getIdCategorie(): ?int
+ public function getId(): ?int
     {
         return $this->idCategorie;
     }
+    // public function getIdCategorie(): ?int
+    // {
+    //     return $this->idCategorie;
+    // }
 
     public function getNom(): ?string
     {
@@ -95,4 +98,9 @@ class Categorie
 
         return $this;
     }
+    public function __toString(): string
+{
+    return $this->nom ?? 'Categorie';
+}
+
 }
