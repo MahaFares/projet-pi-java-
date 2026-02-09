@@ -29,24 +29,17 @@ class Paiement
 
     #[ORM\Column(name: 'methode_paiement', length: 50)]
     #[Assert\NotBlank(message: 'La méthode de paiement est obligatoire.')]
+    #[Assert\Choice(
+        choices: ['Par carte', 'Par espèces'],
+        message: 'La méthode de paiement doit être "Par carte" ou "Par espèces".'
+    )]
     #[Assert\Length(max: 50)]
     #[Assert\Type('string')]
     private ?string $methodePaiement = null;
 
-    #[ORM\Column(name: 'statut_paiement', length: 50)]
-    #[Assert\NotBlank(message: 'Le statut du paiement est obligatoire.')]
-    #[Assert\Length(max: 50)]
-    #[Assert\Type('string')]
-    private ?string $statutPaiement = null;
-
     #[ORM\Column(name: 'date_paiement', type: Types::DATETIME_MUTABLE)]
     #[Assert\NotNull(message: 'La date de paiement est obligatoire.')]
     private ?\DateTimeInterface $datePaiement = null;
-
-    #[ORM\Column(name: 'reference_paiement', length: 100, nullable: true)]
-    #[Assert\Length(max: 100)]
-    #[Assert\Type('string')]
-    private ?string $referencePaiement = null;
 
     public function getIdPaiement(): ?int
     {
@@ -89,18 +82,6 @@ class Paiement
         return $this;
     }
 
-    public function getStatutPaiement(): ?string
-    {
-        return $this->statutPaiement;
-    }
-
-    public function setStatutPaiement(string $statutPaiement): static
-    {
-        $this->statutPaiement = $statutPaiement;
-
-        return $this;
-    }
-
     public function getDatePaiement(): ?\DateTimeInterface
     {
         return $this->datePaiement;
@@ -109,18 +90,6 @@ class Paiement
     public function setDatePaiement(\DateTimeInterface $datePaiement): static
     {
         $this->datePaiement = $datePaiement;
-
-        return $this;
-    }
-
-    public function getReferencePaiement(): ?string
-    {
-        return $this->referencePaiement;
-    }
-
-    public function setReferencePaiement(?string $referencePaiement): static
-    {
-        $this->referencePaiement = $referencePaiement;
 
         return $this;
     }

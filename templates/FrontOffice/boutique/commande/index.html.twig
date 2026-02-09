@@ -14,6 +14,17 @@
         </div>
     </div>
 </section>
+</section>
+<!-- Boutons de navigation -->
+<section class="py-3">
+    <div class="container">
+       <div class="text-right">
+    <a href="{{ path('app_categorie_new') }}" class="btn theme_btn button_hover">Categorie</a>
+    <a href="{{ path('app_produit_new') }}" class="btn theme_btn button_hover">Produit</a>
+    <a href="{{ path('app_paiement_new') }}" class="btn theme_btn button_hover">Paiement</a>
+</div>
+    </div>
+</section>
 
 <section class="accomodation_area section_gap">
     <div class="container">
@@ -33,30 +44,26 @@
                         <th>Id</th>
                         <th>Id user</th>
                         <th>Produit</th>
-                        <th>Type</th>
                         <th>Quantité</th>
                         <th>Total</th>
                         <th>Date</th>
-                        <th>Statut</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for c in commandes %}
                     <tr>
-                        <td>{{ c.id }}</td>
+                        <td>{{ c.idCommande }}</td>
                         <td>{{ c.idUser ?? '—' }}</td>
                         <td>{{ c.produit ? c.produit.nom : '—' }}</td>
-                        <td>{{ c.typeCommande ? c.typeCommande.value : '—' }}</td>
                         <td>{{ c.quantite }}</td>
                         <td>{{ c.total }}</td>
                         <td>{{ c.dateCommande ? c.dateCommande|date('d/m/Y H:i') : '—' }}</td>
-                        <td>{{ c.statutCommande }}</td>
                         <td>
-                            <a href="{{ path('app_commande_show', { id: c.id }) }}" class="btn btn-sm btn-info">Voir</a>
-                            <a href="{{ path('app_commande_edit', { id: c.id }) }}" class="btn btn-sm btn-secondary">Modifier</a>
-                            <form method="post" action="{{ path('app_commande_delete', { id: c.id }) }}" class="d-inline" onsubmit="return confirm('Supprimer cette commande ?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete_commande_' ~ c.id) }}">
+                            <a href="{{ path('app_commande_show', { id: c.idCommande }) }}" class="btn btn-sm btn-info">Voir</a>
+                            <a href="{{ path('app_commande_edit', { id: c.idCommande }) }}" class="btn btn-sm btn-secondary">Modifier</a>
+                            <form method="post" action="{{ path('app_commande_delete', { id: c.idCommande }) }}" class="d-inline" onsubmit="return confirm('Supprimer cette commande ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete_commande_' ~ c.idCommande) }}">
                                 <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
                             </form>
                         </td>
