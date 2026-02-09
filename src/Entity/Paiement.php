@@ -29,6 +29,10 @@ class Paiement
 
     #[ORM\Column(name: 'methode_paiement', length: 50)]
     #[Assert\NotBlank(message: 'La méthode de paiement est obligatoire.')]
+    #[Assert\Choice(
+        choices: ['Par carte', 'Par espèces'],
+        message: 'La méthode de paiement doit être "Par carte" ou "Par espèces".'
+    )]
     #[Assert\Length(max: 50)]
     #[Assert\Type('string')]
     private ?string $methodePaiement = null;
@@ -36,6 +40,7 @@ class Paiement
     #[ORM\Column(name: 'date_paiement', type: Types::DATETIME_MUTABLE)]
     #[Assert\NotNull(message: 'La date de paiement est obligatoire.')]
     private ?\DateTimeInterface $datePaiement = null;
+
     public function getIdPaiement(): ?int
     {
         return $this->idPaiement;
@@ -88,6 +93,4 @@ class Paiement
 
         return $this;
     }
-
-  
 }
