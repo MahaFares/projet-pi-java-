@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HebergementRepository::class)]
 class Hebergement
@@ -17,37 +18,54 @@ class Hebergement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom de l'hébergement ne peut pas être vide.")]
+    #[Assert\Length(min: 2, max: 255, minMessage: "Le nom doit contenir au moins {{ limit }} caractères.", maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères.")]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "La description ne peut pas être vide.")]
+    #[Assert\Length(min: 10, max: 5000, minMessage: "La description est trop courte ({{ limit }} caractères minimum).", maxMessage: "La description est trop longue ({{ limit }} caractères maximum).")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "L'adresse ne peut pas être vide.")]
+    #[Assert\Length(min: 5, max: 255, minMessage: "L'adresse est trop courte ({{ limit }} caractères minimum).")]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: "La ville ne peut pas être vide.")]
+    #[Assert\Length(min: 2, max: 100, minMessage: "La ville doit contenir au moins {{ limit }} caractères.")]
     private ?string $ville = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Le nombre d'étoiles doit être renseigné.")]
+    #[Assert\Range(min: 0, max: 5, notInRangeMessage: "Le nombre d'étoiles doit être entre {{ min }} et {{ max }}.")]
     private ?int $nbEtoiles = null;
 
     #[ORM\Column(length: 500, nullable: true)]
+    #[Assert\Length(max: 500, maxMessage: "Le chemin de l'image est trop long ({{ limit }} caractères maximum).")]
     private ?string $imagePrincipale = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\Length(max: 100, maxMessage: "Le label eco est trop long ({{ limit }} caractères maximum).")]
     private ?string $labelEco = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(min: -90, max: 90, notInRangeMessage: "La latitude doit être entre {{ min }} et {{ max }}.")]
     private ?float $latitude = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(min: -180, max: 180, notInRangeMessage: "La longitude doit être entre {{ min }} et {{ max }}.")]
     private ?float $longitude = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Le statut actif doit être renseigné.")]
+    #[Assert\Type(type: 'bool', message: "Le statut actif doit être un booléen.")]
     private ?bool $actif = null;
 
     #[ORM\ManyToOne(inversedBy: 'hebergements')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "La catégorie doit être renseignée.")]
     private ?CategorieHebergement $categorie = null;
 
     /**

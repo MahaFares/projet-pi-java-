@@ -1,25 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hebergement index{% endblock %}
+{% block title %}Hébergements - Admin{% endblock %}
 
 {% block body %}
-    <h1>Hebergement index</h1>
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
 
-    <table class="table">
+    <h1>Hébergements</h1>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>Description</th>
                 <th>Adresse</th>
                 <th>Ville</th>
-                <th>NbEtoiles</th>
-                <th>ImagePrincipale</th>
-                <th>LabelEco</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
+                <th>Étoiles</th>
                 <th>Actif</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,27 +25,23 @@
             <tr>
                 <td>{{ hebergement.id }}</td>
                 <td>{{ hebergement.nom }}</td>
-                <td>{{ hebergement.description }}</td>
                 <td>{{ hebergement.adresse }}</td>
                 <td>{{ hebergement.ville }}</td>
                 <td>{{ hebergement.nbEtoiles }}</td>
-                <td>{{ hebergement.imagePrincipale }}</td>
-                <td>{{ hebergement.labelEco }}</td>
-                <td>{{ hebergement.latitude }}</td>
-                <td>{{ hebergement.longitude }}</td>
-                <td>{{ hebergement.actif ? 'Yes' : 'No' }}</td>
+                <td>{{ hebergement.actif ? '✓' : '✗' }}</td>
                 <td>
-                    <a href="{{ path('app_hebergement_show', {'id': hebergement.id}) }}">show</a>
-                    <a href="{{ path('app_hebergement_edit', {'id': hebergement.id}) }}">edit</a>
+                    <a href="{{ path('app_hebergement_show', {'id': hebergement.id}) }}">Voir</a>
+                    <a href="{{ path('app_hebergement_edit', {'id': hebergement.id}) }}" class="ms-2">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="12">no records found</td>
+                <td colspan="7" class="text-muted">Aucun hébergement trouvé.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_hebergement_new') }}">Create new</a>
+    <a href="{{ path('app_hebergement_new') }}" class="btn btn-success">Créer un hébergement</a>
+</div>
 {% endblock %}

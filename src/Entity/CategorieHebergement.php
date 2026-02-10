@@ -6,6 +6,7 @@ use App\Repository\CategorieHebergementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategorieHebergementRepository::class)]
 class CategorieHebergement
@@ -16,9 +17,13 @@ class CategorieHebergement
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: "Le nom de la catégorie ne peut pas être vide.")]
+    #[Assert\Length(min: 2, max: 100, minMessage: "Le nom doit contenir au moins {{ limit }} caractères.", maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères.")]
     private ?string $nom = null;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: "La description de la catégorie ne peut pas être vide.")]
+    #[Assert\Length(min: 5, max: 2000, minMessage: "La description est trop courte ({{ limit }} caractères minimum).", maxMessage: "La description est trop longue ({{ limit }} caractères maximum).")]
     private ?string $description = null;
 
     /**

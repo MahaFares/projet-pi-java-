@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Hebergement{% endblock %}
+{% block title %}Modifier un hébergement - Admin{% endblock %}
 
 {% block body %}
-    <h1>Edit Hebergement</h1>
-
-    {{ include('HebergementTemplate/hebergement/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_hebergement_index') }}">back to list</a>
-
-    {{ include('HebergementTemplate/hebergement/_delete_form.html.twig') }}
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
+    <h1>Modifier un hébergement</h1>
+    {{ include('HebergementTemplate/hebergement/_form_new.html.twig') }}
+    <a href="{{ path('app_hebergement_index') }}" class="btn btn-secondary mt-2">Retour à la liste</a>
+    <div class="mt-3">
+        {{ include('HebergementTemplate/hebergement/_delete_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}

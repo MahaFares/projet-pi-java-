@@ -38,7 +38,7 @@ final class EquipementController extends AbstractController
 
         return $this->render('HebergementTemplate/equipement/new.html.twig', [
             'equipement' => $equipement,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -64,7 +64,7 @@ final class EquipementController extends AbstractController
 
         return $this->render('HebergementTemplate/equipement/edit.html.twig', [
             'equipement' => $equipement,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 

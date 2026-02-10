@@ -1,17 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Equipement index{% endblock %}
+{% block title %}Équipements - Admin{% endblock %}
 
 {% block body %}
-    <h1>Equipement index</h1>
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
 
-    <table class="table">
+    <h1>Équipements</h1>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +24,18 @@
                 <td>{{ equipement.nom }}</td>
                 <td>{{ equipement.description }}</td>
                 <td>
-                    <a href="{{ path('app_equipement_show', {'id': equipement.id}) }}">show</a>
-                    <a href="{{ path('app_equipement_edit', {'id': equipement.id}) }}">edit</a>
+                    <a href="{{ path('app_equipement_show', {'id': equipement.id}) }}">Voir</a>
+                    <a href="{{ path('app_equipement_edit', {'id': equipement.id}) }}" class="ms-2">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4" class="text-muted">Aucun équipement trouvé.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_equipement_new') }}">Create new</a>
+    <a href="{{ path('app_equipement_new') }}" class="btn btn-success">Créer un équipement</a>
+</div>
 {% endblock %}

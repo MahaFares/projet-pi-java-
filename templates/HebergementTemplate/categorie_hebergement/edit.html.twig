@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit CategorieHebergement{% endblock %}
+{% block title %}Modifier une catégorie - Admin{% endblock %}
 
 {% block body %}
     <h1>Edit CategorieHebergement</h1>
 
-    {{ include('HebergementTemplate/categorie_hebergement/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('HebergementTemplate/categorie_hebergement/_form.html.twig', {'form': form, 'button_label': 'Update'}) }}
 
     <a href="{{ path('app_categorie_hebergement_index') }}">back to list</a>
 

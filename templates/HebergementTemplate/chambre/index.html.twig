@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Chambre index{% endblock %}
+{% block title %}Chambres - Admin{% endblock %}
 
 {% block body %}
-    <h1>Chambre index</h1>
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
 
-    <table class="table">
+    <h1>Chambres</h1>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -15,7 +18,7 @@
                 <th>PrixParNuit</th>
                 <th>Description</th>
                 <th>Disponible</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,19 +30,20 @@
                 <td>{{ chambre.capacite }}</td>
                 <td>{{ chambre.prixParNuit }}</td>
                 <td>{{ chambre.description }}</td>
-                <td>{{ chambre.disponible ? 'Yes' : 'No' }}</td>
+                <td>{{ chambre.disponible ? '✓' : '✗' }}</td>
                 <td>
-                    <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}">show</a>
-                    <a href="{{ path('app_chambre_edit', {'id': chambre.id}) }}">edit</a>
+                    <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}">Voir</a>
+                    <a href="{{ path('app_chambre_edit', {'id': chambre.id}) }}" class="ms-2">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8" class="text-muted">Aucune chambre trouvée.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_chambre_new') }}">Create new</a>
+    <a href="{{ path('app_chambre_new') }}" class="btn btn-success">Créer une chambre</a>
+</div>
 {% endblock %}

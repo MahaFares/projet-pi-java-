@@ -1,17 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}CategorieHebergement index{% endblock %}
+{% block title %}Catégories d'hébergement - Admin{% endblock %}
 
 {% block body %}
-    <h1>CategorieHebergement index</h1>
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
 
-    <table class="table">
+    <h1>Catégories d'hébergement</h1>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +24,18 @@
                 <td>{{ categorie_hebergement.nom }}</td>
                 <td>{{ categorie_hebergement.description }}</td>
                 <td>
-                    <a href="{{ path('app_categorie_hebergement_show', {'id': categorie_hebergement.id}) }}">show</a>
-                    <a href="{{ path('app_categorie_hebergement_edit', {'id': categorie_hebergement.id}) }}">edit</a>
+                    <a href="{{ path('app_categorie_hebergement_show', {'id': categorie_hebergement.id}) }}">Voir</a>
+                    <a href="{{ path('app_categorie_hebergement_edit', {'id': categorie_hebergement.id}) }}" class="ms-2">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4" class="text-muted">Aucune catégorie trouvée.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_categorie_hebergement_new') }}">Create new</a>
+    <a href="{{ path('app_categorie_hebergement_new') }}" class="btn btn-success">Créer une catégorie</a>
+</div>
 {% endblock %}
