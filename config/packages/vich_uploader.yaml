@@ -1,6 +1,6 @@
 # VichUploaderBundle disabled - using simple file uploads instead
-# vich_uploader:
-#     db_driver: orm
+vich_uploader:
+     db_driver: orm
 #     #mappings:
 #     #    products:
 #     #        uri_prefix: /images/products
