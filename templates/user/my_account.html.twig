@@ -8,19 +8,53 @@
         <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
         <div class="container">
             <div class="page-cover text-center">
-                <h2 class="page-cover-tittle">Mon compte</h2>
+                <h2 class="page-cover-tittle">Mon Compte</h2>
                 <ol class="breadcrumb">
                     <li><a href="{{ path('app_home') }}">Home</a></li>
-                    <li class="active">Mon compte</li>
+                    <li class="active">Mon Compte</li>
                 </ol>
             </div>
         </div>
     </section>
-    <!--================Breadcrumb Area =================-->
+    <!--================End Breadcrumb Area =================-->
 
-    <section class="accomodation_area section_gap">
+    <!--================ Profile Area =================-->
+    <section class="sample-text-area">
         <div class="container">
-            <p class="text-center">Bienvenue sur votre espace compte.</p>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <div class="section_title text-center">
+                        <h2 class="title_color">Informations Personnelles</h2>
+                        <p>Gérez vos informations et préférences.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <img src="{{ asset('images/about_banner.jpg') }}" alt="User Avatar" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                            <!-- Placeholder image, ideally user has an avatar field -->
+                        </div>
+                        <div class="col-md-8">
+                            <div class="typography">
+                                <h3 class="mb-3">Bonjour, {{ app.user.username }} !</h3>
+                                <ul class="list_style unordered-list p-0">
+                                    <li><strong>Email :</strong> {{ app.user.email }}</li>
+                                    <li><strong>Nom d'utilisateur :</strong> {{ app.user.username }}</li>
+                                    <!-- Add other user fields here if available -->
+                                </ul>
+                                
+                                <div class="mt-4 d-flex flex-wrap gap-2">
+                                    <a href="{{ path('app_update_account') }}" class="btn theme_btn button_hover mr-2 mb-2">
+                                        <i class="fa fa-pencil"></i> Modifier mes informations
+                                    </a>
+                                    <a href="{{ path('app_change_password') }}" class="btn theme_btn_two button_hover mb-2">
+                                        <i class="fa fa-lock"></i> Changer mon mot de passe
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+    <!--================ End Profile Area =================-->
 {% endblock %}

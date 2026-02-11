@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon compte | Eco Trip{% endblock %}
+
+{% block body %}
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax"></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Modifier mon compte</h2>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('app_home') }}">Home</a></li>
+                <li><a href="{{ path('app_my_account') }}">Mon compte</a></li>
+                <li class="active">Modifier</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {{ form_start(form) }}
+                    {{ form_row(form.username) }}
+
+                    <button class="btn theme_btn button_hover w-100">
+                        Enregistrer les modifications
+                    </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

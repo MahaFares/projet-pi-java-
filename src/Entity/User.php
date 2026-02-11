@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Enum\Role;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -22,10 +23,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     /**
-     * @var list<string> The user roles
+     * Single role stored as JSON array in DB for compatibility (e.g. ["ROLE_ADMIN"]).
      */
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\Column(enumType: Role::class)]
+    private ?Role $roles;
 
     /**
      * @var string The hashed password
@@ -35,6 +36,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    #[ORM\Column]
+    private ?string $username=null;
 
     public function getId(): ?int
     {
@@ -68,21 +72,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-        $roles[] = 'ROLE_ADMIN';
-
-        return array_unique($roles);
+        return [$this->roles?->value ?? Role::USER->value];
     }
 
     /**
-     * @param list<string> $roles
+     * @param Role $roles
      */
-    public function setRoles(array $roles): static
+    public function setRoles(Role $roles): static
     {
         $this->roles = $roles;
 
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username=$username;
         return $this;
     }
 
