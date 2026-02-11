@@ -1,0 +1,37 @@
+{% extends 'BackOffice/base.html.twig' %}
+
+{% block title %}Dashboard | Admin{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre d'utilisateurs</h5>
+                </div>
+                <div class="card-footer">
+                    <a href="" class="btn btn-primary">Voir les utilisateurs</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre de produits</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre de commandes</h5>
+                </div>
+                <div class="card-footer">
+                    <a href="" class="btn btn-primary">Voir les commandes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
