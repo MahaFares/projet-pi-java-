@@ -177,4 +177,5 @@ class ProduitCrudController extends AbstractController
 
         return $this->redirectToRoute('app_produit_index');
     }
+    
 }
