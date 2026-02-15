@@ -1,384 +1,263 @@
 ﻿{% extends 'base.html.twig' %}
 
-{% block title %}ActivitÃ©s | Eco Trip{% endblock %}
+{% block title %}Produits | EcoTrip{% endblock %}
 
 {% block body %}
-        <!--================Banner Area =================-->
-        <section class="banner_area blog_banner d_flex align-items-center">
-            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-            <div class="container">
-                <div class="banner_content text-center">
-                    <h4>Dude Youâ€™re Getting <br />a Telescope</h4>
-                    <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first</p>
-                    <a href="#" class="btn white_btn button_hover">View More</a>
-                </div>
+    <!--================Breadcrumb Area =================-->
+    <section class="breadcrumb_area">
+        <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+        <div class="container">
+            <div class="page-cover text-center">
+                <h2 class="page-cover-tittle">Notre Boutique</h2>
+                <ol class="breadcrumb">
+                    <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li class="active">Boutique</li>
+                </ol>
             </div>
-        </section>
-        <!--================Banner Area =================-->
-        
-        <!--================Blog Categorie Area =================-->
-        <section class="blog_categorie_area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="categories_post">
-                            <img src="image/blog/cat-post/cat-post-3.jpg" alt="post">
-                            <div class="categories_details">
-                                <div class="categories_text">
-                                    <a href="blog-details.html"><h5>Social Life</h5></a>
-                                    <div class="border_line"></div>
-                                    <p>Enjoy your social life together</p>
-                                </div>
-                            </div>
+        </div>
+    </section>
+    <!--================Breadcrumb Area =================-->
+
+    <!--================ Search & Filter Area =================-->
+    <section class="py-4" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="card p-3 shadow-sm">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par nom ou catégorie..." />
+                            <button id="clearSearch" class="btn btn-outline-secondary" type="button">Effacer</button>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="categories_post">
-                            <img src="image/blog/cat-post/cat-post-2.jpg" alt="post">
-                            <div class="categories_details">
-                                <div class="categories_text">
-                                    <a href="blog-details.html"><h5>Politics</h5></a>
-                                    <div class="border_line"></div>
-                                    <p>Be a part of politics</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-3">
+                        <select id="sortSelect" class="form-select">
+                            <option value="">-- Trier par --</option>
+                            <option value="nom_asc">Nom (A-Z)</option>
+                            <option value="nom_desc">Nom (Z-A)</option>
+                            <option value="prix_asc">Prix croissant</option>
+                            <option value="prix_desc">Prix décroissant</option>
+                            <option value="stock_desc">Stock disponible</option>
+                        </select>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="categories_post">
-                            <img src="image/blog/cat-post/cat-post-1.jpg" alt="post">
-                            <div class="categories_details">
-                                <div class="categories_text">
-                                    <a href="blog-details.html"><h5>Food</h5></a>
-                                    <div class="border_line"></div>
-                                    <p>Let the food be finished</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-2 text-end">
+                        <small class="text-muted">{{ produits|length }} résultats</small>
                     </div>
                 </div>
             </div>
-        </section>
-        <!--================Blog Categorie Area =================-->
-        
-        <!--================Blog Area =================-->
-        <section class="blog_area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="blog_left_sidebar">
-                            <article class="row blog_item">
-                               <div class="col-md-3">
-                                   <div class="blog_info text-right">
-                                        <div class="post_tag">
-                                            <a href="#">Food,</a>
-                                            <a href="#">Technology,</a>
-                                            <a href="#">Politics,</a>
-                                            <a href="#">Lifestyle</a>
-                                        </div>
-                                        <ul class="blog_meta list_style">
-                                            <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
-                                            <li><a href="#">12 Dec, 2017<i class="lnr lnr-calendar-full"></i></a></li>
-                                            <li><a href="#">1.2M Views<i class="lnr lnr-eye"></i></a></li>
-                                            <li><a href="#">06 Comments<i class="lnr lnr-bubble"></i></a></li>
-                                        </ul>
-                                    </div>
-                               </div>
-                                <div class="col-md-9">
-                                    <div class="blog_post">
-                                        <img src="image/blog/main-blog/m-blog-1.jpg" alt="">
-                                        <div class="blog_details">
-                                            <a href="#"><h2>Astronomy Binoculars A Great Alternative</h2></a>
-                                            <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction.</p>
-                                            <a href="#" class="view_btn button_hover">View More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row blog_item">
-                               <div class="col-md-3">
-                                   <div class="blog_info text-right">
-                                        <div class="post_tag">
-                                            <a href="#">Food,</a>
-                                            <a href="#">Technology,</a>
-                                            <a href="#">Politics,</a>
-                                            <a href="#">Lifestyle</a>
-                                        </div>
-                                        <ul class="blog_meta list_style">
-                                            <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
-                                            <li><a href="#">12 Dec, 2017<i class="lnr lnr-calendar-full"></i></a></li>
-                                            <li><a href="#">1.2M Views<i class="lnr lnr-eye"></i></a></li>
-                                            <li><a href="#">06 Comments<i class="lnr lnr-bubble"></i></a></li>
-                                        </ul>
-                                    </div>
-                               </div>
-                                <div class="col-md-9">
-                                    <div class="blog_post">
-                                        <img src="image/blog/main-blog/m-blog-2.jpg" alt="">
-                                        <div class="blog_details">
-                                            <a href="#"><h2>The Basics Of Buying A Telescope</h2></a>
-                                            <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction.</p>
-                                            <a href="#" class="view_btn button_hover">View More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row blog_item">
-                               <div class="col-md-3">
-                                   <div class="blog_info text-right">
-                                        <div class="post_tag">
-                                            <a href="#">Food,</a>
-                                            <a href="#">Technology,</a>
-                                            <a href="#">Politics,</a>
-                                            <a href="#">Lifestyle</a>
-                                        </div>
-                                        <ul class="blog_meta list_style">
-                                            <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
-                                            <li><a href="#">12 Dec, 2017<i class="lnr lnr-calendar-full"></i></a></li>
-                                            <li><a href="#">1.2M Views<i class="lnr lnr-eye"></i></a></li>
-                                            <li><a href="#">06 Comments<i class="lnr lnr-bubble"></i></a></li>
-                                        </ul>
-                                    </div>
-                               </div>
-                                <div class="col-md-9">
-                                    <div class="blog_post">
-                                        <img src="image/blog/main-blog/m-blog-3.jpg" alt="">
-                                        <div class="blog_details">
-                                            <a href="#"><h2>The Glossary Of Telescopes</h2></a>
-                                            <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction.</p>
-                                            <a href="#" class="view_btn button_hover">View More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row blog_item">
-                               <div class="col-md-3">
-                                   <div class="blog_info text-right">
-                                        <div class="post_tag">
-                                            <a href="#">Food,</a>
-                                            <a href="#">Technology,</a>
-                                            <a href="#">Politics,</a>
-                                            <a href="#">Lifestyle</a>
-                                        </div>
-                                        <ul class="blog_meta list_style">
-                                            <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
-                                            <li><a href="#">12 Dec, 2017<i class="lnr lnr-calendar-full"></i></a></li>
-                                            <li><a href="#">1.2M Views<i class="lnr lnr-eye"></i></a></li>
-                                            <li><a href="#">06 Comments<i class="lnr lnr-bubble"></i></a></li>
-                                        </ul>
-                                    </div>
-                               </div>
-                                <div class="col-md-9">
-                                    <div class="blog_post">
-                                        <img src="image/blog/main-blog/m-blog-4.jpg" alt="">
-                                        <div class="blog_details">
-                                            <a href="#"><h2>The Night Sky</h2></a>
-                                            <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction.</p>
-                                            <a href="#" class="view_btn button_hover">View More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="row blog_item">
-                               <div class="col-md-3">
-                                   <div class="blog_info text-right">
-                                        <div class="post_tag">
-                                            <a href="#">Food,</a>
-                                            <a href="#">Technology,</a>
-                                            <a href="#">Politics,</a>
-                                            <a href="#">Lifestyle</a>
-                                        </div>
-                                        <ul class="blog_meta list_style">
-                                            <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
-                                            <li><a href="#">12 Dec, 2017<i class="lnr lnr-calendar-full"></i></a></li>
-                                            <li><a href="#">1.2M Views<i class="lnr lnr-eye"></i></a></li>
-                                            <li><a href="#">06 Comments<i class="lnr lnr-bubble"></i></a></li>
-                                        </ul>
-                                    </div>
-                               </div>
-                                <div class="col-md-9">
-                                    <div class="blog_post">
-                                        <img src="image/blog/main-blog/m-blog-5.jpg" alt="">
-                                        <div class="blog_details">
-                                            <a href="#"><h2>Telescopes 101</h2></a>
-                                            <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction.</p>
-                                            <a href="#" class="view_btn button_hover">View More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <nav class="blog-pagination justify-content-center d-flex">
-		                        <ul class="pagination">
-		                            <li class="page-item">
-		                                <a href="#" class="page-link" aria-label="Previous">
-		                                    <span aria-hidden="true">
-		                                        <span class="lnr lnr-chevron-left"></span>
-		                                    </span>
-		                                </a>
-		                            </li>
-		                            <li class="page-item"><a href="#" class="page-link">01</a></li>
-		                            <li class="page-item active"><a href="#" class="page-link">02</a></li>
-		                            <li class="page-item"><a href="#" class="page-link">03</a></li>
-		                            <li class="page-item"><a href="#" class="page-link">04</a></li>
-		                            <li class="page-item"><a href="#" class="page-link">09</a></li>
-		                            <li class="page-item">
-		                                <a href="#" class="page-link" aria-label="Next">
-		                                    <span aria-hidden="true">
-		                                        <span class="lnr lnr-chevron-right"></span>
-		                                    </span>
-		                                </a>
-		                            </li>
-		                        </ul>
-		                    </nav>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="blog_right_sidebar">
-                            <aside class="single_sidebar_widget search_widget">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search Posts">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button"><i class="lnr lnr-magnifier"></i></button>
-                                    </span>
-                                </div><!-- /input-group -->
-                                <div class="br"></div>
-                            </aside>
-                            <aside class="single_sidebar_widget author_widget">
-                                <img class="author_img rounded-circle" src="image/blog/author.png" alt="">
-                                <h4>Charlie Barber</h4>
-                                <p>Senior blog writer</p>
-                                <div class="social_icon">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-github"></i></a>
-                                    <a href="#"><i class="fa fa-behance"></i></a>
-                                </div>
-                                <p>Boot camps have its supporters andit sdetractors. Some people do not understand why you should have to spend money on boot camp when you can get. Boot camps have itssuppor ters andits detractors.</p>
-                                <div class="br"></div>
-                            </aside>
-                            <aside class="single_sidebar_widget popular_post_widget">
-                                <h3 class="widget_title">Popular Posts</h3>
-                                <div class="media post_item">
-                                    <img src="image/blog/post1.jpg" alt="post">
-                                    <div class="media-body">
-                                        <a href="blog-details.html"><h3>Space The Final Frontier</h3></a>
-                                        <p>02 Hours ago</p>
-                                    </div>
-                                </div>
-                                <div class="media post_item">
-                                    <img src="image/blog/post2.jpg" alt="post">
-                                    <div class="media-body">
-                                        <a href="blog-details.html"><h3>The Amazing Hubble</h3></a>
-                                        <p>02 Hours ago</p>
-                                    </div>
-                                </div>
-                                <div class="media post_item">
-                                    <img src="image/blog/post3.jpg" alt="post">
-                                    <div class="media-body">
-                                        <a href="blog-details.html"><h3>Astronomy Or Astrology</h3></a>
-                                        <p>03 Hours ago</p>
-                                    </div>
-                                </div>
-                                <div class="media post_item">
-                                    <img src="image/blog/post4.jpg" alt="post">
-                                    <div class="media-body">
-                                        <a href="blog-details.html"><h3>Asteroids telescope</h3></a>
-                                        <p>01 Hours ago</p>
-                                    </div>
-                                </div>
-                                <div class="br"></div>
-                            </aside>
-                            <aside class="single_sidebar_widget ads_widget">
-                                <a href="#"><img class="img-fluid" src="image/blog/add.jpg" alt=""></a>
-                                <div class="br"></div>
-                            </aside>
-                            <aside class="single_sidebar_widget post_category_widget">
-                                <h4 class="widget_title">Post Catgories</h4>
-                                <ul class="list_style cat-list">
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Technology</p>
-                                            <p>37</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Lifestyle</p>
-                                            <p>24</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Fashion</p>
-                                            <p>59</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Art</p>
-                                            <p>29</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Food</p>
-                                            <p>15</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Architecture</p>
-                                            <p>09</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>Adventure</p>
-                                            <p>44</p>
-                                        </a>
-                                    </li>															
-                                </ul>
-                                <div class="br"></div>
-                            </aside>
-                            <aside class="single-sidebar-widget newsletter_widget">
-                                <h4 class="widget_title">Newsletter</h4>
-                                <p>
-                                Here, I focus on a range of items and features that we use in life without
-                                giving them a second thought.
-                                </p>
-                                <div class="form-group d-flex flex-row">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></div>
-                                        </div>
-                                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'">
-                                    </div>
-                                    <a href="#" class="bbtns">Subcribe</a>
-                                </div>	
-                                <p class="text-bottom">You can unsubscribe at any time</p>	
-                                <div class="br"></div>							
-                            </aside>
-                            <aside class="single-sidebar-widget tag_cloud_widget">
-                                <h4 class="widget_title">Tag Clouds</h4>
-                                <ul class="list_style">
-                                    <li><a href="#">Technology</a></li>
-                                    <li><a href="#">Fashion</a></li>
-                                    <li><a href="#">Architecture</a></li>
-                                    <li><a href="#">Fashion</a></li>
-                                    <li><a href="#">Food</a></li>
-                                    <li><a href="#">Technology</a></li>
-                                    <li><a href="#">Lifestyle</a></li>
-                                    <li><a href="#">Art</a></li>
-                                    <li><a href="#">Adventure</a></li>
-                                    <li><a href="#">Food</a></li>
-                                    <li><a href="#">Lifestyle</a></li>
-                                    <li><a href="#">Adventure</a></li>
-                                </ul>
-                            </aside>
-                        </div>
-                    </div>
-                </div>
+        </div>
+    </section>
+    <!--================ Search & Filter Area =================-->
+
+    <!--================ Products Area =================-->
+    <section class="accomodation_area section_gap">
+        <div class="container">
+            <div id="noResults" class="text-center py-5" style="display: none;">
+                <p class="text-muted fs-5">Aucun produit ne correspond à votre recherche.</p>
             </div>
-        </section>
-        <!--================Blog Area =================-->
+            
+            <div id="productGrid" class="row">
+                {% if produits|length > 0 %}
+                    {% for produit in produits %}
+                        <div class="col-lg-4 col-md-6 mb-4 product-card" 
+                             data-nom="{{ produit.nom|lower }}" 
+                             data-categorie="{{ produit.categorie ? produit.categorie.nom|lower : '' }}" 
+                             data-prix="{{ produit.prix }}"
+                             data-stock="{{ produit.stock }}">
+                            <div class="card h-100 shadow-sm border-0" style="overflow: hidden; transition: all 0.3s ease;">
+                                <div style="height: 250px; overflow: hidden; background: #e9ecef; position: relative;">
+                                    {% if produit.image and produit.image != '' %}
+                                        {% if produit.image starts with 'http' %}
+                                            <img src="{{ produit.image }}" alt="{{ produit.nom }}" class="w-100 h-100 product-image" style="object-fit: cover; transition: transform 0.3s ease;">
+                                        {% else %}
+                                            <img src="{{ asset('uploads/' ~ produit.image) }}" alt="{{ produit.nom }}" class="w-100 h-100 product-image" style="object-fit: cover; transition: transform 0.3s ease;">
+                                        {% endif %}
+                                    {% else %}
+                                        <img src="{{ asset('images/room1.jpg') }}" alt="{{ produit.nom }}" class="w-100 h-100 product-image" style="object-fit: cover; transition: transform 0.3s ease;">
+                                    {% endif %}
+                                    
+                                    {% if produit.stock <= 0 %}
+                                        <div style="position: absolute; top: 10px; right: 10px;">
+                                            <span class="badge bg-danger"><i class="fa fa-exclamation-circle"></i> Rupture de stock</span>
+                                        </div>
+                                    {% elseif produit.stock < 10 %}
+                                        <div style="position: absolute; top: 10px; right: 10px;">
+                                            <span class="badge bg-warning text-dark"><i class="fa fa-warning"></i> Stock faible</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="card-title mb-0">{{ produit.nom }}</h5>
+                                            <p class="h6 text-primary mb-1 mt-1">{{ produit.prix|number_format(2, ',', ' ') }} TND</p>
+                                        </div>
+                                    </div>
+
+                                    {% if produit.categorie %}
+                                        <p class="small mb-2"><span class="badge bg-secondary">{{ produit.categorie.nom }}</span></p>
+                                    {% else %}
+                                        <p class="small mb-2"><span class="badge bg-light text-dark">Sans catégorie</span></p>
+                                    {% endif %}
+
+                                    <div class="mb-3">
+                                        <p class="small mb-1"><strong>Stock disponible:</strong></p>
+                                        <div>
+                                            {% if produit.stock > 0 %}
+                                                <span class="badge bg-success">{{ produit.stock }} unités</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Épuisé</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid gap-2">
+                                        <a href="{{  path('front_produit_detail', { id: produit.id }) }}" class="btn btn-info btn-sm text-white">
+                                            <i class="fa fa-eye"></i> Voir détails
+                                        </a>
+                                        {% if produit.stock > 0 %}
+                                            <button type="button" class="btn btn-success btn-sm" onclick="commander({{ produit.id }}, '{{ produit.nom|e('js') }}')">
+                                                <i class="fa fa-shopping-cart"></i> Commander
+                                            </button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-secondary btn-sm" disabled>
+                                                <i class="fa fa-ban"></i> Indisponible
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center py-5">
+                        <p class="text-muted">Aucun produit à afficher pour le moment.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <!--================ Products Area =================-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const sortSelect = document.getElementById('sortSelect');
+            const clearBtn = document.getElementById('clearSearch');
+            const grid = document.getElementById('productGrid');
+            const noResults = document.getElementById('noResults');
+
+            function filterProducts() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                const sortValue = sortSelect.value;
+                const allCards = Array.from(document.querySelectorAll('.product-card'));
+
+                // Step 1: Filter cards
+                let visibleCards = allCards.filter(card => {
+                    if (!searchTerm) return true;
+                    const nom = (card.dataset.nom || '').toLowerCase();
+                    const categorie = (card.dataset.categorie || '').toLowerCase();
+                    return nom.includes(searchTerm) || categorie.includes(searchTerm);
+                });
+
+                // Step 2: Sort visible cards
+                visibleCards.sort((a, b) => {
+                    // Prioritize search relevance if search term exists
+                    if (searchTerm) {
+                        const nomA = (a.dataset.nom || '').toLowerCase();
+                        const nomB = (b.dataset.nom || '').toLowerCase();
+                        const catA = (a.dataset.categorie || '').toLowerCase();
+                        const catB = (b.dataset.categorie || '').toLowerCase();
+                        
+                        // Exact name match
+                        const aExactNom = nomA === searchTerm ? 0 : 1;
+                        const bExactNom = nomB === searchTerm ? 0 : 1;
+                        if (aExactNom !== bExactNom) return aExactNom - bExactNom;
+                        
+                        // Name starts with search term
+                        const aStartsNom = nomA.startsWith(searchTerm) ? 0 : 1;
+                        const bStartsNom = nomB.startsWith(searchTerm) ? 0 : 1;
+                        if (aStartsNom !== bStartsNom) return aStartsNom - bStartsNom;
+                        
+                        // Exact category match
+                        const aExactCat = catA === searchTerm ? 0 : 1;
+                        const bExactCat = catB === searchTerm ? 0 : 1;
+                        if (aExactCat !== bExactCat) return aExactCat - bExactCat;
+                    }
+                    
+                    // Apply selected sort
+                    switch(sortValue) {
+                        case 'nom_asc':
+                            return a.dataset.nom.localeCompare(b.dataset.nom);
+                        case 'nom_desc':
+                            return b.dataset.nom.localeCompare(a.dataset.nom);
+                        case 'prix_asc':
+                            return parseFloat(a.dataset.prix || 0) - parseFloat(b.dataset.prix || 0);
+                        case 'prix_desc':
+                            return parseFloat(b.dataset.prix || 0) - parseFloat(a.dataset.prix || 0);
+                        case 'stock_desc':
+                            return parseInt(b.dataset.stock || 0) - parseInt(a.dataset.stock || 0);
+                        default:
+                            return 0;
+                    }
+                });
+
+                // Step 3: Reorder grid
+                if (visibleCards.length === 0) {
+                    noResults.style.display = 'block';
+                    allCards.forEach(card => card.style.display = 'none');
+                } else {
+                    noResults.style.display = 'none';
+                    // Hide all cards first
+                    allCards.forEach(card => card.style.display = 'none');
+                    // Show and reorder visible cards
+                    visibleCards.forEach(card => {
+                        card.style.display = '';
+                        grid.appendChild(card);
+                    });
+                }
+            }
+
+            // Bind events
+            searchInput.addEventListener('input', filterProducts);
+            sortSelect.addEventListener('change', filterProducts);
+            clearBtn.addEventListener('click', function() { 
+                searchInput.value = ''; 
+                filterProducts(); 
+            });
+
+            // Image hover effect
+            function setupHoverEffect() {
+                document.querySelectorAll('.product-card').forEach(card => {
+                    const img = card.querySelector('.product-image');
+                    if (img) {
+                        card.addEventListener('mouseenter', function() { 
+                            img.style.transform = 'scale(1.05)'; 
+                        });
+                        card.addEventListener('mouseleave', function() { 
+                            img.style.transform = 'scale(1)'; 
+                        });
+                    }
+                });
+            }
+
+            setupHoverEffect();
+            filterProducts();
+        });
+
+        // Commander function
+        function commander(produitId, produitNom) {
+            // Vous pouvez soit :
+            // 1. Rediriger vers une page de commande
+            // window.location.href = '/commande/' + produitId;
+            
+            // 2. Afficher une modal de confirmation
+            if (confirm('Voulez-vous commander "' + produitNom + '" ?')) {
+                // Redirection vers la page de commande/panier
+                window.location.href = '{{ path('app_home') }}'; // Remplacer par votre route de commande
+                // Ou ajouter au panier via AJAX
+            }
+        }
+    </script>
 {% endblock %}

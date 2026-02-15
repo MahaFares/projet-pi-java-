@@ -1,0 +1,182 @@
+<aside class="admin-sidebar">
+    <div class="logo">
+        <h3>Admin Panel</h3>
+    </div>
+    <ul class="nav-menu">
+        <li>
+            <a href="{{ path('app_dashboard') }}" class="{{ app.request.attributes.get('_route') == 'app_dashboard' ? 'active' : '' }}">
+                <i class="fa fa-dashboard"></i> Dashboard
+            </a>
+        </li>
+        
+        <li class="menu-section">Activités</li>
+        <li>
+            <a href="" class="{{ 'app_activity' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-calendar"></i> Activités
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_activity_new') }}" class="{{ app.request.attributes.get('_route') == 'app_activity_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouvelle Activité
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_activity_category_index') }}" class="{{ 'app_activity_category' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-tags"></i> Catégories d'Activités
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_activity_category_new') }}" class="{{ app.request.attributes.get('_route') == 'app_activity_category_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouvelle Catégorie
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_activity_schedule_index') }}" class="{{ 'app_activity_schedule' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-clock-o"></i> Horaires d'Activités
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_activity_schedule_new') }}" class="{{ app.request.attributes.get('_route') == 'app_activity_schedule_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouvel Horaire
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_guide_index') }}" class="{{ 'app_guide' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-user"></i> Guides
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_guide_new') }}" class="{{ app.request.attributes.get('_route') == 'app_guide_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouveau Guide
+            </a>
+        </li>
+        
+        <li class="menu-section">Hébergements</li>
+        <li>
+            <a href="{{ path('app_hebergement_index') }}" class="{{ 'app_hebergement' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-bed"></i> Hébergements
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_hebergement_new') }}" class="{{ app.request.attributes.get('_route') == 'app_hebergement_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouvel Hébergement
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_categorie_hebergement_index') }}" class="{{ 'app_categorie_hebergement' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-tags"></i> Catégories d'Hébergement
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_categorie_hebergement_new') }}" class="{{ app.request.attributes.get('_route') == 'app_categorie_hebergement_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouvelle Catégorie
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_chambre_index') }}" class="{{ 'app_chambre' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-home"></i> Chambres
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_chambre_new') }}" class="{{ app.request.attributes.get('_route') == 'app_chambre_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouvelle Chambre
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_equipement_index') }}" class="{{ 'app_equipement' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-cog"></i> Équipements
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_equipement_new') }}" class="{{ app.request.attributes.get('_route') == 'app_equipement_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouvel Équipement
+            </a>
+        </li>
+        
+        <li class="menu-section">Transport</li>
+        <li>
+            <a href="{{ path('app_transport_index') }}" class="{{ 'app_transport' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-bus"></i> Transports
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_transport_new') }}" class="{{ app.request.attributes.get('_route') == 'app_transport_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouveau Transport
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_trajet_index') }}" class="{{ 'app_trajet' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-map"></i> Trajets
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_trajet_new') }}" class="{{ app.request.attributes.get('_route') == 'app_trajet_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouveau Trajet
+            </a>
+        </li>
+        
+        <li class="menu-section">Produits</li>
+        <li>
+            <a href="{{ path('app_produit_index') }}" class="{{ 'app_produit' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-shopping-bag"></i> Produits
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_produit_new') }}" class="{{ app.request.attributes.get('_route') == 'app_produit_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouveau Produit
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_categorie_index') }}" class="{{ 'app_categorie' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-tags"></i> Catégories de Produits
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_categorie_new') }}" class="{{ app.request.attributes.get('_route') == 'app_categorie_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouvelle Catégorie
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_commande_index') }}" class="{{ 'app_commande' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-shopping-cart"></i> Commandes
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_commande_new') }}" class="{{ app.request.attributes.get('_route') == 'app_commande_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouvelle Commande
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_paiement_index') }}" class="{{ 'app_paiement' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                <i class="fa fa-credit-card"></i> Paiements
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_paiement_new') }}" class="{{ app.request.attributes.get('_route') == 'app_paiement_new' ? 'active' : '' }}">
+                <i class="fa fa-plus"></i> Nouveau Paiement
+            </a>
+        </li>
+        
+        <li class="menu-section">Utilisateurs</li>
+        <li>
+            <a href="{{ path('app_my_account') }}" class="{{ app.request.attributes.get('_route') == 'app_my_account' ? 'active' : '' }}">
+                <i class="fa fa-user"></i> Mon Compte
+            </a>
+        </li>
+        
+        <li class="menu-section">Site</li>
+        <li>
+            <a href="{{ path('app_home') }}" target="_blank">
+                <i class="fa fa-external-link"></i> Voir le Site
+            </a>
+        </li>
+    </ul>
+</aside>
+
+
+
+
+
+
+
+

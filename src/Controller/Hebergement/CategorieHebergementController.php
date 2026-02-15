@@ -33,12 +33,12 @@ final class CategorieHebergementController extends AbstractController
             $entityManager->persist($categorieHebergement);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_categorie_hebergement_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_categorie_hebergement_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('HebergementTemplate/categorie_hebergement/new.html.twig', [
             'categorie_hebergement' => $categorieHebergement,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -59,12 +59,12 @@ final class CategorieHebergementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_categorie_hebergement_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_categorie_hebergement_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('HebergementTemplate/categorie_hebergement/edit.html.twig', [
             'categorie_hebergement' => $categorieHebergement,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -76,6 +76,6 @@ final class CategorieHebergementController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_categorie_hebergement_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_categorie_hebergement_index', [], Response::HTTP_SEE_OTHER);
     }
 }

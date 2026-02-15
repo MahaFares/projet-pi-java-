@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Equipement;
-use App\Entity\Hebergement;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,11 +14,6 @@ class EquipementType extends AbstractType
         $builder
             ->add('nom')
             ->add('description')
-            ->add('hebergements', EntityType::class, [
-                'class' => Hebergement::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
         ;
     }
 

@@ -38,7 +38,7 @@ final class ChambreController extends AbstractController
 
         return $this->render('HebergementTemplate/chambre/new.html.twig', [
             'chambre' => $chambre,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -64,7 +64,7 @@ final class ChambreController extends AbstractController
 
         return $this->render('HebergementTemplate/chambre/edit.html.twig', [
             'chambre' => $chambre,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 

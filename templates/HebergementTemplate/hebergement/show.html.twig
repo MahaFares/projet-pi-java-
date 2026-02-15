@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hebergement{% endblock %}
+{% block title %}Hébergement - Admin{% endblock %}
 
 {% block body %}
-    <h1>Hebergement</h1>
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
+    <h1>Détails du hébergement</h1>
 
-    <table class="table">
+    <table class="table table-striped">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -33,7 +35,13 @@
             </tr>
             <tr>
                 <th>ImagePrincipale</th>
-                <td>{{ hebergement.imagePrincipale }}</td>
+                <td>
+                    {% if hebergement.imagePrincipale %}
+                        <img src="{{ asset('uploads/' ~ hebergement.imagePrincipale) }}" alt="{{ hebergement.nom }}" style="max-height: 150px; max-width: 250px; object-fit: cover;" />
+                    {% else %}
+                        <span class="text-muted">Aucune image</span>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>LabelEco</th>
@@ -54,9 +62,13 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_hebergement_index') }}">back to list</a>
+    <div class="mt-3">
+        <a href="{{ path('app_hebergement_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        <a href="{{ path('app_hebergement_edit', {'id': hebergement.id}) }}" class="btn btn-primary ms-2">Modifier</a>
+    </div>
 
-    <a href="{{ path('app_hebergement_edit', {'id': hebergement.id}) }}">edit</a>
-
-    {{ include('HebergementTemplate/hebergement/_delete_form.html.twig') }}
+    <div class="mt-3">
+        {{ include('HebergementTemplate/hebergement/_delete_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}
