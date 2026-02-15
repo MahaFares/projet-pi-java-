@@ -30,12 +30,27 @@ class ProduitCrudController extends AbstractController
     }
 
     #[Route('', name: 'app_produit_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $items = $this->repository->findBy([], ['nom' => 'ASC']);
+        $q = $request->query->get('q');
+        $minPrice = $request->query->get('minPrice');
+        $maxPrice = $request->query->get('maxPrice');
+        $available = $request->query->get('available');
 
-        return $this->render('FrontOffice/boutique/produit/index.html.twig', [
+        $minPrice = $minPrice !== null && $minPrice !== '' ? (float) $minPrice : null;
+        $maxPrice = $maxPrice !== null && $maxPrice !== '' ? (float) $maxPrice : null;
+        $available = ($available === '1' ? true : ($available === '0' ? false : null));
+
+        $items = $this->repository->findByFilters($q, $minPrice, $maxPrice, $available);
+
+        return $this->render('ProductTemplate/produit/index.html.twig', [
             'produits' => $items,
+            'filters' => [
+                'q' => $q,
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice,
+                'available' => $available,
+            ],
         ]);
     }
 
@@ -53,7 +68,7 @@ class ProduitCrudController extends AbstractController
             // Vérifier que le nom n'est pas vide
             if (empty(trim($nom))) {
                 $this->addFlash('error', 'Le nom du produit ne peut pas être vide.');
-                return $this->render('FrontOffice/boutique/produit/new.html.twig', [
+                return $this->render('ProductTemplate/produit/new.html.twig', [
                     'produit' => $produit,
                     'form' => $form,
                 ]);
@@ -62,7 +77,7 @@ class ProduitCrudController extends AbstractController
             // Vérifier que le nom ne contient pas que des chiffres
             if (preg_match('/^\d+$/', trim($nom))) {
                 $this->addFlash('error', 'Le nom du produit ne peut pas contenir uniquement des chiffres.');
-                return $this->render('FrontOffice/boutique/produit/new.html.twig', [
+                return $this->render('ProductTemplate/produit/new.html.twig', [
                     'produit' => $produit,
                     'form' => $form,
                 ]);
@@ -73,7 +88,7 @@ class ProduitCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('FrontOffice/boutique/produit/new.html.twig', [
+                return $this->render('ProductTemplate/produit/new.html.twig', [
                     'produit' => $produit,
                     'form' => $form,
                 ]);
@@ -84,7 +99,7 @@ class ProduitCrudController extends AbstractController
             return $this->redirectToRoute('app_produit_index');
         }
 
-        return $this->render('FrontOffice/boutique/produit/new.html.twig', [
+        return $this->render('ProductTemplate/produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form,
         ]);
@@ -98,7 +113,7 @@ class ProduitCrudController extends AbstractController
             throw $this->createNotFoundException('Produit introuvable.');
         }
 
-        return $this->render('FrontOffice/boutique/produit/show.html.twig', [
+        return $this->render('ProductTemplate/produit/show.html.twig', [
             'produit' => $produit,
         ]);
     }
@@ -121,7 +136,7 @@ class ProduitCrudController extends AbstractController
             // Vérifier que le nom n'est pas vide
             if (empty(trim($nom))) {
                 $this->addFlash('error', 'Le nom du produit ne peut pas être vide.');
-                return $this->render('FrontOffice/boutique/produit/edit.html.twig', [
+                return $this->render('ProductTemplate/produit/edit.html.twig', [
                     'produit' => $produit,
                     'form' => $form,
                 ]);
@@ -130,7 +145,7 @@ class ProduitCrudController extends AbstractController
             // Vérifier que le nom ne contient pas que des chiffres
             if (preg_match('/^\d+$/', trim($nom))) {
                 $this->addFlash('error', 'Le nom du produit ne peut pas contenir uniquement des chiffres.');
-                return $this->render('FrontOffice/boutique/produit/edit.html.twig', [
+                return $this->render('ProductTemplate/produit/edit.html.twig', [
                     'produit' => $produit,
                     'form' => $form,
                 ]);
@@ -141,7 +156,7 @@ class ProduitCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('FrontOffice/boutique/produit/edit.html.twig', [
+                return $this->render('ProductTemplate/produit/edit.html.twig', [
                     'produit' => $produit,
                     'form' => $form,
                 ]);
@@ -151,7 +166,7 @@ class ProduitCrudController extends AbstractController
             return $this->redirectToRoute('app_produit_index');
         }
 
-        return $this->render('FrontOffice/boutique/produit/edit.html.twig', [
+        return $this->render('ProductTemplate/produit/edit.html.twig', [
             'produit' => $produit,
             'form' => $form,
         ]);

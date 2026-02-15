@@ -1,0 +1,110 @@
+{% extends 'Produit/base.html.twig' %}
+
+{% block title %}Dashboard Boutique | Admin{% endblock %}
+
+{% block page_title %}Dashboard - Gestion de la Boutique{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <!-- Statistics Cards Row -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stats-card red">
+                <i class="fa fa-shopping-bag icon" style="color: #dc3545;"></i>
+                <h3>0</h3>
+                <p>Total Produits</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card purple">
+                <i class="fa fa-tags icon" style="color: #6f42c1;"></i>
+                <h3>0</h3>
+                <p>Catégories</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card blue">
+                <i class="fa fa-shopping-cart icon" style="color: #007bff;"></i>
+                <h3>0</h3>
+                <p>Commandes</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card green">
+                <i class="fa fa-credit-card icon" style="color: #28a745;"></i>
+                <h3>0</h3>
+                <p>Paiements</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="activity-list">
+                <h4 class="mb-3"><i class="fa fa-bolt"></i> Actions Rapides</h4>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="{{ path('app_produit_new') }}" class="btn btn-success btn-block btn-lg">
+                            <i class="fa fa-plus-circle"></i> Nouveau Produit
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ path('app_categorie_new') }}" class="btn btn-warning btn-block btn-lg">
+                            <i class="fa fa-tag"></i> Nouvelle Catégorie
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ path('app_commande_index') }}" class="btn btn-info btn-block btn-lg">
+                            <i class="fa fa-shopping-cart"></i> Voir Commandes
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ path('app_paiement_index') }}" class="btn btn-primary btn-block btn-lg">
+                            <i class="fa fa-credit-card"></i> Voir Paiements
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.stats-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+.stats-card:hover {
+    transform: translateY(-5px);
+}
+.stats-card .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+.stats-card h3 {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.stats-card p {
+    color: #666;
+    margin: 0;
+}
+.stats-card.red { border-left: 4px solid #dc3545; }
+.stats-card.green { border-left: 4px solid #28a745; }
+.stats-card.blue { border-left: 4px solid #007bff; }
+.stats-card.purple { border-left: 4px solid #6f42c1; }
+
+.activity-list {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+</style>
+{% endblock %}
