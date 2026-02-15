@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     {% if activity.latitude and activity.longitude %}
     // Initialize Mapbox
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZmFmMTIzIiwiYSI6ImNtbG1qcDg2dzBocTkzZXF3ZmdqeDM4NDYifQ.FXppWsIjfEL34GdNImkkxQ'; // Replace with your token
+    mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN'; // Replace with your token
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/outdoors-v12',
