@@ -1,4 +1,4 @@
-﻿{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Produits | EcoTrip{% endblock %}
 
@@ -8,10 +8,10 @@
         <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
         <div class="container">
             <div class="page-cover text-center">
-                <h2 class="page-cover-tittle">Notre Boutique</h2>
+                <h2 class="page-cover-tittle">Nos Produits</h2>
                 <ol class="breadcrumb">
                     <li><a href="{{ path('app_home') }}">Accueil</a></li>
-                    <li class="active">Boutique</li>
+                    <li class="active">Produits</li>
                 </ol>
             </div>
         </div>
@@ -52,6 +52,10 @@
     <!--================ Products Area =================-->
     <section class="accomodation_area section_gap">
         <div class="container">
+            <div class="mb-3">
+                <a href="{{ path('app_produit_new') }}" class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un produit</a>
+            </div>
+            
             <div id="noResults" class="text-center py-5" style="display: none;">
                 <p class="text-muted fs-5">Aucun produit ne correspond à votre recherche.</p>
             </div>
@@ -73,7 +77,7 @@
                                             <img src="{{ asset('uploads/' ~ produit.image) }}" alt="{{ produit.nom }}" class="w-100 h-100 product-image" style="object-fit: cover; transition: transform 0.3s ease;">
                                         {% endif %}
                                     {% else %}
-                                        <img src="{{ asset('images/room1.jpg') }}" alt="{{ produit.nom }}" class="w-100 h-100 product-image" style="object-fit: cover; transition: transform 0.3s ease;">
+                                        <img src="{{ asset('images/default-product.jpg') }}" alt="{{ produit.nom }}" class="w-100 h-100 product-image" style="object-fit: cover; transition: transform 0.3s ease;">
                                     {% endif %}
                                     
                                     {% if produit.stock <= 0 %}
@@ -82,7 +86,7 @@
                                         </div>
                                     {% elseif produit.stock < 10 %}
                                         <div style="position: absolute; top: 10px; right: 10px;">
-                                            <span class="badge bg-warning text-dark"><i class="fa fa-warning"></i> Stock faible</span>
+                                            <span class="badge bg-warning"><i class="fa fa-warning"></i> Stock faible</span>
                                         </div>
                                     {% endif %}
                                 </div>
@@ -113,26 +117,33 @@
                                     </div>
 
                                     <div class="d-grid gap-2">
-                                        <a href="{{  path('front_produit_detail', { id: produit.id }) }}" class="btn btn-info btn-sm text-white">
+                                        <a href="{{ path('app_produit_show', { id: produit.id }) }}" class="btn btn-info btn-sm text-white">
                                             <i class="fa fa-eye"></i> Voir détails
                                         </a>
-                                        {% if produit.stock > 0 %}
-                                            <button type="button" class="btn btn-success btn-sm" onclick="commander({{ produit.id }}, '{{ produit.nom|e('js') }}')">
-                                                <i class="fa fa-shopping-cart"></i> Commander
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ path('app_produit_edit', { id: produit.id }) }}" class="btn btn-warning btn-sm">
+                                                <i class="fa fa-edit"></i> Modifier
+                                            </a>
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ produit.id }})">
+                                                <i class="fa fa-trash"></i> Supprimer
                                             </button>
-                                        {% else %}
-                                            <button type="button" class="btn btn-secondary btn-sm" disabled>
-                                                <i class="fa fa-ban"></i> Indisponible
-                                            </button>
-                                        {% endif %}
+                                        </div>
                                     </div>
+                                    
+                                    <!-- Hidden delete form -->
+                                    <form id="delete-form-{{ produit.id }}" method="post" action="{{ path('app_produit_delete', { id: produit.id }) }}" style="display: none;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete_produit_' ~ produit.id) }}">
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
                 {% else %}
                     <div class="col-12 text-center py-5">
-                        <p class="text-muted">Aucun produit à afficher pour le moment.</p>
+                        <p class="text-muted">Aucun produit à afficher.</p>
+                        <a href="{{ path('app_produit_new') }}" class="btn btn-success mt-3">
+                            <i class="fa fa-plus"></i> Ajouter le premier produit
+                        </a>
                     </div>
                 {% endif %}
             </div>
@@ -246,17 +257,10 @@
             filterProducts();
         });
 
-        // Commander function
-        function commander(produitId, produitNom) {
-            // Vous pouvez soit :
-            // 1. Rediriger vers une page de commande
-            // window.location.href = '/commande/' + produitId;
-            
-            // 2. Afficher une modal de confirmation
-            if (confirm('Voulez-vous commander "' + produitNom + '" ?')) {
-                // Redirection vers la page de commande/panier
-                window.location.href = '{{ path('app_home') }}'; // Remplacer par votre route de commande
-                // Ou ajouter au panier via AJAX
+        // Delete confirmation function
+        function confirmDelete(produitId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
+                document.getElementById('delete-form-' + produitId).submit();
             }
         }
     </script>

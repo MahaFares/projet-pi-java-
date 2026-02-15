@@ -9,26 +9,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Contrôle de saisie côté serveur :
- * - Validation des entrées : formulaire (Form Type + contraintes) puis ValidatorInterface->validate($entity).
- * - Pas de SQL brut : uniquement Repository->find($id) / findBy() (requêtes paramétrées Doctrine).
- * - ID route : requirements: ['id' => '\d+'] pour n'accepter que des entiers.
- * - Suppression : méthode POST + vérification du jeton CSRF (isCsrfTokenValid).
- */
 #[Route('/admin/produit')]
 class ProduitCrudController extends AbstractController
 {
-    public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly ProduitRepository $repository,
-        private readonly ValidatorInterface $validator,
-    ) {
-    }
-
     #[Route('', name: 'app_produit_index', methods: ['GET'])]
     public function index(Request $request): Response
     {
@@ -55,7 +40,7 @@ class ProduitCrudController extends AbstractController
     }
 
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
@@ -105,8 +90,8 @@ class ProduitCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_produit_show', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function show(int $id): Response
+    #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
+    public function show(Produit $produit): Response
     {
         $produit = $this->repository->find($id);
         if (!$produit) {
@@ -118,14 +103,9 @@ class ProduitCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_produit_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-    public function edit(Request $request, int $id): Response
+    #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
-        $produit = $this->repository->find($id);
-        if (!$produit) {
-            throw $this->createNotFoundException('Produit introuvable.');
-        }
-
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
@@ -172,24 +152,14 @@ class ProduitCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_produit_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
-    public function delete(Request $request, int $id): Response
+    #[Route('/{id}', name: 'app_produit_delete', methods: ['POST'])]
+    public function delete(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
-        $produit = $this->repository->find($id);
-        if (!$produit) {
-            throw $this->createNotFoundException('Produit introuvable.');
+        if ($this->isCsrfTokenValid('delete_produit_'.$produit->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($produit);
+            $entityManager->flush();
         }
 
-        $token = $request->request->get('_token');
-        if (!$this->isCsrfTokenValid('delete_produit_' . $id, $token)) {
-            $this->addFlash('error', 'Jeton CSRF invalide.');
-            return $this->redirectToRoute('app_produit_index');
-        }
-
-        $this->em->remove($produit);
-        $this->em->flush();
-        $this->addFlash('success', 'Produit supprimé.');
-
-        return $this->redirectToRoute('app_produit_index');
+        return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
 }
