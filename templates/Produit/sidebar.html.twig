@@ -1,0 +1,171 @@
+<aside class="admin-sidebar">
+    <div class="logo">
+        <h3>🛍️ Boutique</h3>
+    </div>
+    <ul class="nav-menu">
+        <li>
+            <a href="{{ path('app_produit_index') }}" class="{{ app.request.attributes.get('_route') == 'app_produit_index' ? 'active' : '' }}">
+                <i class="fa fa-dashboard"></i> Dashboard
+            </a>
+        </li>
+        
+        <!-- PRODUITS GESTION -->
+        <li class="menu-section">
+            <div class="dropdown-header" data-toggle="collapse" data-target="#produits-menu">
+                <i class="fa fa-shopping-bag"></i> PRODUITS
+                <i class="fa fa-angle-down float-right"></i>
+            </div>
+        </li>
+        <div id="produits-menu" class="collapse {{ 'app_produit' in app.request.attributes.get('_route') ? 'show' : '' }}">
+            <li>
+                <a href="{{ path('app_produit_index') }}" class="{{ app.request.attributes.get('_route') == 'app_produit_index' ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Liste
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_produit_new') }}" class="{{ app.request.attributes.get('_route') == 'app_produit_new' ? 'active' : '' }}">
+                    <i class="fa fa-plus-circle"></i> Nouveau
+                </a>
+            </li>
+        </div>
+
+        <!-- CATÉGORIES GESTION -->
+        <li class="menu-section">
+            <div class="dropdown-header" data-toggle="collapse" data-target="#categories-menu">
+                <i class="fa fa-tags"></i> CATÉGORIES
+                <i class="fa fa-angle-down float-right"></i>
+            </div>
+        </li>
+        <div id="categories-menu" class="collapse {{ 'app_categorie' in app.request.attributes.get('_route') and 'hebergement' not in app.request.attributes.get('_route') ? 'show' : '' }}">
+            <li>
+                <a href="{{ path('app_categorie_index') }}" class="{{ app.request.attributes.get('_route') == 'app_categorie_index' ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Liste
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_categorie_new') }}" class="{{ app.request.attributes.get('_route') == 'app_categorie_new' ? 'active' : '' }}">
+                    <i class="fa fa-plus-circle"></i> Nouvelle
+                </a>
+            </li>
+        </div>
+
+        <!-- COMMANDES GESTION -->
+        <li class="menu-section">
+            <div class="dropdown-header" data-toggle="collapse" data-target="#commandes-menu">
+                <i class="fa fa-shopping-cart"></i> COMMANDES
+                <i class="fa fa-angle-down float-right"></i>
+            </div>
+        </li>
+        <div id="commandes-menu" class="collapse {{ 'app_commande' in app.request.attributes.get('_route') ? 'show' : '' }}">
+            <li>
+                <a href="{{ path('app_commande_index') }}" class="{{ app.request.attributes.get('_route') == 'app_commande_index' ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Liste
+                </a>
+            </li>
+        </div>
+
+        <!-- PAIEMENTS GESTION -->
+        <li class="menu-section">
+            <div class="dropdown-header" data-toggle="collapse" data-target="#paiements-menu">
+                <i class="fa fa-credit-card"></i> PAIEMENTS
+                <i class="fa fa-angle-down float-right"></i>
+            </div>
+        </li>
+        <div id="paiements-menu" class="collapse {{ 'app_paiement' in app.request.attributes.get('_route') ? 'show' : '' }}">
+            <li>
+                <a href="{{ path('app_paiement_index') }}" class="{{ app.request.attributes.get('_route') == 'app_paiement_index' ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Liste
+                </a>
+            </li>
+        </div>
+
+        <!-- NAVIGATION -->
+        <li class="menu-section">NAVIGATION</li>
+        <li>
+            <a href="{{ path('app_dashboard') }}">
+                <i class="fa fa-arrow-left"></i> Dashboard Principal
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_home') }}" target="_blank">
+                <i class="fa fa-external-link"></i> Voir le Site
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_logout') }}" style="color: #ff6b6b;">
+                <i class="fa fa-sign-out"></i> Déconnexion
+            </a>
+        </li>
+    </ul>
+</aside>
+
+<style>
+.dropdown-header {
+    cursor: pointer;
+    padding: 12px 20px;
+    color: rgba(255,255,255,0.9);
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s;
+    user-select: none;
+}
+.dropdown-header:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+.dropdown-header i.fa-angle-down {
+    transition: transform 0.3s;
+}
+.collapse {
+    padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+.collapse.show {
+    max-height: 1000px;
+}
+.collapse li a {
+    padding-left: 35px;
+    font-size: 0.9rem;
+    display: block;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.collapse li a:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.dropdown-header').forEach(function(header) {
+        header.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetSelector = this.getAttribute('data-target');
+            const menu = document.querySelector(targetSelector);
+            
+            if (menu) {
+                document.querySelectorAll('.collapse').forEach(function(m) {
+                    if (m !== menu) {
+                        m.classList.remove('show');
+                    }
+                });
+                menu.classList.toggle('show');
+            }
+        });
+    });
+    
+    document.querySelectorAll('.collapse li a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            const menu = this.closest('.collapse');
+            if (menu) {
+                menu.classList.remove('show');
+            }
+        });
+    });
+});
+</script>

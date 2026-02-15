@@ -18,7 +18,7 @@ class BoutiqueController extends AbstractController
             $produits = [];
         }
 
-        return $this->render('FrontOffice/boutique/categorie/index.html.twig', [
+        return $this->render('FrontOffice/boutique/boutique.html.twig', [
             'categories' => $produits
         ]);
     }

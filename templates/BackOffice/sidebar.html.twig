@@ -1,6 +1,6 @@
 <aside class="admin-sidebar">
     <div class="logo">
-        <h3>Admin Panel</h3>
+        <h3>🌿 EcoTrip Admin</h3>
     </div>
     <ul class="nav-menu">
         <li>
@@ -9,166 +9,231 @@
             </a>
         </li>
         
-        <li class="menu-section">Activités</li>
-        <li>
-            <a href="" class="{{ 'app_activity' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-calendar"></i> Activités
-            </a>
+        <!-- ACTIVITÉS MODULE (DROPDOWN) -->
+        <li class="menu-section">
+            <div class="dropdown-header" data-toggle="collapse" data-target="#activites-menu">
+                <i class="fa fa-calendar"></i> ACTIVITÉS
+                <i class="fa fa-angle-down float-right"></i>
+            </div>
         </li>
-        <li>
-            <a href="{{ path('app_activity_new') }}" class="{{ app.request.attributes.get('_route') == 'app_activity_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouvelle Activité
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_activity_category_index') }}" class="{{ 'app_activity_category' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-tags"></i> Catégories d'Activités
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_activity_category_new') }}" class="{{ app.request.attributes.get('_route') == 'app_activity_category_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouvelle Catégorie
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_activity_schedule_index') }}" class="{{ 'app_activity_schedule' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-clock-o"></i> Horaires d'Activités
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_activity_schedule_new') }}" class="{{ app.request.attributes.get('_route') == 'app_activity_schedule_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouvel Horaire
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_guide_index') }}" class="{{ 'app_guide' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-user"></i> Guides
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_guide_new') }}" class="{{ app.request.attributes.get('_route') == 'app_guide_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouveau Guide
-            </a>
-        </li>
+        <div id="activites-menu" class="collapse {{ 'app_activity' in app.request.attributes.get('_route') or 'app_guide' in app.request.attributes.get('_route') ? 'show' : '' }}">
+            <li>
+                <a href="{{ path('app_activity_index') }}" class="{{ app.request.attributes.get('_route') == 'app_activity_index' ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Liste des Activités
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_activity_new') }}" class="{{ app.request.attributes.get('_route') == 'app_activity_new' ? 'active' : '' }}">
+                    <i class="fa fa-plus-circle"></i> Nouvelle Activité
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_activity_category_index') }}" class="{{ 'app_activity_category' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-tags"></i> Catégories
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_activity_schedule_index') }}" class="{{ 'app_activity_schedule' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-clock-o"></i> Planning
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_guide_index') }}" class="{{ 'app_guide' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-user"></i> Guides
+                </a>
+            </li>
+        </div>
         
-        <li class="menu-section">Hébergements</li>
-        <li>
-            <a href="{{ path('app_hebergement_index') }}" class="{{ 'app_hebergement' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-bed"></i> Hébergements
-            </a>
+        <!-- HÉBERGEMENTS MODULE (DROPDOWN) -->
+        <li class="menu-section">
+            <div class="dropdown-header" data-toggle="collapse" data-target="#hebergements-menu">
+                <i class="fa fa-bed"></i> HÉBERGEMENTS
+                <i class="fa fa-angle-down float-right"></i>
+            </div>
         </li>
-        <li>
-            <a href="{{ path('app_hebergement_new') }}" class="{{ app.request.attributes.get('_route') == 'app_hebergement_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouvel Hébergement
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_categorie_hebergement_index') }}" class="{{ 'app_categorie_hebergement' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-tags"></i> Catégories d'Hébergement
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_categorie_hebergement_new') }}" class="{{ app.request.attributes.get('_route') == 'app_categorie_hebergement_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouvelle Catégorie
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_chambre_index') }}" class="{{ 'app_chambre' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-home"></i> Chambres
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_chambre_new') }}" class="{{ app.request.attributes.get('_route') == 'app_chambre_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouvelle Chambre
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_equipement_index') }}" class="{{ 'app_equipement' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-cog"></i> Équipements
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_equipement_new') }}" class="{{ app.request.attributes.get('_route') == 'app_equipement_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouvel Équipement
-            </a>
-        </li>
+        <div id="hebergements-menu" class="collapse {{ 'app_hebergement' in app.request.attributes.get('_route') or 'app_chambre' in app.request.attributes.get('_route') or 'app_equipement' in app.request.attributes.get('_route') or 'app_categorie_hebergement' in app.request.attributes.get('_route') ? 'show' : '' }}">
+            <li>
+                <a href="{{ path('app_hebergement_index') }}" class="{{ app.request.attributes.get('_route') == 'app_hebergement_index' ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Liste Hébergements
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_hebergement_new') }}" class="{{ app.request.attributes.get('_route') == 'app_hebergement_new' ? 'active' : '' }}">
+                    <i class="fa fa-plus-circle"></i> Nouvel Hébergement
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_categorie_hebergement_index') }}" class="{{ 'app_categorie_hebergement' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-tags"></i> Catégories
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_chambre_index') }}" class="{{ 'app_chambre' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-home"></i> Chambres
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_equipement_index') }}" class="{{ 'app_equipement' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-cog"></i> Équipements
+                </a>
+            </li>
+        </div>
         
-        <li class="menu-section">Transport</li>
-        <li>
-            <a href="{{ path('app_transport_index') }}" class="{{ 'app_transport' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-bus"></i> Transports
-            </a>
+        <!-- TRANSPORT MODULE (DROPDOWN) -->
+        <li class="menu-section">
+            <div class="dropdown-header" data-toggle="collapse" data-target="#transport-menu">
+                <i class="fa fa-bus"></i> TRANSPORT
+                <i class="fa fa-angle-down float-right"></i>
+            </div>
         </li>
-        <li>
-            <a href="{{ path('app_transport_new') }}" class="{{ app.request.attributes.get('_route') == 'app_transport_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouveau Transport
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_trajet_index') }}" class="{{ 'app_trajet' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-map"></i> Trajets
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_trajet_new') }}" class="{{ app.request.attributes.get('_route') == 'app_trajet_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouveau Trajet
-            </a>
-        </li>
+        <div id="transport-menu" class="collapse {{ 'app_transport' in app.request.attributes.get('_route') or 'app_trajet' in app.request.attributes.get('_route') ? 'show' : '' }}">
+            <li>
+                <a href="{{ path('app_transport_index') }}" class="{{ app.request.attributes.get('_route') == 'app_transport_index' ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Liste Transports
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_transport_new') }}" class="{{ app.request.attributes.get('_route') == 'app_transport_new' ? 'active' : '' }}">
+                    <i class="fa fa-plus-circle"></i> Nouveau Transport
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_trajet_index') }}" class="{{ 'app_trajet' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-map"></i> Trajets
+                </a>
+            </li>
+        </div>
         
-        <li class="menu-section">Produits</li>
-        <li>
-            <a href="{{ path('app_produit_index') }}" class="{{ 'app_produit' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-shopping-bag"></i> Produits
-            </a>
+        <!-- PRODUITS MODULE (DROPDOWN) -->
+        <li class="menu-section">
+            <div class="dropdown-header" data-toggle="collapse" data-target="#produits-menu">
+                <i class="fa fa-shopping-bag"></i> BOUTIQUE
+                <i class="fa fa-angle-down float-right"></i>
+            </div>
         </li>
-        <li>
-            <a href="{{ path('app_produit_new') }}" class="{{ app.request.attributes.get('_route') == 'app_produit_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouveau Produit
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_categorie_index') }}" class="{{ 'app_categorie' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-tags"></i> Catégories de Produits
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_categorie_new') }}" class="{{ app.request.attributes.get('_route') == 'app_categorie_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouvelle Catégorie
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_commande_index') }}" class="{{ 'app_commande' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-shopping-cart"></i> Commandes
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_commande_new') }}" class="{{ app.request.attributes.get('_route') == 'app_commande_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouvelle Commande
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_paiement_index') }}" class="{{ 'app_paiement' in app.request.attributes.get('_route') ? 'active' : '' }}">
-                <i class="fa fa-credit-card"></i> Paiements
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('app_paiement_new') }}" class="{{ app.request.attributes.get('_route') == 'app_paiement_new' ? 'active' : '' }}">
-                <i class="fa fa-plus"></i> Nouveau Paiement
-            </a>
-        </li>
+        <div id="produits-menu" class="collapse {{ 'app_produit' in app.request.attributes.get('_route') or 'app_categorie' in app.request.attributes.get('_route') or 'app_commande' in app.request.attributes.get('_route') or 'app_paiement' in app.request.attributes.get('_route') ? 'show' : '' }}">
+            <li>
+                <a href="{{ path('app_produit_index') }}" class="{{ app.request.attributes.get('_route') == 'app_produit_index' ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Liste Produits
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_produit_new') }}" class="{{ app.request.attributes.get('_route') == 'app_produit_new' ? 'active' : '' }}">
+                    <i class="fa fa-plus-circle"></i> Nouveau Produit
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_categorie_index') }}" class="{{ 'app_categorie' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-tags"></i> Catégories
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_commande_index') }}" class="{{ 'app_commande' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-shopping-cart"></i> Commandes
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('app_paiement_index') }}" class="{{ 'app_paiement' in app.request.attributes.get('_route') ? 'active' : '' }}">
+                    <i class="fa fa-credit-card"></i> Paiements
+                </a>
+            </li>
+        </div>
         
-        <li class="menu-section">Utilisateurs</li>
+        <!-- UTILISATEURS -->
+        <li class="menu-section">UTILISATEURS</li>
         <li>
             <a href="{{ path('app_my_account') }}" class="{{ app.request.attributes.get('_route') == 'app_my_account' ? 'active' : '' }}">
-                <i class="fa fa-user"></i> Mon Compte
+                <i class="fa fa-user-circle"></i> Mon Compte
             </a>
         </li>
         
-        <li class="menu-section">Site</li>
+        <!-- SITE -->
+        <li class="menu-section">SITE</li>
         <li>
             <a href="{{ path('app_home') }}" target="_blank">
                 <i class="fa fa-external-link"></i> Voir le Site
             </a>
         </li>
+        <li>
+            <a href="{{ path('app_logout') }}" style="color: #ff6b6b;">
+                <i class="fa fa-sign-out"></i> Déconnexion
+            </a>
+        </li>
     </ul>
 </aside>
+
+<style>
+.dropdown-header {
+    cursor: pointer;
+    padding: 12px 20px;
+    color: rgba(255,255,255,0.9);
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s;
+    user-select: none;
+}
+.dropdown-header:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+.dropdown-header i.fa-angle-down {
+    transition: transform 0.3s;
+}
+.collapse {
+    padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+.collapse.show {
+    max-height: 1000px;
+}
+.collapse li a {
+    padding-left: 35px;
+    font-size: 0.9rem;
+    display: block;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.collapse li a:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle dropdown on click
+    document.querySelectorAll('.dropdown-header').forEach(function(header) {
+        header.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const targetSelector = this.getAttribute('data-target');
+            const menu = document.querySelector(targetSelector);
+            
+            if (menu) {
+                // Close all other menus
+                document.querySelectorAll('.collapse').forEach(function(m) {
+                    if (m !== menu) {
+                        m.classList.remove('show');
+                    }
+                });
+                
+                // Toggle current menu
+                menu.classList.toggle('show');
+            }
+        });
+    });
+    
+    // Close menu when clicking on a link inside it
+    document.querySelectorAll('.collapse li a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            const menu = this.closest('.collapse');
+            if (menu) {
+                menu.classList.remove('show');
+            }
+        });
+    });
+});
+</script>

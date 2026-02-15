@@ -1,37 +1,442 @@
 {% extends 'BackOffice/base.html.twig' %}
 
-{% block title %}Dashboard | Admin{% endblock %}
+{% block title %}Dashboard | EcoTrip Admin{% endblock %}
 
-{% block page_title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard - Vue d'ensemble{% endblock %}
+
+{% block stylesheets %}
+<style>
+.stats-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+.stats-card:hover {
+    transform: translateY(-5px);
+}
+.stats-card .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+.stats-card h3 {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.stats-card p {
+    color: #666;
+    margin: 0;
+    font-size: 14px;
+}
+.stats-card.green { border-left: 4px solid #28a745; }
+.stats-card.blue { border-left: 4px solid #007bff; }
+.stats-card.orange { border-left: 4px solid #fd7e14; }
+.stats-card.purple { border-left: 4px solid #6f42c1; }
+.stats-card.red { border-left: 4px solid #dc3545; }
+.stats-card.teal { border-left: 4px solid #20c997; }
+
+.activity-list {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+.activity-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.activity-item:last-child {
+    border-bottom: none;
+}
+.activity-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.activity-item .info {
+    flex: 1;
+}
+.activity-item .info h5 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
+.activity-item .info p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.badge-success { background: #d4edda; color: #155724; }
+.badge-warning { background: #fff3cd; color: #856404; }
+
+.module-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border-left: 5px solid;
+}
+.module-section.activity { border-left-color: #28a745; }
+.module-section.hebergement { border-left-color: #007bff; }
+.module-section.transport { border-left-color: #fd7e14; }
+.module-section.boutique { border-left-color: #dc3545; }
+
+.module-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+</style>
+{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Nombre d'utilisateurs</h5>
+<div class="container-fluid">
+    
+    <!-- Global Overview Stats -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3">📊 Vue d'ensemble Globale</h3>
+        </div>
+    </div>
+    
+    <div class="row mb-5">
+        <div class="col-md-2">
+            <div class="stats-card green">
+                <i class="fa fa-calendar icon" style="color: #28a745;"></i>
+                <h3>{{ totalActivities ?? 0 }}</h3>
+                <p>Activités</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stats-card blue">
+                <i class="fa fa-building icon" style="color: #007bff;"></i>
+                <h3>0</h3>
+                <p>Hébergements</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stats-card orange">
+                <i class="fa fa-bus icon" style="color: #fd7e14;"></i>
+                <h3>0</h3>
+                <p>Transports</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stats-card red">
+                <i class="fa fa-shopping-bag icon" style="color: #dc3545;"></i>
+                <h3>0</h3>
+                <p>Produits</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stats-card purple">
+                <i class="fa fa-users icon" style="color: #6f42c1;"></i>
+                <h3>0</h3>
+                <p>Utilisateurs</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stats-card teal">
+                <i class="fa fa-shopping-cart icon" style="color: #20c997;"></i>
+                <h3>0</h3>
+                <p>Réservations</p>
+            </div>
+        </div>
+    </div>
+
+    {# ==================== ACTIVITÉS MODULE ==================== #}
+    <div class="module-section activity">
+        <div class="module-title">
+            <i class="fa fa-calendar" style="color: #28a745;"></i>
+            MODULE ACTIVITÉS
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <div class="stats-card green">
+                    <i class="fa fa-calendar icon" style="color: #28a745;"></i>
+                    <h3>{{ totalActivities ?? 0 }}</h3>
+                    <p>Total Activités</p>
+                    <a href="{{ path('app_activity_index') }}" class="btn btn-sm btn-outline-success mt-2">Voir tout</a>
                 </div>
-                <div class="card-footer">
-                    <a href="" class="btn btn-primary">Voir les utilisateurs</a>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card blue">
+                    <i class="fa fa-check-circle icon" style="color: #007bff;"></i>
+                    <h3>{{ activeActivities ?? 0 }}</h3>
+                    <p>Activités Actives</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card orange">
+                    <i class="fa fa-tags icon" style="color: #fd7e14;"></i>
+                    <h3>{{ totalCategories ?? 0 }}</h3>
+                    <p>Catégories</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card purple">
+                    <i class="fa fa-user icon" style="color: #6f42c1;"></i>
+                    <h3>{{ totalGuides ?? 0 }}</h3>
+                    <p>Guides</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Nombre de produits</h5>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="activity-list">
+                    <h5 class="mb-3"><i class="fa fa-clock-o"></i> Activités Récentes</h5>
+                    {% if recentActivities is defined and recentActivities is not empty %}
+                        {% for activity in recentActivities|slice(0, 3) %}
+                            <div class="activity-item">
+                                {% if activity.image %}
+                                    <img src="{{ asset(activity.image) }}" alt="{{ activity.title }}">
+                                {% else %}
+                                    <img src="{{ asset('images/default-activity.jpg') }}" alt="{{ activity.title }}">
+                                {% endif %}
+                                <div class="info">
+                                    <h5>{{ activity.title }}</h5>
+                                    <p>{{ activity.location }} • {{ activity.price }} TND</p>
+                                </div>
+                                {% if activity.isActive %}
+                                    <span class="badge badge-success">Actif</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">Aucune activité</p>
+                    {% endif %}
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Nombre de commandes</h5>
-                </div>
-                <div class="card-footer">
-                    <a href="" class="btn btn-primary">Voir les commandes</a>
+
+            <div class="col-md-6">
+                <div class="activity-list">
+                    <h5 class="mb-3"><i class="fa fa-bolt"></i> Actions Rapides</h5>
+                    <div class="row">
+                        <div class="col-6 mb-2">
+                            <a href="{{ path('app_activity_new') }}" class="btn btn-success btn-block">
+                                <i class="fa fa-plus"></i> Nouvelle Activité
+                            </a>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <a href="{{ path('app_activity_category_new') }}" class="btn btn-warning btn-block">
+                                <i class="fa fa-tag"></i> Nouvelle Catégorie
+                            </a>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <a href="{{ path('app_activity_schedule_new') }}" class="btn btn-info btn-block">
+                                <i class="fa fa-calendar"></i> Nouvel Horaire
+                            </a>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <a href="{{ path('app_guide_new') }}" class="btn btn-primary btn-block">
+                                <i class="fa fa-user-plus"></i> Nouveau Guide
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    {# ==================== HÉBERGEMENT MODULE ==================== #}
+    <div class="module-section hebergement">
+        <div class="module-title">
+            <i class="fa fa-building" style="color: #007bff;"></i>
+            MODULE HÉBERGEMENT
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <div class="stats-card blue">
+                    <i class="fa fa-building icon" style="color: #007bff;"></i>
+                    <h3>0</h3>
+                    <p>Total Hébergements</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card green">
+                    <i class="fa fa-home icon" style="color: #28a745;"></i>
+                    <h3>0</h3>
+                    <p>Chambres</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card orange">
+                    <i class="fa fa-cog icon" style="color: #fd7e14;"></i>
+                    <h3>0</h3>
+                    <p>Équipements</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card purple">
+                    <i class="fa fa-tags icon" style="color: #6f42c1;"></i>
+                    <h3>0</h3>
+                    <p>Catégories</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-list">
+            <h5 class="mb-3"><i class="fa fa-bolt"></i> Actions Rapides</h5>
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="{{ path('app_hebergement_new') }}" class="btn btn-success btn-block">
+                        <i class="fa fa-plus"></i> Nouvel Hébergement
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('app_chambre_new') }}" class="btn btn-warning btn-block">
+                        <i class="fa fa-home"></i> Nouvelle Chambre
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('app_equipement_new') }}" class="btn btn-info btn-block">
+                        <i class="fa fa-cog"></i> Nouvel Équipement
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('app_categorie_hebergement_new') }}" class="btn btn-primary btn-block">
+                        <i class="fa fa-tag"></i> Nouvelle Catégorie
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# ==================== TRANSPORT MODULE ==================== #}
+    <div class="module-section transport">
+        <div class="module-title">
+            <i class="fa fa-bus" style="color: #fd7e14;"></i>
+            MODULE TRANSPORT
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="stats-card orange">
+                    <i class="fa fa-bus icon" style="color: #fd7e14;"></i>
+                    <h3>0</h3>
+                    <p>Total Transports</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card green">
+                    <i class="fa fa-map icon" style="color: #28a745;"></i>
+                    <h3>0</h3>
+                    <p>Trajets</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card blue">
+                    <i class="fa fa-calendar icon" style="color: #007bff;"></i>
+                    <h3>0</h3>
+                    <p>Départs Programmés</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-list">
+            <h5 class="mb-3"><i class="fa fa-bolt"></i> Actions Rapides</h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="{{ path('app_transport_new') }}" class="btn btn-success btn-block">
+                        <i class="fa fa-plus"></i> Nouveau Transport
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{{ path('app_trajet_new') }}" class="btn btn-info btn-block">
+                        <i class="fa fa-map"></i> Nouveau Trajet
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{{ path('app_transport_index') }}" class="btn btn-primary btn-block">
+                        <i class="fa fa-list"></i> Voir Transports
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# ==================== BOUTIQUE MODULE ==================== #}
+    <div class="module-section boutique">
+        <div class="module-title">
+            <i class="fa fa-shopping-bag" style="color: #dc3545;"></i>
+            MODULE BOUTIQUE
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <div class="stats-card red">
+                    <i class="fa fa-shopping-bag icon" style="color: #dc3545;"></i>
+                    <h3>0</h3>
+                    <p>Total Produits</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card purple">
+                    <i class="fa fa-tags icon" style="color: #6f42c1;"></i>
+                    <h3>0</h3>
+                    <p>Catégories</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card blue">
+                    <i class="fa fa-shopping-cart icon" style="color: #007bff;"></i>
+                    <h3>0</h3>
+                    <p>Commandes</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card green">
+                    <i class="fa fa-credit-card icon" style="color: #28a745;"></i>
+                    <h3>0</h3>
+                    <p>Paiements</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-list">
+            <h5 class="mb-3"><i class="fa fa-bolt"></i> Actions Rapides</h5>
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="{{ path('app_produit_new') }}" class="btn btn-success btn-block">
+                        <i class="fa fa-plus"></i> Nouveau Produit
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('app_categorie_new') }}" class="btn btn-warning btn-block">
+                        <i class="fa fa-tag"></i> Nouvelle Catégorie
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('app_commande_index') }}" class="btn btn-info btn-block">
+                        <i class="fa fa-shopping-cart"></i> Commandes
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ path('app_paiement_index') }}" class="btn btn-primary btn-block">
+                        <i class="fa fa-credit-card"></i> Paiements
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

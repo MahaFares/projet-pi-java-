@@ -103,10 +103,5 @@ class HomeController extends AbstractController
         return $this->render('FrontOffice/contact/contact.html.twig');
     }
 
-    #[IsGranted('ROLE_ADMIN')]
-    #[Route('/dashboard', name: 'app_dashboard')]
-    public function dashboard(): Response
-    {
-        return $this->render('Backoffice/dashboard.html.twig');
-    }
+   
 }

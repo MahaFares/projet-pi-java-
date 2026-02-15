@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Enum\Role;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,7 +15,22 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username');
+            ->add('email')
+            ->add('username')
+            ->add('password', PasswordType::class, [
+                'required' => false,
+            ])
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'User' => Role::USER->value,
+                    'Admin' => Role::ADMIN->value,
+                ],
+                'expanded' => false,
+                'multiple' => false,
+            ])
+            ->add('isVerified', null, [
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

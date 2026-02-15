@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType; 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -66,6 +67,46 @@ class ActivityType extends AbstractType
                 ],
                 'mapped' => false,
             ])
+            ->add('latitude', NumberType::class, [
+                'required' => false,
+                'label' => 'Latitude GPS',
+                'help' => 'Clic droit sur Google Maps → Copier latitude (Ex: 36.7831)',
+                'attr' => [
+                    'class' => 'form-control',
+                    'step' => '0.0000001',
+                    'placeholder' => '36.7831',
+                ],
+            ])
+
+            ->add('longitude', NumberType::class, [
+                'required' => false,
+                'label' => 'Longitude GPS',
+                'help' => 'Clic droit sur Google Maps → Copier longitude (Ex: 8.6906)',
+                'attr' => [
+                    'class' => 'form-control',
+                    'step' => '0.0000001',
+                    'placeholder' => '8.6906',
+                ],
+            ])
+
+            ->add('image360', FileType::class, [
+                'required' => false,
+                'label' => 'Image 360° Panoramique',
+                'help' => 'Image panoramique équirectangulaire pour visite virtuelle (JPG, PNG)',
+                'attr' => [
+                    'class' => 'form-control',
+                    'accept' => 'image/jpeg,image/png',
+                ],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '10M',
+                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                        'mimeTypesMessage' => 'Veuillez télécharger une image panoramique valide (JPG ou PNG)',
+                    ])
+                ],
+                'mapped' => false,
+            ])
+
             ->add('isActive', CheckboxType::class, [
                 'required' => false,
                 'help' => 'Cochez pour rendre l\'activité disponible',

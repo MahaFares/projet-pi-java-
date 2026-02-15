@@ -1,20 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'BackOffice/base.html.twig' %}
 
-{% block title %}Transport index{% endblock %}
+{% block title %}Trajets - Admin{% endblock %}
 
 {% block body %}
-    <h1>Transport index</h1>
+<div class="container py-4">
+    {{ include('admin_nav.html.twig') }}
 
-    <table class="table">
+    <h1>Trajets</h1>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Type</th>
-                <th>Capacite</th>
-                <th>Emissionco2</th>
-                <th>Prixparpersonne</th>
-                <th>Disponible</th>
-                <th>actions</th>
+                <th>Capacité</th>
+                <th>Prix/Personne</th>
+                <th>CO2</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -23,21 +25,21 @@
                 <td>{{ transport.id }}</td>
                 <td>{{ transport.type }}</td>
                 <td>{{ transport.capacite }}</td>
-                <td>{{ transport.emissionco2 }}</td>
-                <td>{{ transport.prixparpersonne }}</td>
-                <td>{{ transport.disponible ? 'Yes' : 'No' }}</td>
+                <td>{{ transport.prixparpersonne }} DT</td>
+                <td>{{ transport.emissionco2 }} kg</td>
                 <td>
-                    <a href="{{ path('app_trajet_show', {'id': transport.id}) }}">show</a>
-                    <a href="{{ path('app_trajet_edit', {'id': transport.id}) }}">edit</a>
+                    <a href="{{ path('app_trajet_show', {'id': transport.id}) }}">Voir</a>
+                    <a href="{{ path('app_trajet_edit', {'id': transport.id}) }}" class="ms-2">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="6" class="text-muted">Aucun trajet.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_trajet_new') }}">Create new</a>
+    <a href="{{ path('app_trajet_new') }}" class="btn btn-success">Créer un trajet</a>
+</div>
 {% endblock %}

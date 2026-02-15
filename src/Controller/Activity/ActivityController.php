@@ -18,10 +18,27 @@ use Symfony\Component\Filesystem\Filesystem;
 final class ActivityController extends AbstractController
 {
     #[Route('', name: 'app_activity_index', methods: ['GET'])]
-    public function index(ActivityRepository $activityRepository): Response
+    public function index(Request $request, ActivityRepository $activityRepository): Response
     {
+        $q = $request->query->get('q');
+        $minPrice = $request->query->get('minPrice');
+        $maxPrice = $request->query->get('maxPrice');
+        $available = $request->query->get('available');
+
+        $minPrice = $minPrice !== null && $minPrice !== '' ? (float) $minPrice : null;
+        $maxPrice = $maxPrice !== null && $maxPrice !== '' ? (float) $maxPrice : null;
+        $available = ($available === '1' ? true : ($available === '0' ? false : null));
+
+        $activities = $activityRepository->findByFilters($q, $minPrice, $maxPrice, $available);
+
         return $this->render('ActivityTemplate/activity/index.html.twig', [
-            'activities' => $activityRepository->findAll(),
+            'activities' => $activities,
+            'filters' => [
+                'q' => $q,
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice,
+                'available' => $available,
+            ],
         ]);
     }
 
@@ -66,7 +83,7 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_activity_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_activity_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(Activity $activity): Response
     {
         return $this->render('ActivityTemplate/activity/show.html.twig', [
@@ -74,7 +91,7 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_activity_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_activity_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function edit(Request $request, Activity $activity, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ActivityType::class, $activity);
@@ -121,7 +138,7 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_activity_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_activity_delete', methods: ['POST'], requirements: ['id' => '\d+'])]
     public function delete(Request $request, Activity $activity, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$activity->getId(), $request->getPayload()->getString('_token'))) {
