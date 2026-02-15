@@ -34,7 +34,7 @@ class CommandeCrudController extends AbstractController
     {
         $items = $this->repository->findBy([], ['dateCommande' => 'DESC']);
 
-        return $this->render('FrontOffice/boutique/commande/index.html.twig', [
+        return $this->render('ProductTemplate/commande/index.html.twig', [
             'commandes' => $items,
         ]);
     }
@@ -52,7 +52,7 @@ class CommandeCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('FrontOffice/boutique/commande/new.html.twig', [
+                return $this->render('ProductTemplate/commande/new.html.twig', [
                     'commande' => $commande,
                     'form' => $form,
                 ]);
@@ -63,7 +63,7 @@ class CommandeCrudController extends AbstractController
             return $this->redirectToRoute('app_commande_index');
         }
 
-        return $this->render('FrontOffice/boutique/commande/new.html.twig', [
+        return $this->render('ProductTemplate/commande/new.html.twig', [
             'commande' => $commande,
             'form' => $form,
         ]);
@@ -77,7 +77,7 @@ class CommandeCrudController extends AbstractController
             throw $this->createNotFoundException('Commande introuvable.');
         }
 
-        return $this->render('FrontOffice/boutique/commande/show.html.twig', [
+        return $this->render('ProductTemplate/commande/show.html.twig', [
             'commande' => $commande,
         ]);
     }
@@ -99,7 +99,7 @@ class CommandeCrudController extends AbstractController
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
-                return $this->render('FrontOffice/boutique/commande/edit.html.twig', [
+                return $this->render('ProductTemplate/commande/edit.html.twig', [
                     'commande' => $commande,
                     'form' => $form,
                 ]);
@@ -109,7 +109,7 @@ class CommandeCrudController extends AbstractController
             return $this->redirectToRoute('app_commande_index');
         }
 
-        return $this->render('FrontOffice/boutique/commande/edit.html.twig', [
+        return $this->render('ProductTemplate/commande/edit.html.twig', [
             'commande' => $commande,
             'form' => $form,
         ]);

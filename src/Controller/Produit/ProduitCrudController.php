@@ -15,10 +15,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProduitCrudController extends AbstractController
 {
     #[Route('', name: 'app_produit_index', methods: ['GET'])]
-    public function index(ProduitRepository $produitRepository): Response
+    public function index(Request $request): Response
     {
-        return $this->render('BackOffice/produit/index.html.twig', [
-            'produits' => $produitRepository->findAll(),
+        $q = $request->query->get('q');
+        $minPrice = $request->query->get('minPrice');
+        $maxPrice = $request->query->get('maxPrice');
+        $available = $request->query->get('available');
+
+        $minPrice = $minPrice !== null && $minPrice !== '' ? (float) $minPrice : null;
+        $maxPrice = $maxPrice !== null && $maxPrice !== '' ? (float) $maxPrice : null;
+        $available = ($available === '1' ? true : ($available === '0' ? false : null));
+
+        $items = $this->repository->findByFilters($q, $minPrice, $maxPrice, $available);
+
+        return $this->render('ProductTemplate/produit/index.html.twig', [
+            'produits' => $items,
+            'filters' => [
+                'q' => $q,
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice,
+                'available' => $available,
+            ],
         ]);
     }
 
@@ -30,13 +47,44 @@ class ProduitCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($produit);
-            $entityManager->flush();
+            // Contrôle de saisie côté serveur pour le nom du produit
+            $nom = $produit->getNom();
+            
+            // Vérifier que le nom n'est pas vide
+            if (empty(trim($nom))) {
+                $this->addFlash('error', 'Le nom du produit ne peut pas être vide.');
+                return $this->render('ProductTemplate/produit/new.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
+            
+            // Vérifier que le nom ne contient pas que des chiffres
+            if (preg_match('/^\d+$/', trim($nom))) {
+                $this->addFlash('error', 'Le nom du produit ne peut pas contenir uniquement des chiffres.');
+                return $this->render('ProductTemplate/produit/new.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
 
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+            $errors = $this->validator->validate($produit);
+            if (count($errors) > 0) {
+                foreach ($errors as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+                return $this->render('ProductTemplate/produit/new.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
+            $this->em->persist($produit);
+            $this->em->flush();
+            $this->addFlash('success', 'Produit créé.');
+            return $this->redirectToRoute('app_produit_index');
         }
 
-        return $this->render('BackOffice/produit/new.html.twig', [
+        return $this->render('ProductTemplate/produit/new.html.twig', [
             'produit' => $produit,
             'form' => $form,
         ]);
@@ -45,7 +93,12 @@ class ProduitCrudController extends AbstractController
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
-        return $this->render('BackOffice/produit/show.html.twig', [
+        $produit = $this->repository->find($id);
+        if (!$produit) {
+            throw $this->createNotFoundException('Produit introuvable.');
+        }
+
+        return $this->render('ProductTemplate/produit/show.html.twig', [
             'produit' => $produit,
         ]);
     }
@@ -57,12 +110,43 @@ class ProduitCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            // Contrôle de saisie côté serveur pour le nom du produit
+            $nom = $produit->getNom();
+            
+            // Vérifier que le nom n'est pas vide
+            if (empty(trim($nom))) {
+                $this->addFlash('error', 'Le nom du produit ne peut pas être vide.');
+                return $this->render('ProductTemplate/produit/edit.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
+            
+            // Vérifier que le nom ne contient pas que des chiffres
+            if (preg_match('/^\d+$/', trim($nom))) {
+                $this->addFlash('error', 'Le nom du produit ne peut pas contenir uniquement des chiffres.');
+                return $this->render('ProductTemplate/produit/edit.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
 
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+            $errors = $this->validator->validate($produit);
+            if (count($errors) > 0) {
+                foreach ($errors as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+                return $this->render('ProductTemplate/produit/edit.html.twig', [
+                    'produit' => $produit,
+                    'form' => $form,
+                ]);
+            }
+            $this->em->flush();
+            $this->addFlash('success', 'Produit mis à jour.');
+            return $this->redirectToRoute('app_produit_index');
         }
 
-        return $this->render('BackOffice/produit/edit.html.twig', [
+        return $this->render('ProductTemplate/produit/edit.html.twig', [
             'produit' => $produit,
             'form' => $form,
         ]);

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'BackOffice/base.html.twig' %}
 
 {% block title %}Hébergements - Admin{% endblock %}
 
@@ -7,6 +7,28 @@
     {{ include('admin_nav.html.twig') }}
 
     <h1>Hébergements</h1>
+
+    <form method="get" class="row g-2 mb-3">
+        <div class="col-md-4">
+            <input type="text" name="q" value="{{ filters.q|default('') }}" class="form-control" placeholder="Recherche (nom/adresse/ville)">
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="minStars" value="{{ filters.minStars is not null ? filters.minStars : '' }}" class="form-control" placeholder="Étoiles min">
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="maxStars" value="{{ filters.maxStars is not null ? filters.maxStars : '' }}" class="form-control" placeholder="Étoiles max">
+        </div>
+        <div class="col-md-2">
+            <select name="active" class="form-select">
+                <option value="">Tous</option>
+                <option value="1" {% if filters.active is same as(true) %}selected{% endif %}>Actif</option>
+                <option value="0" {% if filters.active is same as(false) %}selected{% endif %}>Inactif</option>
+            </select>
+        </div>
+        <div class="col-md-2 d-grid">
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+        </div>
+    </form>
 
     <table class="table table-striped">
         <thead>

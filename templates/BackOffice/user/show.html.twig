@@ -1,0 +1,66 @@
+{% extends 'BackOffice/base.html.twig' %}
+
+{% block title %}Utilisateur {{ user.username }} | Admin{% endblock %}
+
+{% block page_title %}Détails Utilisateur: {{ user.username }}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nom d'utilisateur:</label>
+                        <p>{{ user.username }}</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Email:</label>
+                        <p>
+                            <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Rôle:</label>
+                        <p>
+                            {% if user.roles.name == 'ADMIN' %}
+                                <span class="badge bg-danger">ADMINISTRATEUR</span>
+                            {% else %}
+                                <span class="badge bg-primary">UTILISATEUR</span>
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Email Vérifié:</label>
+                        <p>
+                            {% if user.isVerified %}
+                                <span class="badge bg-success">Oui</span>
+                            {% else %}
+                                <span class="badge bg-warning">Non</span>
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <hr>
+
+                    <a href="{{ path('app_user_edit', {id: user.id}) }}" class="btn btn-warning">
+                        <i class="fa fa-edit"></i> Éditer
+                    </a>
+                    <a href="{{ path('app_user_index') }}" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left"></i> Retour à la liste
+                    </a>
+                    <form method="POST" action="{{ path('app_user_delete', {id: user.id}) }}" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-trash"></i> Supprimer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
