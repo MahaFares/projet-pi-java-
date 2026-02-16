@@ -1,0 +1,97 @@
+{% extends 'Reservation/base.html.twig' %}
+
+{% block title %}Dashboard Réservations | Admin{% endblock %}
+
+{% block page_title %}Dashboard - Gestion des Réservations{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <!-- Statistics Cards Row -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="stats-card purple">
+                <i class="fa fa-calendar icon" style="color: #6f42c1;"></i>
+                <h3>0</h3>
+                <p>Total Réservations</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card green">
+                <i class="fa fa-check-circle icon" style="color: #28a745;"></i>
+                <h3>0</h3>
+                <p>Confirmées</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card orange">
+                <i class="fa fa-credit-card icon" style="color: #fd7e14;"></i>
+                <h3>0</h3>
+                <p>Paiements Reçus</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="activity-list">
+                <h4 class="mb-3"><i class="fa fa-bolt"></i> Actions Rapides</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{{ path('app_reservation_new') }}" class="btn btn-success btn-block btn-lg">
+                            <i class="fa fa-plus-circle"></i> Nouvelle Réservation
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="{{ path('app_reservation_index') }}" class="btn btn-info btn-block btn-lg">
+                            <i class="fa fa-list"></i> Voir Réservations
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="{{ path('app_payment_reservation_index') }}" class="btn btn-primary btn-block btn-lg">
+                            <i class="fa fa-credit-card"></i> Voir Paiements
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.stats-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+.stats-card:hover {
+    transform: translateY(-5px);
+}
+.stats-card .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+.stats-card h3 {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.stats-card p {
+    color: #666;
+    margin: 0;
+}
+.stats-card.green { border-left: 4px solid #28a745; }
+.stats-card.orange { border-left: 4px solid #fd7e14; }
+.stats-card.purple { border-left: 4px solid #6f42c1; }
+
+.activity-list {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+</style>
+{% endblock %}
