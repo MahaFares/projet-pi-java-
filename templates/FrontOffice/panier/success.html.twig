@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement réussi | EcoTrip{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+.success-hero {
+    background: linear-gradient(135deg, #2d5016 0%, #1e4620 100%);
+    padding: 50px 0;
+    color: #fff;
+    text-align: center;
+}
+.success-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 40px 30px;
+    max-width: 520px;
+    margin: -60px auto 40px auto;
+    position: relative;
+    overflow: hidden;
+}
+.success-badge {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #2d5016;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 38px;
+    margin: 0 auto 20px auto;
+    animation: popIn 0.6s ease-out, bounce 1.2s ease-in-out infinite;
+}
+@keyframes popIn {
+    0% { transform: scale(0.2); opacity: 0; }
+    80% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+.cart-confetti {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.25) 0, transparent 50%),
+        radial-gradient(circle at 80% 0, rgba(52, 152, 219, 0.2) 0, transparent 55%),
+        radial-gradient(circle at 0 100%, rgba(241, 196, 15, 0.25) 0, transparent 60%);
+    opacity: 0;
+    animation: fadeBg 1.2s ease-out forwards;
+}
+@keyframes fadeBg {
+    to { opacity: 1; }
+}
+.total-success {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #2d5016;
+    margin: 10px 0 4px 0;
+}
+.subtext-success {
+    color: #6b7280;
+}
+.btn-main {
+    background: #2d5016;
+    color: #fff;
+    border-radius: 999px;
+    padding: 12px 26px;
+    font-weight: 700;
+}
+.btn-main:hover {
+    background: #1e4620;
+    color: #fff;
+}
+.btn-ghost {
+    border-radius: 999px;
+    padding: 12px 24px;
+}
+.mini-cart {
+    margin: 25px auto 10px auto;
+    width: 80px;
+    height: 80px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #2d5016, #3c6b24);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 36px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.20);
+    animation: slideCart 0.9s ease-out;
+}
+@keyframes slideCart {
+    0% { transform: translateX(-40px) rotate(-10deg); opacity: 0; }
+    70% { transform: translateX(5px) rotate(3deg); opacity: 1; }
+    100% { transform: translateX(0) rotate(0); opacity: 1; }
+}
+.signature-block {
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px dashed #d1d5db;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+.signature-name {
+    font-weight: 700;
+    color: #111827;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="success-hero">
+    <div class="container">
+        <h1 class="mb-2">Paiement réussi ✨</h1>
+        <p class="mb-0">Merci pour votre confiance, votre expérience EcoTrip est confirmée.</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="success-card text-center">
+        <div class="cart-confetti"></div>
+        <div class="success-badge">
+            <i class="fa fa-check"></i>
+        </div>
+        <div class="mini-cart mt-2">
+            <i class="fa fa-shopping-cart"></i>
+        </div>
+        <h3 class="mt-3">Votre commande a bien été payée</h3>
+        <div class="total-success">
+            {{ total|number_format(2, ',', ' ') }} TND
+        </div>
+        <p class="subtext-success">
+            Un e-mail de confirmation vous sera envoyé avec le récapitulatif de votre commande.
+        </p>
+
+        {% if commande %}
+            <p class="text-muted mb-3">
+                Numéro de commande : <strong>#{{ commande.idCommande }}</strong>
+            </p>
+            <div class="d-flex flex-column align-items-center mt-3">
+                <a href="{{ path('app_panier_facture_pdf', {id: commande.idCommande}) }}" class="btn btn-outline-secondary btn-ghost mb-3">
+                    <i class="fa fa-file-pdf-o me-1"></i> Télécharger la facture (PDF)
+                </a>
+                <a href="{{ path('app_home') }}" class="btn btn-main mt-1">
+                    Continuer sur EcoTrip
+                </a>
+            </div>
+        {% else %}
+            <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                <a href="{{ path('app_home') }}" class="btn btn-main">
+                    Continuer sur EcoTrip
+                </a>
+            </div>
+        {% endif %}
+
+        <div class="signature-block">
+            <div class="signature-name">EcoTrip Tunisie</div>
+            <div>Facture générée électroniquement. Signature numérique appliquée.</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

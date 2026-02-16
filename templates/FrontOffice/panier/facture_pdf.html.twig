@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Facture #{{ commande.idCommande }} - EcoTrip</title>
+    <style>
+        body { font-family: 'DejaVu Sans', Arial, sans-serif; font-size: 11pt; color: #111827; }
+        .header { background: linear-gradient(135deg, #2d5016 0%, #1e4620 100%); color:#fff; padding:20px 25px; }
+        .header h1 { margin:0 0 4px 0; font-size:20pt; }
+        .header small { opacity:0.9; }
+        .wrap { padding:20px 25px; }
+        .row { display:flex; justify-content:space-between; margin-bottom:12px; }
+        .box { padding:10px 12px; border-radius:8px; background:#f9fafb; }
+        .box h3 { margin:0 0 6px 0; font-size:11pt; color:#374151; }
+        table { width:100%; border-collapse:collapse; margin-top:18px; }
+        th, td { padding:8px 10px; border-bottom:1px solid #e5e7eb; font-size:10pt; }
+        th { background:#f3f4f6; text-align:left; }
+        .text-right { text-align:right; }
+        .total-row td { border-top:2px solid #111827; font-weight:bold; }
+        .signature { margin-top:30px; display:flex; justify-content:space-between; font-size:9pt; }
+        .sign-block { text-align:right; }
+        .sign-line { margin-top:35px; border-top:1px solid #9ca3af; width:180px; }
+        .stamp { display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid #10b981; color:#10b981; font-size:8pt; text-transform:uppercase; }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Facture EcoTrip</h1>
+    <small>Paiement confirmé - Reçu officiel</small>
+</div>
+
+<div class="wrap">
+    <div class="row">
+        <div class="box" style="flex:1; margin-right:8px;">
+            <h3>Client</h3>
+            <div>{{ user.nom ?? user.firstname ?? '' }} {{ user.prenom ?? user.lastname ?? '' }}</div>
+            <div>{{ user.email }}</div>
+        </div>
+        <div class="box" style="flex:1; margin-left:8px;">
+            <h3>Facture</h3>
+            <div>Numéro : <strong>#{{ commande.idCommande }}</strong></div>
+            <div>Date : {{ commande.dateCommande|date('d/m/Y H:i') }}</div>
+            <div class="stamp">Payé</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Produit / Service</th>
+            <th class="text-right">Quantité</th>
+            <th class="text-right">Prix unitaire (TND)</th>
+            <th class="text-right">Sous-total (TND)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ligne in commande.ligneDeCommandes %}
+            <tr>
+                <td>{{ ligne.idProduct.nom ?? 'Produit' }}</td>
+                <td class="text-right">{{ ligne.quantite }}</td>
+                <td class="text-right">{{ ligne.unitPrice|number_format(2, ',', ' ') }}</td>
+                <td class="text-right">{{ ligne.subtotal|number_format(2, ',', ' ') }}</td>
+            </tr>
+        {% endfor %}
+        <tr class="total-row">
+            <td colspan="3" class="text-right">Total TTC</td>
+            <td class="text-right">{{ commande.total|number_format(2, ',', ' ') }} TND</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="signature">
+        <div>
+            <strong>EcoTrip Tunisie</strong><br>
+            Plateforme de voyages écoresponsables<br>
+            Reçu généré le {{ generatedAt|date('d/m/Y H:i') }}
+        </div>
+        <div class="sign-block">
+            <div>Signature électronique</div>
+            <div class="sign-line"></div>
+            <div>EcoTrip Tunisie</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

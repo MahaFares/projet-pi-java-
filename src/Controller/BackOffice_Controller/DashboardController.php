@@ -2,21 +2,22 @@
 
 namespace App\Controller\BackOffice_Controller;
 
+use App\Repository\ChauffeurRepository;
+use App\Repository\TransportCategoryRepository;
 use App\Repository\TransportRepository;
+use App\Repository\TrajetRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\ActivityRepository;
 use App\Repository\ActivityCategoryRepository;
 use App\Repository\ActivityScheduleRepository;
 use App\Repository\GuideRepository;
 use App\Repository\HebergementRepository;
 
-
-
-
-class DashboardController  extends AbstractController
+class DashboardController extends AbstractController
 {
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/dashboard', name: 'app_dashboard')]
@@ -24,7 +25,11 @@ class DashboardController  extends AbstractController
         ActivityRepository $activityRepo,
         ActivityCategoryRepository $categoryRepo,
         ActivityScheduleRepository $scheduleRepo,
-        GuideRepository $guideRepo
+        GuideRepository $guideRepo,
+        TransportRepository $transportRepo,
+        TransportCategoryRepository $transportCategoryRepo,
+        ChauffeurRepository $chauffeurRepo,
+        TrajetRepository $trajetRepo
     ): Response {
         // Activity Statistics
         $totalActivities = $activityRepo->count([]);
@@ -53,6 +58,10 @@ class DashboardController  extends AbstractController
             'activitiesByCategory' => $activitiesByCategory,
             'recentActivities' => $recentActivities,
             'topRatedActivities' => $topRatedActivities,
+            'totalTransports' => $transportRepo->count([]),
+            'totalTransportCategories' => $transportCategoryRepo->count([]),
+            'totalChauffeurs' => $chauffeurRepo->count([]),
+            'totalTrajets' => $trajetRepo->count([]),
         ]);
     }
 }

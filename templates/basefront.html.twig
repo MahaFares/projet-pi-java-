@@ -49,6 +49,7 @@
     <script src="{{ asset('js/stellar.js') }}"></script>
     <script src="{{ asset('vendors/lightbox/simpleLightbox.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    <script>window.updateCartBadge = function(c) { var b = document.getElementById('cartBadge'); if(b) { b.textContent = c; b.style.display = c > 0 ? '' : 'none'; } };</script>
     {% block javascripts %}{% endblock %}
 </body>
 </html>
