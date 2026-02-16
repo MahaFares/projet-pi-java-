@@ -50,4 +50,17 @@ class ProduitRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+    public function countByStockGreaterThanZero(): int
+    {
+        return (int) $this->createQueryBuilder('p')
+            ->select('COUNT(p.idProduit)')
+            ->where('p.stock > 0')
+            ->getQuery()
+            ->getSingleScalarResult() ?? 0;
+    }
+
+    public function countByStockZero(): int
+    {
+        return $this->count(['stock' => 0]);
+    }
 }

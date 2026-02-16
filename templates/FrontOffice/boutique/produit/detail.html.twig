@@ -165,11 +165,15 @@
         }
 
         function addToCart() {
-            const quantity = document.getElementById('quantity').value;
-            const productName = "{{ produit.nom|e('js') }}";
-            const productPrice = {{ produit.prix }};
-            
-            alert(`${quantity} x ${productName} ajouté au panier!\nTotal: ${(quantity * productPrice).toFixed(2)} TND`);
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            fetch('{{ path('app_panier_add_produit', {id: produit.id}) }}', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'quantity=' + encodeURIComponent(quantity)
+            }).then(r => r.json()).then(d => {
+                if (d.success) { if (typeof updateCartBadge === 'function') updateCartBadge(d.count); alert(quantity + ' x {{ produit.nom|e('js') }} ajouté au panier !'); }
+                else { alert(d.message || 'Erreur'); }
+            });
         }
     </script>
 {% endblock %}
