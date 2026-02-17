@@ -21,7 +21,15 @@ final class UserController extends AbstractController
     #[Route('/my-account', name: 'app_my_account', methods: ['GET'])]
     public function myAccount(): Response
     {
-        return $this->render('user/my_account.html.twig');
+        $user = $this->getUser();
+        
+        // Admin: render admin version
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            return $this->render('user/admin_my_account.html.twig');
+        }
+        
+        // Regular user: render front-end version
+        return $this->render('user/my_account_front.html.twig');
     }
 
 #[Route('/update-account', name: 'app_update_account', methods: ['GET','POST'])]
